@@ -1,0 +1,373 @@
+#:kivy 1.11.1
+
+<MyGrid>:
+    BoxLayout:
+        id: top_box
+        #diviser l'écran en deux
+        orientation: "horizontal"
+        size: root.size
+        pos: root.pos
+        
+        # BARRE LATERALE DEBUT *************************************************************
+
+        BoxLayout:
+        #barre latérale
+            cols: "vertical"
+            size_hint: 0.2, 1
+            pos: root.pos
+            id: top_box
+
+            canvas:
+                Color:
+                    rgb: (.349, .5686, .392, 1)
+
+                RoundedRectangle:
+                    size: self.size
+                    pos: self.pos
+                    radius: 0, 20, 20, 0 #TOP-L, TOP-R, BOTTOM-R, BOTTOM-L
+            
+            BoxLayout:
+                id: bottom_box
+                orientation: 'vertical'
+                Label:
+                    id: title
+                    background_normal: ''
+                    text: 'VideGraf'
+                    color: 1, 1, 1, 1
+                    size_hint_y: 0.15
+                    height: 40
+                    width: 200
+                    font_size: 60
+                    halign: "center"
+                    text_size: self.size
+                Button:
+                    id: button_1
+                    background_normal: ''
+                    background_color: .349, .5686, .392, 1
+                    #text: 'Sélectionner'
+                    size_hint_y: 0.10
+                    width: 200
+                    height: 40
+                    #halign: "left"
+                    #text_size: self.size
+                    StackLayout:
+                        pos: self.parent.pos
+                        size: self.parent.size
+                        orientation: 'lr-tb'
+                        padding: [30, 0, 0, 0]
+                        size_hint_y: None
+                        Image:
+                            source: 'hand.png'
+                            size_hint_x: None
+                            width: 30
+                            valign: "center"
+
+                        Label:
+                            size_hint_x: None
+                            halign: "left"
+                            height: 40
+                            width: 200
+                            text: "Sélectionner"
+                            text_size: self.size
+                            valign: "center"
+                Button:
+                    id: button_2
+                    background_normal: ''
+                    background_color: .349, .5686, .392, 1
+                    #text: 'Sélectionner'
+                    size_hint_y: 0.10
+                    width: 200
+                    height: 40
+                    #halign: "left"
+                    #text_size: self.size
+                    StackLayout:
+                        pos: self.parent.pos
+                        size: self.parent.size
+                        orientation: 'lr-tb'
+                        padding: [30, 0, 0, 0]
+                        size_hint_y: None
+                        Image:
+                            source: 'hand.png'
+                            size_hint_x: None
+                            width: 30
+                            valign: "center"
+
+                        Label:
+                            size_hint_x: None
+                            halign: "left"
+                            height: 40
+                            width: 200
+                            text: "Vers le bas"
+                            text_size: self.size
+                            valign: "center"
+                Button:
+                    id: button_3
+                    background_normal: ''
+                    background_color: .349, .5686, .392, 1
+                    size_hint_y: 0.10
+                    width: 200
+                    height: 40
+
+                    StackLayout:
+                        pos: self.parent.pos
+                        size: self.parent.size
+                        orientation: 'lr-tb'
+                        padding: [30, 0, 0, 0]
+                        size_hint_y: None
+
+                        Image:
+                            source: 'hand.png'
+                            size_hint_x: None
+                            width: 30
+                            valign: "center"
+
+                        Label:
+                            size_hint_x: None
+                            halign: "left"
+                            height: 40
+                            width: 200
+                            text: "Vers le haut"
+                            text_size: self.size
+                            valign: "center"
+                Button:
+                    id: button_4
+                    background_normal: ''
+                    background_color: .349, .5686, .392, 1
+                    #text: 'Sélectionner'
+                    size_hint_y: 0.10
+                    width: 200
+                    height: 40
+                    #halign: "left"
+                    #text_size: self.size
+                    StackLayout:
+                        pos: self.parent.pos
+                        size: self.parent.size
+                        orientation: 'lr-tb'
+                        padding: [30, 0, 0, 0]
+                        size_hint_y: None
+                        Image:
+                            source: 'hand.png'
+                            size_hint_x: None
+                            width: 30
+                            valign: "center"
+
+                        Label:
+                            size_hint_x: None
+                            halign: "left"
+                            height: 40
+                            width: 200
+                            text: "Vers la droite"
+                            text_size: self.size
+                            valign: "center"
+                Button:
+                    id: button_4
+                    background_normal: ''
+                    background_color: .349, .5686, .392, 1
+                    #text: 'Sélectionner'
+                    size_hint_y: 0.10
+                    width: 240
+                    height: 40
+                    #halign: "left"
+                    #text_size: self.size
+                    StackLayout:
+                        pos: self.parent.pos
+                        size: self.parent.size
+                        orientation: 'lr-tb'
+                        padding: [30, 0, 0, 0]
+                        size_hint_x: None
+                        size_hint_y: None
+                        Image:
+                            source: 'hand.png'
+                            size_hint_x: None
+                            width: 30
+                            valign: "center"
+
+                        Label:
+                            size_hint_x: None
+                            halign: "left"
+                            height: 40
+                            width: 200
+                            text: "Vers la gauche"
+                            text_size: self.size
+                            valign: "center"        
+                Widget:
+
+            # BARRE LATERALE FIN *************************************************************
+
+        # En-tête 
+        BoxLayout:
+            orientation: 'vertical'
+
+            StackLayout:
+                orientation: 'lr-tb'
+                #size_hint_y: .1
+
+                padding: [50, 50, 50, 0]
+                size_hint_y: None
+
+                Label:
+                    text: "[b] Sujets chauds du moment"
+                    markup: True
+                    font_size: 44
+                    text_size: self.size
+                    color: .349, .5686, .392, 1
+
+            
+                ################################################################################################################################
+                ####################                                                                             ###############################
+                ####################                                        CONTENU                              ###############################
+                ####################                                                                             ###############################
+                ################################################################################################################################
+
+            ScreenManager:
+                Screen:
+                    ScrollView:
+                        size: self.size
+                        pos: self.pos 
+
+                        GridLayout:
+                            # à générer automatiquement ? \\TODO
+                            cols: 3
+                            size: self.size
+                            pos: self.pos
+
+                            canvas:
+                                Color:
+                                    rgb: (.94, .94, .94, 1)
+
+                                Rectangle:
+                                    #size: 789, 577
+                                    size: self.size
+                                    pos: self.pos
+                            
+                            
+                            Button:
+                                text: "GL 2"
+                                color: 1, 0, 0, 1
+                                background_color: 0, 0, 0, 0
+                                valign: "middle"
+                                halign: "center"
+
+                                size_hint: 0.4, 0.2
+                                
+                                canvas:
+                                    Color:
+                                        #rgb: (1, 0, 0, 1)
+                                        rgba: (.4,.4,.4,1) if self.state=='normal' else (0,.7,.7,1)  # visual feedback of press
+
+                                    RoundedRectangle:
+                                        size: self.size
+                                        pos: self.pos
+                                        radius: 40, 40, 40, 40 #TOP-L, TOP-R, BOTTOM-R, BOTTOM-L
+                            
+                            Button:
+                                text: "GL 2"
+                                color: 1, 0, 0, 1
+                                background_color: 0, 0, 0, 0
+                                valign: "middle"
+                                halign: "center"
+
+                                size_hint: 0.4, 0.2
+                                
+                                canvas:
+                                    Color:
+                                        #rgb: (1, 0, 0, 1)
+                                        rgba: (.4,.4,.4,1) if self.state=='normal' else (0,.7,.7,1)  # visual feedback of press
+
+                                    RoundedRectangle:
+                                        size: self.size
+                                        pos: self.pos
+                                        radius: 40, 40, 40, 40 #TOP-L, TOP-R, BOTTOM-R, BOTTOM-L
+                            Button:
+                                text: "GL 2"
+                                color: 1, 0, 0, 1
+                                background_color: 0, 0, 0, 0
+                                valign: "middle"
+                                halign: "center"
+
+                                size_hint: 0.4, 0.2
+                                
+                                canvas:
+                                    Color:
+                                        #rgb: (1, 0, 0, 1)
+                                        rgba: (.4,.4,.4,1) if self.state=='normal' else (0,.7,.7,1)  # visual feedback of press
+
+                                    RoundedRectangle:
+                                        size: self.size
+                                        pos: self.pos
+                                        radius: 40, 40, 40, 40 #TOP-L, TOP-R, BOTTOM-R, BOTTOM-L
+                            Button:
+                                text: "GL 2"
+                                color: 1, 0, 0, 1
+                                background_color: 0, 0, 0, 0
+                                valign: "middle"
+                                halign: "center"
+
+                                size_hint: 0.4, 0.2
+                                
+                                canvas:
+                                    Color:
+                                        #rgb: (1, 0, 0, 1)
+                                        rgba: (.4,.4,.4,1) if self.state=='normal' else (0,.7,.7,1)  # visual feedback of press
+
+                                    RoundedRectangle:
+                                        size: self.size
+                                        pos: self.pos
+                                        radius: 40, 40, 40, 40 #TOP-L, TOP-R, BOTTOM-R, BOTTOM-L
+                            Button:
+                                text: "GL 2"
+                                color: 1, 0, 0, 1
+                                background_color: 0, 0, 0, 0
+                                valign: "middle"
+                                halign: "center"
+
+                                size_hint: 0.4, 0.2
+                                
+                                canvas:
+                                    Color:
+                                        #rgb: (1, 0, 0, 1)
+                                        rgba: (.4,.4,.4,1) if self.state=='normal' else (0,.7,.7,1)  # visual feedback of press
+
+                                    RoundedRectangle:
+                                        size: self.size
+                                        pos: self.pos
+                                        radius: 40, 40, 40, 40 #TOP-L, TOP-R, BOTTOM-R, BOTTOM-L
+                            Button:
+                                text: "GL 2"
+                                color: 1, 0, 0, 1
+                                background_color: 0, 0, 0, 0
+                                valign: "middle"
+                                halign: "center"
+
+                                size_hint: 0.4, 0.2
+                                
+                                canvas:
+                                    Color:
+                                        #rgb: (1, 0, 0, 1)
+                                        rgba: (.4,.4,.4,1) if self.state=='normal' else (0,.7,.7,1)  # visual feedback of press
+
+                                    RoundedRectangle:
+                                        size: self.size
+                                        pos: self.pos
+                                        radius: 40, 40, 40, 40 #TOP-L, TOP-R, BOTTOM-R, BOTTOM-L
+                            
+
+
+<ScrollButton>
+    size_hint: None, None
+    size: 789, 567
+
+    text: "GL 2"
+    color: 1, 0, 0, 1
+    background_color: 0, 0, 0, 0
+    valign: "middle"
+    halign: "center"
+                                
+    canvas:
+        Color:
+            rgba: (.4,.4,.4,1) if self.state=='normal' else (0,.7,.7,1)  # visual feedback of press
+
+        RoundedRectangle:
+            size: self.size
+            pos: self.pos
+            radius: 40, 40, 40, 40 #TOP-L, TOP-R, BOTTOM-R, BOTTOM-L
