@@ -1,21 +1,23 @@
 #:kivy 1.11.1
 
-<MyGrid>:
+#:import Label kivy.uix.label.Label
+
+
+<MainBox>:
     BoxLayout:
         id: top_box
         #diviser l'écran en deux
         orientation: "horizontal"
         size: root.size
         pos: root.pos
-        
-        # BARRE LATERALE DEBUT *************************************************************
+        spacing: 60
 
         BoxLayout:
-        #barre latérale
+            #barre latérale
+            id: lateral
             cols: "vertical"
             size_hint: 0.2, 1
             pos: root.pos
-            id: top_box
 
             canvas:
                 Color:
@@ -192,182 +194,52 @@
                             valign: "center"        
                 Widget:
 
-            # BARRE LATERALE FIN *************************************************************
+<Header>:
+    BoxLayout:
+        orientation: 'vertical'
+        size: root.size
+        pos: root.pos
+        spacing: 30
+        id: content_box
 
-        # En-tête 
-        BoxLayout:
-            orientation: 'vertical'
-
-            StackLayout:
-                orientation: 'lr-tb'
-                #size_hint_y: .1
-
-                padding: [50, 50, 50, 0]
-                size_hint_y: None
-
-                Label:
-                    text: "[b] Sujets chauds du moment"
-                    markup: True
-                    font_size: 44
-                    text_size: self.size
-                    color: .349, .5686, .392, 1
-
+        StackLayout:
+            orientation: 'lr-tb'
+            #padding: [50, 50, 50, 0]
+            size_hint_y: None
             
-                ################################################################################################################################
-                ####################                                                                             ###############################
-                ####################                                        CONTENU                              ###############################
-                ####################                                                                             ###############################
-                ################################################################################################################################
 
-            ScreenManager:
-                Screen:
-                    ScrollView:
-                        size: self.size
-                        pos: self.pos 
+            Label:
+                text: "[b] Sujets chauds du moment"
+                markup: True
+                font_size: 44
+                text_size: self.size
+                color: .349, .5686, .392, 1
 
-                        GridLayout:
-                            # à générer automatiquement ? \\TODO
-                            cols: 3
-                            size: self.size
-                            pos: self.pos
+<Topics>:
 
-                            canvas:
-                                Color:
-                                    rgb: (.94, .94, .94, 1)
+    GridLayout:
+        id: contents
+        cols: 3
+        size: root.size
+        pos: root.pos
+        spacing: 100
+        #on_parent:
+            #for i in range(11): txt = "Label {0}".format(i); self.add_widget(Label(text = txt, text_size=(cm(2), cm(2)), pos=self.pos,
+            #id=txt, color=(1,0,0,1)))
 
-                                Rectangle:
-                                    #size: 789, 577
-                                    size: self.size
-                                    pos: self.pos
-                            
-                            
-                            Button:
-                                text: "GL 2"
-                                color: 1, 0, 0, 1
-                                background_color: 0, 0, 0, 0
-                                valign: "middle"
-                                halign: "center"
+<Subject>:
+    Button:
+        text: "bonjour"
+        color: .349, .5686, .392, 1
+        pos: root.pos
+        size: root.size
+        background_color: 0,0,0,0
+        
+        canvas.before:
+            Color:
+                rgba: (1, 1, 1, 1) if self.state == 'normal' else (.349, .5686, .392, .2)
 
-                                size_hint: 0.4, 0.2
-                                
-                                canvas:
-                                    Color:
-                                        #rgb: (1, 0, 0, 1)
-                                        rgba: (.4,.4,.4,1) if self.state=='normal' else (0,.7,.7,1)  # visual feedback of press
-
-                                    RoundedRectangle:
-                                        size: self.size
-                                        pos: self.pos
-                                        radius: 40, 40, 40, 40 #TOP-L, TOP-R, BOTTOM-R, BOTTOM-L
-                            
-                            Button:
-                                text: "GL 2"
-                                color: 1, 0, 0, 1
-                                background_color: 0, 0, 0, 0
-                                valign: "middle"
-                                halign: "center"
-
-                                size_hint: 0.4, 0.2
-                                
-                                canvas:
-                                    Color:
-                                        #rgb: (1, 0, 0, 1)
-                                        rgba: (.4,.4,.4,1) if self.state=='normal' else (0,.7,.7,1)  # visual feedback of press
-
-                                    RoundedRectangle:
-                                        size: self.size
-                                        pos: self.pos
-                                        radius: 40, 40, 40, 40 #TOP-L, TOP-R, BOTTOM-R, BOTTOM-L
-                            Button:
-                                text: "GL 2"
-                                color: 1, 0, 0, 1
-                                background_color: 0, 0, 0, 0
-                                valign: "middle"
-                                halign: "center"
-
-                                size_hint: 0.4, 0.2
-                                
-                                canvas:
-                                    Color:
-                                        #rgb: (1, 0, 0, 1)
-                                        rgba: (.4,.4,.4,1) if self.state=='normal' else (0,.7,.7,1)  # visual feedback of press
-
-                                    RoundedRectangle:
-                                        size: self.size
-                                        pos: self.pos
-                                        radius: 40, 40, 40, 40 #TOP-L, TOP-R, BOTTOM-R, BOTTOM-L
-                            Button:
-                                text: "GL 2"
-                                color: 1, 0, 0, 1
-                                background_color: 0, 0, 0, 0
-                                valign: "middle"
-                                halign: "center"
-
-                                size_hint: 0.4, 0.2
-                                
-                                canvas:
-                                    Color:
-                                        #rgb: (1, 0, 0, 1)
-                                        rgba: (.4,.4,.4,1) if self.state=='normal' else (0,.7,.7,1)  # visual feedback of press
-
-                                    RoundedRectangle:
-                                        size: self.size
-                                        pos: self.pos
-                                        radius: 40, 40, 40, 40 #TOP-L, TOP-R, BOTTOM-R, BOTTOM-L
-                            Button:
-                                text: "GL 2"
-                                color: 1, 0, 0, 1
-                                background_color: 0, 0, 0, 0
-                                valign: "middle"
-                                halign: "center"
-
-                                size_hint: 0.4, 0.2
-                                
-                                canvas:
-                                    Color:
-                                        #rgb: (1, 0, 0, 1)
-                                        rgba: (.4,.4,.4,1) if self.state=='normal' else (0,.7,.7,1)  # visual feedback of press
-
-                                    RoundedRectangle:
-                                        size: self.size
-                                        pos: self.pos
-                                        radius: 40, 40, 40, 40 #TOP-L, TOP-R, BOTTOM-R, BOTTOM-L
-                            Button:
-                                text: "GL 2"
-                                color: 1, 0, 0, 1
-                                background_color: 0, 0, 0, 0
-                                valign: "middle"
-                                halign: "center"
-
-                                size_hint: 0.4, 0.2
-                                
-                                canvas:
-                                    Color:
-                                        #rgb: (1, 0, 0, 1)
-                                        rgba: (.4,.4,.4,1) if self.state=='normal' else (0,.7,.7,1)  # visual feedback of press
-
-                                    RoundedRectangle:
-                                        size: self.size
-                                        pos: self.pos
-                                        radius: 40, 40, 40, 40 #TOP-L, TOP-R, BOTTOM-R, BOTTOM-L
-                            
-
-
-<ScrollButton>
-    size_hint: None, None
-    size: 789, 567
-
-    text: "GL 2"
-    color: 1, 0, 0, 1
-    background_color: 0, 0, 0, 0
-    valign: "middle"
-    halign: "center"
-                                
-    canvas:
-        Color:
-            rgba: (.4,.4,.4,1) if self.state=='normal' else (0,.7,.7,1)  # visual feedback of press
-
-        RoundedRectangle:
-            size: self.size
-            pos: self.pos
-            radius: 40, 40, 40, 40 #TOP-L, TOP-R, BOTTOM-R, BOTTOM-L
+            RoundedRectangle:
+                size: self.size
+                pos: self.pos
+                radius: 40, 40, 40, 40
