@@ -31,12 +31,13 @@
             BoxLayout:
                 id: bottom_box
                 orientation: 'vertical'
+                spacing: 80
                 Label:
                     id: title
                     background_normal: ''
                     text: 'VideGraf'
                     color: 1, 1, 1, 1
-                    size_hint_y: 0.15
+                    size_hint_y: 0.2
                     height: 40
                     width: 200
                     font_size: 60
@@ -58,6 +59,7 @@
                         orientation: 'lr-tb'
                         padding: [30, 0, 0, 0]
                         size_hint_y: None
+                        spacing: 10
                         Image:
                             source: 'hand.png'
                             size_hint_x: None
@@ -88,6 +90,7 @@
                         orientation: 'lr-tb'
                         padding: [30, 0, 0, 0]
                         size_hint_y: None
+                        spacing: 10
                         Image:
                             source: 'hand.png'
                             size_hint_x: None
@@ -116,6 +119,7 @@
                         orientation: 'lr-tb'
                         padding: [30, 0, 0, 0]
                         size_hint_y: None
+                        spacing: 10
 
                         Image:
                             source: 'hand.png'
@@ -147,6 +151,7 @@
                         orientation: 'lr-tb'
                         padding: [30, 0, 0, 0]
                         size_hint_y: None
+                        spacing: 10
                         Image:
                             source: 'hand.png'
                             size_hint_x: None
@@ -178,6 +183,7 @@
                         padding: [30, 0, 0, 0]
                         size_hint_x: None
                         size_hint_y: None
+                        spacing: 10
                         Image:
                             source: 'hand.png'
                             size_hint_x: None
@@ -193,6 +199,16 @@
                             text_size: self.size
                             valign: "center"        
                 Widget:
+            
+                FloatLayout:
+                    Image:
+                        source: "chibi_side_bar.png"
+                        size_hint_x: 1
+                        size_hint_y: None
+                        size: self.texture_size
+                        anchor_x: "center"
+                        anchor_y: "center"
+
 
 <Header>:
     BoxLayout:
@@ -229,7 +245,7 @@
 
 <Subject>:
     Button:
-        text: "bonjour"
+        text: "lol"
         color: .349, .5686, .392, 1
         pos: root.pos
         size: root.size

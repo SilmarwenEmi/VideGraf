@@ -5,13 +5,14 @@ from kivy.uix.widget import Widget
 from kivy.uix.label import Label
 from kivy.uix.textinput import TextInput
 from kivy.uix.button import Button
+from kivy.core.image import Image 
 
 from kivy.uix.gridlayout import GridLayout
 from kivy.uix.boxlayout import BoxLayout
 
 from kivy.graphics import Rectangle, Color, RoundedRectangle
 
-#from kivy.properties import StringProperty
+from kivy.properties import StringProperty
 
 
 from kivy.core.window import Window
@@ -30,7 +31,10 @@ class MainBox(BoxLayout):
     pass
 
 class MyApp(App): # <- Main Class
+    abcd = StringProperty('')
     def build(self):
+
+        self.abcd = 'test'
                 
         mainBox = MainBox()
 
