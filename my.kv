@@ -220,8 +220,8 @@
 
         StackLayout:
             orientation: 'lr-tb'
-            #padding: [50, 50, 50, 0]
-            size_hint_y: None
+            size_hint_x: 2
+            size_hint_y: .1
             
 
             Label:
@@ -245,11 +245,13 @@
 
 <Subject>:
     Button:
-        text: "lol"
+        text: "" if app.abcd is None else "%s" % (app.abcd)
         color: .349, .5686, .392, 1
         pos: root.pos
         size: root.size
         background_color: 0,0,0,0
+
+        id: name
         
         canvas.before:
             Color:

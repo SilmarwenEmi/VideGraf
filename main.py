@@ -12,11 +12,12 @@ from kivy.uix.boxlayout import BoxLayout
 
 from kivy.graphics import Rectangle, Color, RoundedRectangle
 
-from kivy.properties import StringProperty
+from kivy.properties import StringProperty, ListProperty
 
 
 from kivy.core.window import Window
 Window.clearcolor = (.94, .94, .94, 1)
+
 
 class Subject(Widget):
     pass
@@ -31,23 +32,23 @@ class MainBox(BoxLayout):
     pass
 
 class MyApp(App): # <- Main Class
-    abcd = StringProperty('')
+    subjectsTitles = ListProperty()
     def build(self):
 
-        self.abcd = 'test'
-                
+        abcd = StringProperty('test')
+
         mainBox = MainBox()
 
         header = Header()
-
         mainBox.ids.top_box.add_widget(header)
 
         topics = Topics()
-
         header.ids.content_box.add_widget(topics)
 
+        subjectsTitles = ["Emi", "Laurent", "Hawa", "Kirby", "Jack", "Nala"]
         listSubject = []
-        for cpt in range (6):
+        for i in subjectsTitles:
+            self.abcd = i
             listSubject.append(Subject())
 
         for subject in listSubject:
