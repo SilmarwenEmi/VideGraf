@@ -63,7 +63,7 @@ class MyApp(App): # <- Main Class
         subjectsTitles = [["Les 50 ans de la faculté d'informatique", "10", "2"], 
                           ["La réforme du cursus en informatique","1", "3"], 
                           ["Master en sciences informatiques à Charleroi","1", "3"], 
-                          ["Kirby","1", "3"], 
+                          ["Les universités de Mons, de Bruxelles et de Namur vont organiser ensemble un nouveau master en sciences informatiques à Charleroi","1", "3"], 
                           ["Jack","1", "3"], 
                           ["Nala","1", "3"]
                         ]

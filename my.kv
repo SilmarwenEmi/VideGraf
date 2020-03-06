@@ -21,14 +21,16 @@
         size: root.size
         pos: root.pos
         spacing: 60
+        
 
         BoxLayout:
             #barre latérale
             id: lateral
-            cols: "vertical"
-            size_hint: 0.2, 1
+            orientation: "vertical"
+            size_hint: 0.2, 1 #la barre latéral prend 20% de l'espace à l'écran
             pos: root.pos
 
+            #couleur de fond
             canvas:
                 Color:
                     rgb: (.349, .5686, .392, 1)
@@ -42,6 +44,8 @@
                 id: bottom_box
                 orientation: 'vertical'
                 spacing: 80
+                padding:[60, 0, 60, 0]
+
                 Label:
                     id: title
                     background_normal: ''
@@ -53,23 +57,22 @@
                     font_size: 65
                     halign: "center"
                     text_size: self.size
+
                 Button:
                     id: button_1
                     background_normal: ''
                     background_color: .349, .5686, .392, 1
-                    #text: 'Sélectionner'
                     size_hint_y: 0.10
                     width: 200
                     height: 40
-                    #halign: "left"
-                    #text_size: self.size
+
                     StackLayout:
                         pos: self.parent.pos
                         size: self.parent.size
                         orientation: 'lr-tb'
-                        padding: [30, 0, 0, 0]
                         size_hint_y: None
-                        spacing: 10
+                        spacing: 30
+
                         Image:
                             source: 'hand.png'
                             size_hint_x: None
@@ -88,19 +91,16 @@
                     id: button_2
                     background_normal: ''
                     background_color: .349, .5686, .392, 1
-                    #text: 'Sélectionner'
                     size_hint_y: 0.10
                     width: 200
                     height: 40
-                    #halign: "left"
-                    #text_size: self.size
+
                     StackLayout:
                         pos: self.parent.pos
                         size: self.parent.size
                         orientation: 'lr-tb'
-                        padding: [30, 0, 0, 0]
                         size_hint_y: None
-                        spacing: 10
+                        spacing: 30
                         Image:
                             source: 'hand.png'
                             size_hint_x: None
@@ -127,9 +127,8 @@
                         pos: self.parent.pos
                         size: self.parent.size
                         orientation: 'lr-tb'
-                        padding: [30, 0, 0, 0]
                         size_hint_y: None
-                        spacing: 10
+                        spacing: 30
 
                         Image:
                             source: 'hand.png'
@@ -149,19 +148,16 @@
                     id: button_4
                     background_normal: ''
                     background_color: .349, .5686, .392, 1
-                    #text: 'Sélectionner'
                     size_hint_y: 0.10
                     width: 200
                     height: 40
-                    #halign: "left"
-                    #text_size: self.size
+
                     StackLayout:
                         pos: self.parent.pos
                         size: self.parent.size
                         orientation: 'lr-tb'
-                        padding: [30, 0, 0, 0]
                         size_hint_y: None
-                        spacing: 10
+                        spacing: 30
                         Image:
                             source: 'hand.png'
                             size_hint_x: None
@@ -180,20 +176,17 @@
                     id: button_4
                     background_normal: ''
                     background_color: .349, .5686, .392, 1
-                    #text: 'Sélectionner'
                     size_hint_y: 0.10
                     width: 240
                     height: 40
-                    #halign: "left"
-                    #text_size: self.size
+
                     StackLayout:
                         pos: self.parent.pos
                         size: self.parent.size
                         orientation: 'lr-tb'
-                        padding: [30, 0, 0, 0]
                         size_hint_x: None
                         size_hint_y: None
-                        spacing: 10
+                        spacing: 30
                         Image:
                             source: 'hand.png'
                             size_hint_x: None
@@ -240,6 +233,7 @@
                 font_size: 44
                 text_size: self.size
                 color: .349, .5686, .392, 1
+            
 
 <Topics>:
 
