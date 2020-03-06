@@ -2,6 +2,16 @@
 
 #:import Label kivy.uix.label.Label
 
+#WindowManager:
+#    MainWindow:
+#    SecondWindow:
+#        Label:
+#            text: "second window"
+
+#<MainWindow>:
+#    name: "main"
+#<SecondWindow>:
+#    name: "second"
 
 <MainBox>:
     BoxLayout:
@@ -40,7 +50,7 @@
                     size_hint_y: 0.2
                     height: 40
                     width: 200
-                    font_size: 60
+                    font_size: 65
                     halign: "center"
                     text_size: self.size
                 Button:
@@ -244,20 +254,90 @@
             #id=txt, color=(1,0,0,1)))
 
 <Subject>:
-    Button:
-        text: "" if app.abcd is None else "%s" % (app.abcd)
-        color: .349, .5686, .392, 1
-        pos: root.pos
+    StackLayout:
+        orientation: "tb-lr"
+        spacing: 20
         size: root.size
-        background_color: 0,0,0,0
+        pos: root.pos
+        size_hint_x: None
+        size_hint_y: None
+        padding: [20, 20, 100, 100]
 
-        id: name
-        
-        canvas.before:
-            Color:
-                rgba: (1, 1, 1, 1) if self.state == 'normal' else (.349, .5686, .392, .2)
+        Button:
+            pos: root.pos
+            size: root.size
+            background_color: 0,0,0,0
+            text_size: self.size
+            #on_release: app.root.current = "second"
 
-            RoundedRectangle:
-                size: self.size
-                pos: self.pos
-                radius: 40, 40, 40, 40
+            canvas.before:
+                Color:
+                    rgba: (1, 1, 1, 1) if self.state == 'normal' else (.349, .5686, .392, .2)
+
+                RoundedRectangle:
+                    size: [self.size[0], self.size[1]]
+                    pos: self.pos
+                    radius: 40, 40, 40, 40
+
+            BoxLayout:
+                pos: self.parent.pos
+                size: self.parent.size
+                orientation: 'vertical'
+                padding: [30, 100, 30, 0]
+                size_hint_x: None
+                size_hint_y: None
+                spacing: self.size[0]/4
+
+                Label:
+                    text: "" if app.subjectName is None else "%s" % (app.subjectName)
+                    color: .349, .5686, .392, 1
+                    text_size: self.parent.size
+                    pos: self.parent.pos
+                    halign: "center"
+                
+                
+                GridLayout:
+                    cols: 5
+                    pos: self.parent.pos
+                    size: self.parent.size
+                    padding: [80, 0, 80, 0]
+                    size_hint_x: None
+                    size_hint_y: None
+                    spacing: 20
+
+                    
+                    Image:
+                        source: 'camera.png'
+                        size_hint_x: None
+                        width: 40
+                        valign: "center"
+
+                    Label:
+                        color: .349, .5686, .392, 1
+                        size_hint_x: None
+                        halign: "center"
+                        height: 40
+                        width: 80
+                        text: "" if app.subjectCamNb is None else "%s" % (app.subjectCamNb)
+                        text_size: self.size
+                        valign: "center" 
+                    
+                    Widget:
+
+                    Image:
+                        source: 'paint_spray.png'
+                        size_hint_x: None
+                        width: 40
+                        valign: "center"
+
+                    Label:
+                        color: .349, .5686, .392, 1
+                        size_hint_x: None
+                        halign: "center"
+                        height: 40
+                        width: 80
+                        text: "" if app.subjectGrafNb is None else "%s" % (app.subjectGrafNb)
+                        text_size: self.size
+                        valign: "center" 
+    
+            
