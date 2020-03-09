@@ -15,21 +15,10 @@ from kivy.graphics import Rectangle, Color, RoundedRectangle
 from kivy.uix.screenmanager import Screen, ScreenManager
 
 from kivy.properties import StringProperty, ListProperty
-from kivy.lang import Builder
 
 
 from kivy.core.window import Window
 Window.clearcolor = (.94, .94, .94, 1)
-
-"""class WindowManager(ScreenManager):
-    pass
-
-class MainScreen(Screen):
-    pass
-
-class SecondWindow(Screen):
-    pass"""
-
 
 
 class Subject(Widget):
@@ -41,21 +30,31 @@ class Topics(Widget):
 class Header(Widget):
     pass
 
-class MainBox(BoxLayout):
+class HeaderTopicName(Widget):
+    pass
+
+class TopicsSelectionScreen(Screen):
+    pass
+
+class TopicDisplayScreen(Screen):
     pass
 
 class MyApp(App): # <- Main Class
     subjectsTitles = ListProperty()
+
     def build(self):
 
         subjectName = StringProperty('test')
         subjectCamNb = StringProperty('test1')
         subjectGrafNb = StringProperty('test2')
 
-        mainBox = MainBox()
+        #screens declaration
+        topicsSelectionScreen = TopicsSelectionScreen(name ="screen_TopicsSelection")
+        topicDisplayScreen = TopicDisplayScreen(name="screen_TopicDisplay")
 
+        #topics selection screen
         header = Header()
-        mainBox.ids.top_box.add_widget(header)
+        topicsSelectionScreen.ids.top_box.add_widget(header)
 
         topics = Topics()
         header.ids.content_box.add_widget(topics)
@@ -76,8 +75,18 @@ class MyApp(App): # <- Main Class
 
         for subject in listSubject:
             topics.ids.contents.add_widget(subject)
+        
+        #topic display screen
+        headerTopicName = HeaderTopicName()
+        topicDisplayScreen.ids.top_box.add_widget(headerTopicName)
 
-        return mainBox
+        #screens calls
+        screenManager = ScreenManager()
+
+        screenManager.add_widget(topicsSelectionScreen)
+        screenManager.add_widget(topicDisplayScreen)
+
+        return screenManager
 
 
 if __name__ == "__main__":
