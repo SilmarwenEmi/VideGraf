@@ -24,6 +24,9 @@ Window.clearcolor = (.94, .94, .94, 1)
 class Subject(Widget):
     pass
 
+class Intervention(Widget):
+    pass
+
 class Topics(Widget):
     pass
 
@@ -31,6 +34,9 @@ class Header(Widget):
     pass
 
 class HeaderTopicName(Widget):
+    pass
+
+class InterventionsSelection(Widget):
     pass
 
 class TopicsSelectionScreen(Screen):
@@ -47,6 +53,9 @@ class MyApp(App): # <- Main Class
         subjectName = StringProperty('test')
         subjectCamNb = StringProperty('test1')
         subjectGrafNb = StringProperty('test2')
+
+        interventionLabel = StringProperty("test3")
+        interventionView = StringProperty("test4")
 
         #screens declaration
         topicsSelectionScreen = TopicsSelectionScreen(name ="screen_TopicsSelection")
@@ -79,6 +88,25 @@ class MyApp(App): # <- Main Class
         #topic display screen
         headerTopicName = HeaderTopicName()
         topicDisplayScreen.ids.top_box.add_widget(headerTopicName)
+
+        interventionsSelection = InterventionsSelection()
+        headerTopicName.ids.content_box.add_widget(interventionsSelection)
+
+        interventionsContents = [["Bonjour", "intervention_graff.png"], 
+                                 ["Bonjour", "intervention_graff.png"], 
+                                 ["Bonjour", "intervention_graff_2.png"],
+                                 ["Bonjour", "intervention_graff_2.png"], 
+                                 ["Bonjour", "intervention_graff.png"]
+                                ] 
+
+        listInterventions = []
+        for i in interventionsContents:
+            self.interventionLabel = i[0]
+            self.interventionView = i[1]
+            listInterventions.append(Intervention())
+
+        for intervention in listInterventions:
+            interventionsSelection.ids.intervention_content.add_widget(intervention)
 
         #screens calls
         screenManager = ScreenManager()
