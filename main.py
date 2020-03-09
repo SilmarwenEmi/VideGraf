@@ -36,8 +36,21 @@ class Header(Widget):
 class HeaderTopicName(Widget):
     pass
 
+class HeaderIntervention(Widget):
+    pass
+
 class InterventionsSelection(Widget):
     pass
+
+class InterventionDisplayedContent(Widget):
+    pass
+
+class InterventionContent(Widget):
+    pass
+
+class InterventionDisplayedScreen(Screen):
+    pass
+
 
 class TopicsSelectionScreen(Screen):
     pass
@@ -60,6 +73,7 @@ class MyApp(App): # <- Main Class
         #screens declaration
         topicsSelectionScreen = TopicsSelectionScreen(name ="screen_TopicsSelection")
         topicDisplayScreen = TopicDisplayScreen(name="screen_TopicDisplay")
+        interventionDisplayedScreen = InterventionDisplayedScreen(name="screen_InterventionDisplayed")
 
         #topics selection screen
         header = Header()
@@ -86,6 +100,7 @@ class MyApp(App): # <- Main Class
             topics.ids.contents.add_widget(subject)
         
         #topic display screen
+            #TODO: if len() == 0 then chibi mec else ce qui est déjà fait
         headerTopicName = HeaderTopicName()
         topicDisplayScreen.ids.top_box.add_widget(headerTopicName)
 
@@ -96,6 +111,16 @@ class MyApp(App): # <- Main Class
                                  ["Bonjour", "intervention_graff.png"], 
                                  ["Bonjour", "intervention_graff_2.png"],
                                  ["Bonjour", "intervention_graff_2.png"], 
+                                 ["Bonjour", "intervention_graff.png"], 
+                                 ["Bonjour", "intervention_graff.png"], 
+                                 ["Bonjour", "intervention_graff.png"], 
+                                 ["Bonjour", "intervention_graff.png"], 
+                                 ["Bonjour", "intervention_graff.png"], 
+                                 ["Bonjour", "intervention_graff.png"], 
+                                 ["Bonjour", "intervention_graff.png"], 
+                                 ["Bonjour", "intervention_graff.png"], 
+                                 ["Bonjour", "intervention_graff.png"], 
+                                 ["Bonjour", "intervention_graff.png"], 
                                  ["Bonjour", "intervention_graff.png"]
                                 ] 
 
@@ -108,11 +133,19 @@ class MyApp(App): # <- Main Class
         for intervention in listInterventions:
             interventionsSelection.ids.intervention_content.add_widget(intervention)
 
-        #screens calls
+        #intervention display screen
+        interventionHeader = HeaderIntervention()
+        interventionDisplayedScreen.ids.top_box.add_widget(interventionHeader)
+
+        interventionContent = InterventionContent()
+        interventionHeader.ids.content_box.add_widget(interventionContent)
+
+        #add screens to screenmanager
         screenManager = ScreenManager()
 
         screenManager.add_widget(topicsSelectionScreen)
         screenManager.add_widget(topicDisplayScreen)
+        screenManager.add_widget(interventionDisplayedScreen)
 
         return screenManager
 

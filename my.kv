@@ -71,7 +71,7 @@
                     height: 40
                     on_press:
                         root.manager.transition.direction = 'left' 
-                        root.manager.transition.duration = 1 
+                        root.manager.transition.duration = 1
                         root.manager.current = 'screen_TopicDisplay'
 
                     StackLayout:
@@ -414,10 +414,11 @@
                     size_hint_y: 0.10
                     width: 260
                     height: 40
-                    #on_press:
-                        #root.manager.transition.direction = 'left' 
-                        #root.manager.transition.duration = 1 
-                        #root.manager.current = 'screen_TopicDisplay'
+                    
+                    on_press:
+                        root.manager.transition.direction = 'left' 
+                        root.manager.transition.duration = 0
+                        root.manager.current = 'screen_InterventionDisplayed'
 
                     StackLayout:
                         pos: self.parent.pos
@@ -532,7 +533,7 @@
                     height: 40
                     on_press:
                         root.manager.transition.direction = 'right' 
-                        root.manager.transition.duration = 1 
+                        root.manager.transition.duration = 0
                         root.manager.current = 'screen_TopicsSelection'
 
                     StackLayout:
@@ -576,26 +577,13 @@
         pos: root.pos
         spacing: 30
         id: content_box
-
-        StackLayout:
-            orientation: 'lr-tb'
-            size_hint_x: 2
-            size_hint_y: .1
-            
-
-            Label:
-                text: "[b] Titre sujet sélectionné"
-                markup: True
-                font_size: 44
-                text_size: self.size
-                color: .349, .5686, .392, 1
         
 
 <InterventionsSelection>:
     BoxLayout:
         #interventions à gauche et chibi avec bulle à droite
         orientation: "horizontal"
-        pos: root.pos
+        pos: [root.pos[0],root.pos[1]-150]
         size: root.size
 
         BoxLayout:
@@ -634,4 +622,291 @@
                 size: self.size
                 pos: self.pos
                 source: "" if app.interventionView is None else "%s" % (app.interventionView)
+
+<InterventionDisplayedScreen>:
+    BoxLayout:
+        id: top_box
+        #diviser l'écran en deux
+        orientation: "horizontal"
+        size: root.size
+        pos: root.pos
+        spacing: 60
+
+
+        BoxLayout:
+            #barre latérale
+            id: lateral
+            orientation: "vertical"
+            size_hint: 0.2, 1 #la barre latéral prend 20% de l'espace à l'écran
+            pos: root.pos
+
+            #couleur de fond
+            canvas:
+                Color:
+                    rgb: (.349, .5686, .392, 1)
+
+                RoundedRectangle:
+                    size: self.size
+                    pos: self.pos
+                    radius: 0, 20, 20, 0 #TOP-L, TOP-R, BOTTOM-R, BOTTOM-L
             
+            BoxLayout:
+                id: bottom_box
+                orientation: 'vertical'
+                spacing: 80
+                padding:[60, 0, 60, 0]
+
+                Label:
+                    background_normal: ''
+                    text: 'VideGraff'
+                    color: 1, 1, 1, 1
+                    size_hint_y: 0.2
+                    height: 40
+                    width: 260
+                    font_size: 65
+                    halign: "center"
+                    text_size: self.size
+                    bold: True
+
+                Label:
+                    background_normal: ''
+                    text: 'Essaie un de ces gestes !'
+                    color: 1, 1, 1, 1
+                    size_hint_y: 0.1
+                    height: 40
+                    width: 260
+                    font_size: 34
+                    halign: "left"
+                    text_size: self.size
+                    bold: True
+
+                Button:
+                    id: button_1
+                    background_normal: ''
+                    background_color: .349, .5686, .392, 1
+                    size_hint_y: 0.10
+                    width: 260
+                    height: 40
+                    #on_press:
+                        #root.manager.transition.direction = 'left' 
+                        #root.manager.transition.duration = 0
+                        #root.manager.current = 'screen_TopicDisplay'
+
+                    StackLayout:
+                        pos: self.parent.pos
+                        size: self.parent.size
+                        orientation: 'lr-tb'
+                        size_hint_y: None
+                        spacing: 30
+
+                        Image:
+                            source: 'hand.png'
+                            size_hint_x: None
+                            width: 30
+                            valign: "center"
+
+                        Label:
+                            size_hint_x: None
+                            halign: "left"
+                            height: 40
+                            width: 260
+                            text: "Play / Pause"
+                            text_size: self.size
+                            valign: "center"
+                Button:
+                    id: button_2
+                    background_normal: ''
+                    background_color: .349, .5686, .392, 1
+                    size_hint_y: 0.10
+                    width: 350
+                    height: 40
+                    on_press:
+                        root.manager.transition.direction = 'left' 
+                        root.manager.transition.duration = 0
+                        root.manager.current = 'screen_TopicDisplay'
+
+                    StackLayout:
+                        pos: self.parent.pos
+                        size: self.parent.size
+                        orientation: 'lr-tb'
+                        size_hint_y: None
+                        spacing: 30
+
+                        Image:
+                            source: 'hand.png'
+                            size_hint_x: None
+                            width: 30
+                            valign: "center"
+
+                        Label:
+                            size_hint_x: None
+                            halign: "left"
+                            height: 40
+                            width: 350
+                            text: "Changer d'intervention"
+                            text_size: self.size
+                            valign: "center"
+
+                Label:
+                    id: button_2
+                    background_normal: ''
+                    background_color: .349, .5686, .392, 1
+                    size_hint_y: 0.10
+                    width: 260
+                    height: 40
+
+                    StackLayout:
+                        pos: self.parent.pos
+                        size: self.parent.size
+                        orientation: 'tb-lr'
+                        size_hint_y: None
+                        spacing: 30
+
+                        Label:
+                            size_hint_x: None
+                            halign: "left"
+                            height: 40
+                            width: 260
+                            text: "Contribuer"
+                            text_size: self.size
+                            valign: "center"
+                Button:
+                    id: button_3
+                    background_normal: ''
+                    background_color: .349, .5686, .392, 1
+                    size_hint_y: 0.10
+                    width: 260
+                    height: 40
+
+                    StackLayout:
+                        pos: self.parent.pos
+                        size: self.parent.size
+                        orientation: 'lr-tb'
+                        size_hint_y: None
+                        spacing: 30
+                        padding:[80, 0, 0, 0]
+
+                        Image:
+                            source: 'hand.png'
+                            size_hint_x: None
+                            width: 30
+                            valign: "center"
+
+                        Label:
+                            size_hint_x: None
+                            halign: "left"
+                            height: 40
+                            width: 260
+                            text: "Graffiti"
+                            text_size: self.size
+                            valign: "center"
+                Button:
+                    id: button_4
+                    background_normal: ''
+                    background_color: .349, .5686, .392, 1
+                    size_hint_y: 0.10
+                    width: 260
+                    height: 40
+
+                    StackLayout:
+                        pos: self.parent.pos
+                        size: self.parent.size
+                        orientation: 'lr-tb'
+                        size_hint_y: None
+                        spacing: 30
+                        padding:[80, 0, 0, 0]
+
+                        Image:
+                            source: 'hand.png'
+                            size_hint_x: None
+                            width: 30
+                            valign: "center"
+
+                        Label:
+                            size_hint_x: None
+                            halign: "left"
+                            height: 40
+                            width: 260
+                            text: "Vidéo"
+                            text_size: self.size
+                            valign: "center"
+                Button:
+                    id: button_4
+                    background_normal: ''
+                    background_color: .349, .5686, .392, 1
+                    size_hint_y: 0.10
+                    width: 240
+                    height: 40
+                    on_press:
+                        root.manager.transition.direction = 'right' 
+                        root.manager.transition.duration = 0
+                        root.manager.current = 'screen_TopicsSelection'
+
+                    StackLayout:
+                        pos: self.parent.pos
+                        size: self.parent.size
+                        orientation: 'lr-tb'
+                        size_hint_x: None
+                        size_hint_y: None
+                        spacing: 30
+                        
+
+                        Image:
+                            source: 'hand.png'
+                            size_hint_x: None
+                            width: 30
+                            valign: "center"
+
+                        Label:
+                            size_hint_x: None
+                            halign: "left"
+                            height: 40
+                            width: 260
+                            text: "Retour aux sujets"
+                            text_size: self.size
+                            valign: "center"  
+      
+                Widget:
+            
+                FloatLayout:
+                    Image:
+                        source: "chibi_side_bar.png"
+                        size_hint_x: 1
+                        size_hint_y: None
+                        size: self.texture_size
+                        anchor_x: "center"
+                        anchor_y: "center"
+
+<HeaderIntervention>:
+    BoxLayout:
+        orientation: 'vertical'
+        size: root.size
+        pos: root.pos
+        spacing: 30
+        id: content_box
+
+        StackLayout:
+            orientation: 'lr-tb'
+            size_hint_x: 2
+            size_hint_y: .1
+            
+
+            Label:
+                text: "Titre sujet sélectionné"
+                bold: True
+                font_size: 44
+                text_size: self.size
+                color: .349, .5686, .392, 1
+
+<InterventionContent>:
+    BoxLayout:
+        orientation: "horizontal"
+        size: root.size
+        pos: root.pos
+
+        VideoPlayer:
+            source: "video_test.mp4"
+            state: "pause"
+        
+        Label:
+            text: "Bonjour tout le monde !"
