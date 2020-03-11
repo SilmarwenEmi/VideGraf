@@ -1,4 +1,7 @@
 import kivy
+
+from random import random
+
 from kivy.app import App
 from kivy.uix.widget import Widget
 
@@ -10,7 +13,7 @@ from kivy.core.image import Image
 from kivy.uix.gridlayout import GridLayout
 from kivy.uix.boxlayout import BoxLayout
 
-from kivy.graphics import Rectangle, Color, RoundedRectangle
+from kivy.graphics import Rectangle, Color, RoundedRectangle, Ellipse, Line
 
 from kivy.uix.screenmanager import Screen, ScreenManager
 
@@ -36,7 +39,7 @@ class Header(Widget):
 class HeaderTopicName(Widget):
     pass
 
-class HeaderIntervention(Widget):
+class HeaderSubjectTitle(Widget):
     pass
 
 class InterventionsSelection(Widget):
@@ -46,7 +49,45 @@ class InterventionDisplayedContent(Widget):
     pass
 
 class InterventionContent(Widget):
-    pass
+
+    video_state = StringProperty("pause")
+
+    def play(self):
+        if self.video_state == 'play':
+            self.video_state = 'pause'
+
+        elif self.video_state == 'pause':
+            self.video_state = 'play'
+
+        print("Hello")
+
+class AddGraffitiContent(Widget):
+    def save_grafffiti_png(self):
+        #self.ids.painter_widget.export_to_png("test.png")
+        print("hello")
+
+class GraffitiDraw(Widget):
+
+    def on_touch_down(self, touch):
+        color = (random(), random(), random())
+        with self.canvas:
+            Color(*color, mode='hsv') # (numéro couleur rgb) / 255
+            d = 5.
+            print("X: " + str(touch.spos[0]) + " - Y: " + str(touch.spos[1]))
+            if 0.19 < touch.spos[0] < 0.96 and 0.05 < touch.spos[1] < 0.86:
+                Ellipse(pos=(touch.x - d / 2, touch.y - d / 2), size=(d, d))
+                #try:
+                touch.ud['line'] = Line(points=(touch.x, touch.y))
+                #except:
+                    #print("erreur lors du dessin de caca - début")
+                
+
+    def on_touch_move(self, touch):
+        if 0.19 < touch.spos[0] < 0.96 and 0.05 < touch.spos[1] < 0.86:
+            try:
+                touch.ud['line'].points += [touch.x, touch.y]
+            except:
+                print("erreur lors du dessin de caca - tracé")
 
 class InterventionDisplayedScreen(Screen):
     pass
@@ -58,10 +99,16 @@ class TopicsSelectionScreen(Screen):
 class TopicDisplayScreen(Screen):
     pass
 
+class AddGraffitiScreen(Screen):
+    pass
+
 class MyApp(App): # <- Main Class
     subjectsTitles = ListProperty()
 
     def build(self):
+
+        self.interventionContentRef = InterventionContent()
+        self.addGraffitiContentRef = AddGraffitiContent()
 
         subjectName = StringProperty('test')
         subjectCamNb = StringProperty('test1')
@@ -74,6 +121,7 @@ class MyApp(App): # <- Main Class
         topicsSelectionScreen = TopicsSelectionScreen(name ="screen_TopicsSelection")
         topicDisplayScreen = TopicDisplayScreen(name="screen_TopicDisplay")
         interventionDisplayedScreen = InterventionDisplayedScreen(name="screen_InterventionDisplayed")
+        addGraffitiScreen = AddGraffitiScreen(name="screen_AddGraffiti")
 
         #topics selection screen
         header = Header()
@@ -111,17 +159,19 @@ class MyApp(App): # <- Main Class
                                  ["Bonjour", "intervention_graff.png"], 
                                  ["Bonjour", "intervention_graff_2.png"],
                                  ["Bonjour", "intervention_graff_2.png"], 
+                                 ["Bonjour", "intervention_graff.png"],
+
                                  ["Bonjour", "intervention_graff.png"], 
                                  ["Bonjour", "intervention_graff.png"], 
                                  ["Bonjour", "intervention_graff.png"], 
                                  ["Bonjour", "intervention_graff.png"], 
+                                 ["Bonjour", "intervention_graff.png"],
+
                                  ["Bonjour", "intervention_graff.png"], 
                                  ["Bonjour", "intervention_graff.png"], 
+                                 ["Bonjour", "intervention_graff_2.png"], 
                                  ["Bonjour", "intervention_graff.png"], 
-                                 ["Bonjour", "intervention_graff.png"], 
-                                 ["Bonjour", "intervention_graff.png"], 
-                                 ["Bonjour", "intervention_graff.png"], 
-                                 ["Bonjour", "intervention_graff.png"]
+                                 ["Bonjour", "intervention_graff_2.png"]
                                 ] 
 
         listInterventions = []
@@ -134,11 +184,23 @@ class MyApp(App): # <- Main Class
             interventionsSelection.ids.intervention_content.add_widget(intervention)
 
         #intervention display screen
-        interventionHeader = HeaderIntervention()
+        interventionHeader = HeaderSubjectTitle()
         interventionDisplayedScreen.ids.top_box.add_widget(interventionHeader)
 
         interventionContent = InterventionContent()
         interventionHeader.ids.content_box.add_widget(interventionContent)
+
+        #add graffiti
+        graffTitleHeader = HeaderSubjectTitle()
+        addGraffitiScreen.ids.top_box.add_widget(graffTitleHeader)
+
+        addGraffitiContent = AddGraffitiContent()
+        graffTitleHeader.ids.content_box.add_widget(addGraffitiContent)
+
+            #paint widget
+        paintGraffiti = addGraffitiContent.ids.painter_widget
+        self.painter = GraffitiDraw()
+        paintGraffiti.add_widget(self.painter)
 
         #add screens to screenmanager
         screenManager = ScreenManager()
@@ -146,9 +208,13 @@ class MyApp(App): # <- Main Class
         screenManager.add_widget(topicsSelectionScreen)
         screenManager.add_widget(topicDisplayScreen)
         screenManager.add_widget(interventionDisplayedScreen)
+        screenManager.add_widget(addGraffitiScreen)
 
         return screenManager
 
+    def clear_canvas(self, obj):
+            self.painter.canvas.clear()
+            
 
 if __name__ == "__main__":
     MyApp().run()
