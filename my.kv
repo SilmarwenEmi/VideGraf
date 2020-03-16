@@ -507,6 +507,11 @@
                     width: 260
                     height: 40
 
+                    on_press:
+                        root.manager.transition.direction = 'left' 
+                        root.manager.transition.duration = 0
+                        root.manager.current = 'screen_AddVideo'
+
                     StackLayout:
                         pos: self.parent.pos
                         size: self.parent.size
@@ -819,6 +824,11 @@
                     width: 260
                     height: 40
 
+                    on_press:
+                        root.manager.transition.direction = 'left' 
+                        root.manager.transition.duration = 0
+                        root.manager.current = 'screen_AddVideo'
+
                     StackLayout:
                         pos: self.parent.pos
                         size: self.parent.size
@@ -903,7 +913,7 @@
             
 
             Label:
-                text: "Titre sujet sélectionné"
+                text: "" if app.subjectTitle is None else "%s" % (app.subjectTitle)
                 bold: True
                 font_size: 44
                 text_size: self.size
@@ -1043,7 +1053,7 @@
                         root.manager.transition.direction = 'left' 
                         root.manager.transition.duration = 0
                         root.manager.current = 'screen_TopicsSelection'
-                        app.addGraffitiContentRef.save_grafffiti_png()
+                        app.addGraffitiContentRef.ids.painter_widget.export_scaled_png('kvwgt.png', image_scale=float("2"))
 
                     StackLayout:
                         pos: self.parent.pos
@@ -1117,6 +1127,185 @@
 
         GridLayout:
             cols: 1
+            size: root.size
+            pos: root.pos
+            id: graffiti_draw
+
+            canvas.before:
+                Color:
+                    rgba: 1, 1, 1, 1
+                RoundedRectangle:
+                    size: self.size
+                    pos: self.pos
+                    radius: 40, 40, 40, 40
+            
+            BoxLayout:
+                orientation: "vertical"
+                size: self.size
+                pos: self.pos
+
+                Label:
+                    text: "Graffiti"
+                    color: .349, .5686, .392, 1
+                    bold: True
+                    halign: "left"
+                    valign: "top"
+                    size_hint: 0.08, 0.1
+
+                GridLayout:
+                    cols: 1
+
+                    MyWidget:
+                        id: painter_widget
+                        
+                    
+<AddVideoScreen>:
+    BoxLayout:
+        id: top_box
+        #diviser l'écran en deux
+        orientation: "horizontal"
+        size: root.size
+        pos: root.pos
+        spacing: 60
+
+
+        BoxLayout:
+            #barre latérale
+            id: lateral
+            orientation: "vertical"
+            size_hint: 0.2, 1 #la barre latéral prend 20% de l'espace à l'écran
+            pos: root.pos
+
+            #couleur de fond
+            canvas:
+                Color:
+                    rgb: (.349, .5686, .392, 1)
+
+                RoundedRectangle:
+                    size: self.size
+                    pos: self.pos
+                    radius: 0, 20, 20, 0 #TOP-L, TOP-R, BOTTOM-R, BOTTOM-L
+            
+            BoxLayout:
+                id: bottom_box
+                orientation: 'vertical'
+                spacing: 80
+                padding:[60, 0, 60, 0]
+
+                Label:
+                    background_normal: ''
+                    text: 'VideGraff'
+                    color: 1, 1, 1, 1
+                    size_hint_y: 0.2
+                    height: 40
+                    width: 260
+                    font_size: 65
+                    halign: "center"
+                    text_size: self.size
+                    bold: True
+
+                Label:
+                    background_normal: ''
+                    text: 'Essaie un de ces gestes !'
+                    color: 1, 1, 1, 1
+                    size_hint_y: 0.1
+                    height: 40
+                    width: 260
+                    font_size: 34
+                    halign: "left"
+                    text_size: self.size
+                    bold: True
+
+                Button:
+                    id: button_1
+                    background_normal: ''
+                    background_color: .349, .5686, .392, 1
+                    size_hint_y: 0.10
+                    width: 260
+                    height: 40
+                    on_press:
+                        #root.manager.transition.direction = 'left' 
+                        #root.manager.transition.duration = 0
+                        #root.manager.current = 'screen_TopicsSelection'
+                        #app.addVideoContentRef.record_video()
+
+                    StackLayout:
+                        pos: self.parent.pos
+                        size: self.parent.size
+                        orientation: 'lr-tb'
+                        size_hint_y: None
+                        spacing: 30
+
+                        Image:
+                            source: 'hand.png'
+                            size_hint_x: None
+                            width: 30
+                            valign: "center"
+
+                        Label:
+                            size_hint_x: None
+                            halign: "left"
+                            height: 40
+                            width: 300
+                            text: "Enregistrer/Stopper"
+                            text_size: self.size
+                            valign: "center"
+                
+                Button:
+                    id: button_3
+                    background_normal: ''
+                    background_color: .349, .5686, .392, 1
+                    size_hint_y: 0.10
+                    width: 260
+                    height: 40
+                     
+                    on_press:
+                        root.manager.transition.direction = 'left' 
+                        root.manager.transition.duration = 0
+                        root.manager.current = 'screen_TopicsSelection'
+
+                    StackLayout:
+                        pos: self.parent.pos
+                        size: self.parent.size
+                        orientation: 'lr-tb'
+                        size_hint_y: None
+                        spacing: 30
+
+                        Image:
+                            source: 'hand.png'
+                            size_hint_x: None
+                            width: 30
+                            valign: "center"
+
+                        Label:
+                            size_hint_x: None
+                            halign: "left"
+                            height: 40
+                            width: 260
+                            text: "Annuler"
+                            text_size: self.size
+                            valign: "center"
+                  
+                Widget:
+            
+                FloatLayout:
+                    Image:
+                        source: "chibi_side_bar.png"
+                        size_hint_x: 1
+                        size_hint_y: None
+                        size: self.texture_size
+                        anchor_x: "center"
+                        anchor_y: "center"
+
+<AddVideoContent>:
+    BoxLayout:
+        orientation: "vertical"
+        padding: [30, 60, 100, 100]
+        size: root.size
+        pos: root.pos
+
+        GridLayout:
+            cols: 1
             size: self.size
             pos: self.pos
             id: graffiti_draw
@@ -1129,16 +1318,31 @@
                     pos: self.pos
                     radius: 40, 40, 40, 40
             
-            GridLayout:
-                cols: 1
+            BoxLayout:
+                orientation: "vertical"
                 size: self.size
                 pos: self.pos
+                padding: [90, 0, 0, 30]
 
+                Label:
+                    text: "Enregistrement vidéo"
+                    color: .349, .5686, .392, 1
+                    bold: True
+                    halign: "left"
+                    valign: "top"
+                    size_hint: 0.08, 0.15
                 Widget:
-                    id: painter_widget
-                    canvas:
-                        Color:
-                            rgba: 0,0,0,0
-                        Rectangle:
-                            size: [100, 100]
-                            pos: self.pos
+
+                GridLayout:
+                    cols: 1
+
+                    Camera:
+                        id: recorder_widget
+                        
+                    
+
+<MyWidget>:
+    #Button:
+        #background_color: 1, 1, 1, 0
+        #center: root.center
+        #size: (root.width // 2, root.height // 8)
