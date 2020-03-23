@@ -82,6 +82,8 @@ class InterventionContent(Widget):
 
         print("Hello")
 
+
+
 class AddGraffitiContent(Widget):
     pass
 
@@ -104,7 +106,9 @@ class MyWidget(Widget):
             Scale(image_scale, -image_scale, image_scale)
             Translate(-self.x, -self.y - self.height, 0)
 
-        nbFiles = 0
+        # graffiti number (without video)
+        global graffitiNb 
+        graffitiNb = 0
         print(filename)
         try: 
             files = os.listdir(filename)
@@ -114,15 +118,16 @@ class MyWidget(Widget):
             if ".DS_Store" in files:
                 files.remove(".DS_Store")
             
-            nbFiles = len(files)
+            graffitiNb = len(files)
             
         except:
-            print("erreur")
-
+            pass
+        
+        # save graffiti as png
         fbo.add(self.canvas)
         fbo.draw()
-        print("graff" + str(nbFiles) + ".png")
-        fbo.texture.save(filename+"graff" + str(nbFiles) + ".png", flipped=False)
+        print("graff" + str(graffitiNb) + ".png")
+        fbo.texture.save(filename+"graff" + str(graffitiNb) + ".png", flipped=False)
         fbo.remove(self.canvas)
 
         if self.parent is not None and canvas_parent_index > -1:
@@ -203,9 +208,9 @@ class MyApp(App): # <- Main Class
     def build(self):
 
         #connection to DB
-        client = pymongo.MongoClient("mongodb+srv://Silmarwen:Kirby2011@stage-sodbw.gcp.mongodb.net/test?retryWrites=true&w=majority")
-        if client != None:
-            db = client["VideGraff"]
+        self.client = pymongo.MongoClient("mongodb+srv://Silmarwen:Kirby2011@stage-sodbw.gcp.mongodb.net/test?retryWrites=true&w=majority")
+        if self.client != None:
+            db = self.client["VideGraff"]
             collection = db["data"]
 
 
@@ -216,6 +221,7 @@ class MyApp(App): # <- Main Class
         self.addGraffitiContentRef = addGraffitiContent
         self.mywgtRef = MyWidget()
         self.interventionsSelection = InterventionsSelection()
+        
 
         interventionView = StringProperty("")
         subjectName = StringProperty('test')
@@ -231,11 +237,11 @@ class MyApp(App): # <- Main Class
         addVideoScreen = AddVideoScreen(name="screen_AddVideo")
 
         #topics selection screen
-        header = Header()
-        self.topicsSelectionScreen.ids.top_box.add_widget(header)
+        self.header = Header()
+        self.topicsSelectionScreen.ids.top_box.add_widget(self.header)
 
-        topics = Topics()
-        header.ids.content_box.add_widget(topics)
+        self.topics = Topics()
+        self.header.ids.content_box.add_widget(self.topics)
 
         #takes info from mongodb
         subjectsTitles = collection.find({})
@@ -248,7 +254,7 @@ class MyApp(App): # <- Main Class
             listSubject.append(Subject())
 
         for subject in listSubject:
-            topics.ids.contents.add_widget(subject)
+            self.topics.ids.contents.add_widget(subject)
         
         #topic display screen
             #TODO: if len() == 0 then chibi mec else ce qui est déjà fait
@@ -346,9 +352,31 @@ class MyApp(App): # <- Main Class
             print("exception")
             
      
-    
-    def printInterventionView(self):
-        print(self.interventionView)
+    def updateGraffitiNumberDB(self):
+        myquery = { "title": self.subjectTitle }
+        newvalues = { "$set": { "graffitis": graffitiNb } }
+
+        self.client["VideGraff"]["data"].update_one(myquery, newvalues)
+
+        #takes info from mongodb
+        subjectsTitles = self.client["VideGraff"]["data"].find({})
+
+        self.header.ids.content_box.remove_widget(self.topics)
+        self.topics = Topics()
+
+        listSubject = []
+        for subject in subjectsTitles:
+            self.subjectName = subject["title"]
+            self.subjectCamNb = subject["video"]
+            self.subjectGrafNb = subject["graffitis"]
+            listSubject.append(Subject())
+
+        for subject in listSubject:
+            self.topics.ids.contents.add_widget(subject)
+        
+        self.header.ids.content_box.add_widget(self.topics)
+
+        
 
             
 
