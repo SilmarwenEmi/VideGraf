@@ -83,33 +83,7 @@ class InterventionContent(Widget):
         print("Hello")
 
 class AddGraffitiContent(Widget):
-    def export_scaled_png(self, filename, image_scale=1):
-        print("export_scaled_png")
-        re_size = (self.width * image_scale, 
-                self.height * image_scale)
-        
-        print(self.parent)
-
-        if self.parent is not None:
-            canvas_parent_index = self.parent.canvas.indexof(self.canvas)
-            if canvas_parent_index > -1:
-                self.parent.canvas.remove(self.canvas)
-
-        fbo = Fbo(size=re_size, with_stencilbuffer=True)
-
-        with fbo:
-            ClearColor(1, 1, 1, 1)
-            ClearBuffers()
-            Scale(image_scale, -image_scale, image_scale)
-            Translate(-self.x, -self.y - self.height, 0)
-
-        fbo.add(self.canvas)
-        fbo.draw()
-        fbo.texture.save(filename, flipped=True)
-        fbo.remove(self.canvas)
-
-        if self.parent is not None and canvas_parent_index > -1:
-            self.parent.canvas.insert(canvas_parent_index, self.canvas)
+    pass
 
 
 class MyWidget(Widget):
@@ -130,9 +104,25 @@ class MyWidget(Widget):
             Scale(image_scale, -image_scale, image_scale)
             Translate(-self.x, -self.y - self.height, 0)
 
+        nbFiles = 0
+        print(filename)
+        try: 
+            files = os.listdir(filename)
+            print(files)
+            files.remove("subject")
+
+            if ".DS_Store" in files:
+                files.remove(".DS_Store")
+            
+            nbFiles = len(files)
+            
+        except:
+            print("erreur")
+
         fbo.add(self.canvas)
         fbo.draw()
-        fbo.texture.save(filename, flipped=False)
+        print("graff" + str(nbFiles) + ".png")
+        fbo.texture.save(filename+"graff" + str(nbFiles) + ".png", flipped=False)
         fbo.remove(self.canvas)
 
         if self.parent is not None and canvas_parent_index > -1:
