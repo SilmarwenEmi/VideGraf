@@ -1,8 +1,5 @@
 #:kivy 1.11.1
 
-#:import Label kivy.uix.label.Label
-
-
 <TopicsSelectionScreen>:
     # \TODO: add scroll ?
 
@@ -69,10 +66,6 @@
                     size_hint_y: 0.10
                     width: 260
                     height: 40
-                    on_press:
-                        root.manager.transition.direction = 'left' 
-                        root.manager.transition.duration = 0
-                        root.manager.current = 'screen_TopicDisplay'
 
                     StackLayout:
                         pos: self.parent.pos
@@ -266,10 +259,20 @@
         padding: [20, 20, 100, 100]
 
         Button:
+            id: button_subject
             pos: root.pos
             size: root.size
+            text: "" if app.subjectName is None else "%s" % (app.subjectName)
+            color: 0,0,0,0
             background_color: 0,0,0,0
             text_size: self.size
+
+            on_press:
+                app.topicsSelectionScreen.manager.transition.direction = 'left' 
+                app.topicsSelectionScreen.manager.transition.duration = 0
+                app.topicsSelectionScreen.manager.current = 'screen_TopicDisplay'
+                app.subjectTitle = self.text
+                app.displayInterventions()
 
             canvas.before:
                 Color:
@@ -546,6 +549,7 @@
                         root.manager.transition.duration = 0
                         root.manager.current = 'screen_TopicsSelection'
 
+
                     StackLayout:
                         pos: self.parent.pos
                         size: self.parent.size
@@ -597,6 +601,7 @@
         size: root.size
 
         BoxLayout:
+            id: intervention_box
             #pour ajouter le widget et tout remonter
             orientation: "vertical"
             size_hint: 2, 1
@@ -609,29 +614,72 @@
                 pos: self.parent.pos
                 spacing: 100
                 size_hint: 1,3
+
             
             Widget:
     
-        Label:
-            text: "image chibi avec bulle !"
-            color: 0, 0, 0, 1
+            
+        Image:
+            source: "" if app.subjectTitle is None else "data/%s/subject/chibi_subject.png" % (app.subjectTitle)
+            pos: self.pos
+
+            
+
+<InterventionsSelectionEmpty>:
+    BoxLayout:
+        #interventions à gauche et chibi avec bulle à droite
+        orientation: "horizontal"
+        pos: [root.pos[0],root.pos[1]-150]
+        size: root.size
+
+        BoxLayout:
+            id: intervention_box
+            #pour ajouter le widget et tout remonter
+            orientation: "vertical"
+            size_hint: 2, 1
+
+            FloatLayout:
+                size: self.size
+                pos: self.pos
+                Image:
+                    source: "chibiMan.png"
+                    size_hint_x: None
+                    size_hint_y: None
+                    size: [self.parent.size[0]/1.2,self.parent.size[1]/1.2]
+                    pos_hint: {"x":-0.1, "y":-0.5}
+
+            Widget:
+
+        Image:
+            source: "" if app.subjectTitle is None else "data/%s/subject/chibi_subject.png" % (app.subjectTitle)
+            pos: self.pos
+        
+        #Widget:
+    
 
 <Intervention>:
     Button:
+        text: "" if app.interventionView is None else "%s" % (app.interventionView)
+        color: 0, 0, 0, 0
         pos: root.pos
         size: [550, 200]
         background_color: 0, 0, 0, 0
         text_size: self.size
-        #on_press: appeler fonction pour aller chercher le contenu et rediriger vers la page avec le bon contenu
+        on_press:
+            app.currentIntervention = self.text
+            app.interventionDisplayedScreen.manager.transition.direction = 'left' 
+            app.interventionDisplayedScreen.manager.transition.duration = 0
+            app.interventionDisplayedScreen.manager.current = 'screen_InterventionDisplayed'
 
         canvas.before:
             Color:
                 rgba: (1, 1, 1, 1) if self.state == 'normal' else (.349, .5686, .392, .2)
 
             Ellipse:
+                id: ellipse
                 size: self.size
                 pos: self.pos
-                source: "" if app.interventionView is None else "%s" % (app.interventionView)
+                source: "" if self.text is None else "%s" % (self.text)
 
 <InterventionDisplayedScreen>:
     BoxLayout:
@@ -934,15 +982,16 @@
             size: root.size
             pos: root.pos
 
-            VideoPlayer:
-                id: video
-                source: "video_test.mp4"
+            #VideoPlayer:
+                #id: video
+                #source: "video_test.mp4"
                 #state: "pause"
-                state: root.video_state
-                size_hint: 1,2
-                size: root.size
+                #state: root.video_state
+                #size_hint: 1,2
+                #size: root.size
+            
 
-            Widget:
+            #Widget:
         
         StackLayout:
             orientation: "tb-lr"
@@ -978,7 +1027,7 @@
                     bold: True
 
                 Image:
-                    source: "graffiti.jpeg"
+                    source: "" if app.currentIntervention is None else "%s" % (app.currentIntervention)
                     size: self.size
                     pos: self.pos
                     halign: "center"
@@ -1053,7 +1102,8 @@
                         root.manager.transition.direction = 'left' 
                         root.manager.transition.duration = 0
                         root.manager.current = 'screen_TopicsSelection'
-                        app.addGraffitiContentRef.ids.painter_widget.export_scaled_png('kvwgt.png', image_scale=float("2"))
+                        app.addGraffitiContentRef.ids.painter_widget.export_scaled_png('data/%s/graff.png' % (app.subjectTitle), image_scale=float("2"))
+                        app.clear_graff()
 
                     StackLayout:
                         pos: self.parent.pos
@@ -1084,6 +1134,11 @@
                     size_hint_y: 0.10
                     width: 260
                     height: 40
+                    on_press:
+                        root.manager.transition.direction = 'left' 
+                        root.manager.transition.duration = 0
+                        root.manager.current = 'screen_TopicsSelection'
+                        app.clear_graff()
 
                     StackLayout:
                         pos: self.parent.pos
@@ -1319,6 +1374,7 @@
                     radius: 40, 40, 40, 40
             
             BoxLayout:
+                id: camera_display
                 orientation: "vertical"
                 size: self.size
                 pos: self.pos
@@ -1346,3 +1402,4 @@
         #background_color: 1, 1, 1, 0
         #center: root.center
         #size: (root.width // 2, root.height // 8)
+    
