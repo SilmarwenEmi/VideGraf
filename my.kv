@@ -1015,10 +1015,10 @@
         spacing: 100
 
 
-        BoxLayout:
-            orientation: "vertical"
-            size: root.size
-            pos: root.pos
+        #BoxLayout:
+            #orientation: "vertical"
+            #size: root.size
+            #pos: root.pos
 
             #VideoPlayer:
                 #id: video
@@ -1051,8 +1051,7 @@
                 cols: 1
                 pos: self.pos
                 size: self.size
-                padding: [60]
-                spacing: 60
+                padding: [40, 60, 60, 60]
 
                 Label:
                     text: "Graffiti"
@@ -1068,7 +1067,7 @@
                     source: "" if app.currentIntervention is None else "%s" % (app.currentIntervention)
                     size: self.size
                     pos: self.pos
-                    halign: "center"
+                    halign: "left"
 
                 Widget:
 

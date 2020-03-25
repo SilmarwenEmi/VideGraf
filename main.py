@@ -247,7 +247,6 @@ class MyApp(App): # <- Main Class
             print(newvalues)
 
             test = self.client["VideGraff"]["data"].update_one(myquery, newvalues)
-            print(test.acknowledged)
 
 
         #app code
@@ -386,7 +385,10 @@ class MyApp(App): # <- Main Class
      
     def updateGraffitiNumberDB(self):
         myquery = { "title": self.subjectTitle }
-        newvalues = { "$set": { "graffitis": graffitiNb } }
+        newvalues = { "$set": { "graffitis": graffitiNb + 1 } }
+
+        print(myquery)
+        print(newvalues)
 
         self.client["VideGraff"]["data"].update_one(myquery, newvalues)
 
