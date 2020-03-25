@@ -272,6 +272,7 @@
                 app.topicsSelectionScreen.manager.transition.duration = 0
                 app.topicsSelectionScreen.manager.current = 'screen_TopicDisplay'
                 app.subjectTitle = self.text
+                app.currentDescription = app.subjectDescription[self.text]
                 app.displayInterventions()
 
             canvas.before:
@@ -618,10 +619,30 @@
             
             Widget:
     
+        BoxLayout:
+            orientation: "vertical"
+
+            Button:
+                color: 0, 0, 0, 0
+                background_color: 0, 0, 0, 0
+                pos: self.pos
+                size: self.size
+
+                on_press:
+                    app.interventionsSelection.fire_popup()
+
+                canvas.before:
+                    Color:
+                        rgba: (1, 1, 1, 1) if self.state == 'normal' else (1, 1, 1, .2)
+
+                    RoundedRectangle:
+                        id: ellipse
+                        size: self.size
+                        pos: self.pos
+                        source: "" if app.subjectTitle is None else "data/%s/subject/chibi_subject.png" % (app.subjectTitle)
             
-        Image:
-            source: "" if app.subjectTitle is None else "data/%s/subject/chibi_subject.png" % (app.subjectTitle)
-            pos: self.pos
+            Widget:
+            
 
             
 
@@ -650,12 +671,29 @@
 
             Widget:
 
-        Image:
-            source: "" if app.subjectTitle is None else "data/%s/subject/chibi_subject.png" % (app.subjectTitle)
-            pos: self.pos
-        
-        #Widget:
-    
+        BoxLayout:
+            orientation: "vertical"
+
+            Button:
+                color: 0, 0, 0, 0
+                background_color: 0, 0, 0, 0
+                pos: self.pos
+                size: self.size
+
+                on_press:
+                    app.interventionsSelectionEmpty.fire_popup()
+
+                canvas.before:
+                    Color:
+                        rgba: (1, 1, 1, 1) if self.state == 'normal' else (1, 1, 1, .2)
+
+                    RoundedRectangle:
+                        id: ellipse
+                        size: self.size
+                        pos: self.pos
+                        source: "" if app.subjectTitle is None else "data/%s/subject/chibi_subject.png" % (app.subjectTitle)
+            
+            Widget:
 
 <Intervention>:
     Button:
@@ -1404,4 +1442,30 @@
         #background_color: 1, 1, 1, 0
         #center: root.center
         #size: (root.width // 2, root.height // 8)
+
+<DescriptionPopup>:
+    id: descriptionPopup
+    size_hint: .3, .3
+    auto_dismiss: True
+    title: "" if app.subjectTitle is None else '%s' % (app.subjectTitle) 
+    title_color: .349, .5686, .392, 1
+    title_size: 30
+    separator_color: .349, .5686, .392, 1
+    background: "popup_background.png"
+
+    GridLayout:
+        cols: 1
+        padding: [20, 30, 20, 30]
+        size: self.size
+
+        Label:
+            text: "" if app.currentDescription is None else "%s" % (app.currentDescription)
+            color: .588, .588, .588, 1
+            text_size: self.size
+            size_hint : 1.0, 1.0
+            halign: "left"
+            valign: "top"
+        
+            
     
+        

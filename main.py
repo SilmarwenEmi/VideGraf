@@ -61,10 +61,14 @@ class HeaderSubjectTitle(Widget):
     pass
 
 class InterventionsSelection(Widget):
-    pass
+    def fire_popup(self):
+        pops = DescriptionPopup()
+        pops.open()
 
 class InterventionsSelectionEmpty(Widget):
-    pass
+    def fire_popup(self):
+        pops = DescriptionPopup()
+        pops.open()
 
 class InterventionDisplayedContent(Widget):
     pass
@@ -197,11 +201,14 @@ class KivyCamera(Image):
             # display image from the texture
             self.texture = image_texture
 
+class DescriptionPopup(Popup):
+    pass
+
 
 class MyApp(App): # <- Main Class
     subjectsTitles = ListProperty()
     subjectTitle = StringProperty("")
-    
+    currentDescription = StringProperty("test descr")
     currentIntervention = StringProperty("")
 
 
@@ -211,7 +218,36 @@ class MyApp(App): # <- Main Class
         self.client = pymongo.MongoClient("mongodb+srv://Silmarwen:Kirby2011@stage-sodbw.gcp.mongodb.net/test?retryWrites=true&w=majority")
         if self.client != None:
             db = self.client["VideGraff"]
-            collection = db["data"]
+            self.collection = db["data"]
+        
+        #upadate DB if graffiti deleted
+        directories = os.listdir("data/")
+
+        if ".DS_Store" in directories:
+                directories.remove(".DS_Store")
+
+        for directory in directories:
+
+            files = os.listdir("data/%s" % (directory))
+            files.remove("subject")
+
+            if ".DS_Store" in files:
+                files.remove(".DS_Store")
+
+            nbGraff = 0
+            for fileName in files:
+                
+                if "graff" in fileName:
+                    nbGraff += 1
+
+            myquery = { "title": directory }
+            newvalues = { "$set": { "graffitis": nbGraff } }
+
+            print(myquery)
+            print(newvalues)
+
+            test = self.client["VideGraff"]["data"].update_one(myquery, newvalues)
+            print(test.acknowledged)
 
 
         #app code
@@ -227,6 +263,7 @@ class MyApp(App): # <- Main Class
         subjectName = StringProperty('test')
         subjectCamNb = StringProperty('test1')
         subjectGrafNb = StringProperty('test2')
+        self.subjectDescription = {}
         interventionLabel = StringProperty("test3")
 
         #screens declaration
@@ -244,10 +281,15 @@ class MyApp(App): # <- Main Class
         self.header.ids.content_box.add_widget(self.topics)
 
         #takes info from mongodb
-        subjectsTitles = collection.find({})
+        subjectsTitles = self.collection.find({})
+        
+        print("################################")
+        print(subjectsTitles)
+        self.subjectsDescription = {}
 
         listSubject = []
         for subject in subjectsTitles:
+            self.subjectDescription[subject["title"]] = subject["description"]
             self.subjectName = subject["title"]
             self.subjectCamNb = subject["video"]
             self.subjectGrafNb = subject["graffitis"]
@@ -310,17 +352,6 @@ class MyApp(App): # <- Main Class
         self.painter.canvas.clear()
     
     
-    def save_grafffiti_png(self):
-        print("save graffiti png")
-        try:
-            Window.screenshot(name="Screenshot.png")
- 
-            #if platform == 'android':
-                #Window.screenshot(name='/storage/emulated/0/Pictures/Screenshots/Screenshot.png')
-            
-        except:
-            pass
-    
     def displayInterventions(self):
 
         self.topicDisplayScreen.ids.top_box.remove_widget(self.headerTopicName)
@@ -344,12 +375,13 @@ class MyApp(App): # <- Main Class
                 self.headerTopicName.ids.content_box.add_widget(self.interventionsSelection)
             
             else:
-                self.headerTopicName.ids.content_box.add_widget(InterventionsSelectionEmpty())
+                self.interventionsSelectionEmpty = InterventionsSelectionEmpty()
+                self.headerTopicName.ids.content_box.add_widget(self.interventionsSelectionEmpty)
         
     
 
         except:
-            print("exception")
+            pass
             
      
     def updateGraffitiNumberDB(self):
