@@ -310,15 +310,16 @@
                 
                 Image:
                     source: 'camera.png'
-                    size_hint_x: None
-                    width: 40
+                    size_hint_x: 1
+                    width: 50
                     valign: "center"
 
                 Label:
                     color: .349, .5686, .392, 1
-                    size_hint_x: None
+                    size_hint_x: 1
+                    font_size: 32
                     halign: "center"
-                    height: 40
+                    height: 50
                     width: 80
                     text: "" if app.subjectCamNb is None else "%s" % (app.subjectCamNb)
                     text_size: self.size
@@ -328,15 +329,17 @@
 
                 Image:
                     source: 'paint_spray.png'
-                    size_hint_x: None
-                    width: 40
+                    size_hint_x: 1
+                    size_hint_y: 2
+                    height: 200
                     valign: "center"
 
                 Label:
                     color: .349, .5686, .392, 1
-                    size_hint_x: None
+                    size_hint_x: 1
+                    font_size: 32
                     halign: "center"
-                    height: 40
+                    height: 50
                     width: 80
                     text: "" if app.subjectGrafNb is None else "%s" % (app.subjectGrafNb)
                     text_size: self.size
