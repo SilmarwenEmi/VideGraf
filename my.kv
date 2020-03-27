@@ -244,108 +244,105 @@
         size: root.size
         pos: root.pos
         spacing: 100
+        padding: [0, 0, 100, 100]
         #on_parent:
             #for i in range(11): txt = "Label {0}".format(i); self.add_widget(Label(text = txt, text_size=(cm(2), cm(2)), pos=self.pos,
             #id=txt, color=(1,0,0,1)))
 
 <Subject>:
-    StackLayout:
-        orientation: "tb-lr"
-        spacing: 20
-        size: root.size
-        pos: root.pos
-        size_hint_x: None
-        size_hint_y: None
-        padding: [20, 20, 100, 100]
+    Button:
+        id: button_subject
+        pos: self.parent.pos
+        size: self.parent.size
+        text: "" if app.subjectName is None else "%s" % (app.subjectName) #subject name not displayed here
+        color: 1, 0, 0, 0
+        background_color: 0, 0, 0, 0
 
-        Button:
-            id: button_subject
-            pos: root.pos
-            size: root.size
-            text: "" if app.subjectName is None else "%s" % (app.subjectName)
-            color: 0,0,0,0
-            background_color: 0,0,0,0
-            text_size: self.size
+        on_press:
+            app.topicsSelectionScreen.manager.transition.direction = 'left' 
+            app.topicsSelectionScreen.manager.transition.duration = 0
+            app.topicsSelectionScreen.manager.current = 'screen_TopicDisplay'
+            app.subjectTitle = self.text
+            app.currentDescription = app.subjectDescription[self.text]
+            app.displayInterventions()
 
-            on_press:
-                app.topicsSelectionScreen.manager.transition.direction = 'left' 
-                app.topicsSelectionScreen.manager.transition.duration = 0
-                app.topicsSelectionScreen.manager.current = 'screen_TopicDisplay'
-                app.subjectTitle = self.text
-                app.currentDescription = app.subjectDescription[self.text]
-                app.displayInterventions()
+        canvas.before:
+            Color:
+                rgba: (1, 1, 1, 1) if self.state == 'normal' else (.349, .5686, .392, .2)
 
-            canvas.before:
-                Color:
-                    rgba: (1, 1, 1, 1) if self.state == 'normal' else (.349, .5686, .392, .2)
+            RoundedRectangle:
+                size: self.parent.size
+                pos: self.parent.pos
+                radius: 40, 40, 40, 40
 
-                RoundedRectangle:
-                    size: self.size
-                    pos: self.pos
-                    radius: 40, 40, 40, 40
+        BoxLayout:
+            orientation: "vertical"
+            size: self.parent.size
+            pos: self.parent.pos
+            padding: [50, 50, 50, 100]
+            spacing: 100
 
-            BoxLayout:
+            Label:
+                text: "" if app.subjectName is None else "%s" % (app.subjectName) # subject name displayed here
+                color: .349, .5686, .392, 1
+                font_size: 40
+                #bold: True
+                text_size: self.size
+                pos: self.parent.pos
+                halign: "center"
+            
+            Image:
+                source: "" if app.subjectName is None else "data/%s/subject/subject_image.jpg" % (app.subjectName) #subject name not displayed here
+                keep_ratio: True
+                size_hint_y: 3
+                size: self.parent.size
+                pos: self.parent.pos
+                        
+            
+            GridLayout:
+                cols: 5
                 pos: self.parent.pos
                 size: self.parent.size
-                orientation: 'vertical'
-                padding: [30, 100, 30, 0]
-                size_hint_x: None
-                size_hint_y: None
-                spacing: self.size[0]/4
+                padding: [80, 0, 80, 0]
+                size_hint_y: 0.3
+                spacing: 20
+
+                
+                Image:
+                    source: 'camera.png'
+                    size_hint_x: None
+                    width: 40
+                    valign: "center"
 
                 Label:
-                    text: "" if app.subjectName is None else "%s" % (app.subjectName)
                     color: .349, .5686, .392, 1
-                    text_size: self.parent.size
-                    pos: self.parent.pos
-                    halign: "center"
-                
-                
-                GridLayout:
-                    cols: 5
-                    pos: self.parent.pos
-                    size: self.parent.size
-                    padding: [80, 0, 80, 0]
                     size_hint_x: None
-                    size_hint_y: None
-                    spacing: 20
+                    halign: "center"
+                    height: 40
+                    width: 80
+                    text: "" if app.subjectCamNb is None else "%s" % (app.subjectCamNb)
+                    text_size: self.size
+                    valign: "center" 
+                
+                Widget:
 
-                    
-                    Image:
-                        source: 'camera.png'
-                        size_hint_x: None
-                        width: 40
-                        valign: "center"
+                Image:
+                    source: 'paint_spray.png'
+                    size_hint_x: None
+                    width: 40
+                    valign: "center"
 
-                    Label:
-                        color: .349, .5686, .392, 1
-                        size_hint_x: None
-                        halign: "center"
-                        height: 40
-                        width: 80
-                        text: "" if app.subjectCamNb is None else "%s" % (app.subjectCamNb)
-                        text_size: self.size
-                        valign: "center" 
-                    
-                    Widget:
+                Label:
+                    color: .349, .5686, .392, 1
+                    size_hint_x: None
+                    halign: "center"
+                    height: 40
+                    width: 80
+                    text: "" if app.subjectGrafNb is None else "%s" % (app.subjectGrafNb)
+                    text_size: self.size
+                    valign: "center" 
+                        
 
-                    Image:
-                        source: 'paint_spray.png'
-                        size_hint_x: None
-                        width: 40
-                        valign: "center"
-
-                    Label:
-                        color: .349, .5686, .392, 1
-                        size_hint_x: None
-                        halign: "center"
-                        height: 40
-                        width: 80
-                        text: "" if app.subjectGrafNb is None else "%s" % (app.subjectGrafNb)
-                        text_size: self.size
-                        valign: "center" 
-    
-            
 
 <TopicDisplayScreen>:
 
