@@ -1,7 +1,6 @@
 #:kivy 1.11.1
 
 <TopicsSelectionScreen>:
-    # \TODO: add scroll ?
 
     BoxLayout:
         id: top_box
@@ -33,7 +32,8 @@
                 id: bottom_box
                 orientation: 'vertical'
                 spacing: 80
-                padding:[60, 0, 60, 0]
+                padding:[60, 100, 60, 0]
+
 
                 Label:
                     background_normal: ''
@@ -54,7 +54,7 @@
                     size_hint_y: 0.1
                     height: 40
                     width: 260
-                    font_size: 34
+                    font_size: 38
                     halign: "left"
                     text_size: self.size
                     bold: True
@@ -229,9 +229,9 @@
             
 
             Label:
-                text: "[b] Sujets chauds du moment"
-                markup: True
-                font_size: 44
+                text: "Sujets chauds du moment"
+                bold: True
+                font_size: 50
                 text_size: self.size
                 color: .349, .5686, .392, 1
             
@@ -244,7 +244,7 @@
         size: root.size
         pos: root.pos
         spacing: 100
-        padding: [0, 0, 100, 100]
+        padding: [0, 50, 100, 100]
         #on_parent:
             #for i in range(11): txt = "Label {0}".format(i); self.add_widget(Label(text = txt, text_size=(cm(2), cm(2)), pos=self.pos,
             #id=txt, color=(1,0,0,1)))
@@ -280,13 +280,13 @@
             size: self.parent.size
             pos: self.parent.pos
             padding: [50, 50, 50, 100]
-            spacing: 100
+            spacing: 60
 
             Label:
                 text: "" if app.subjectName is None else "%s" % (app.subjectName) # subject name displayed here
                 color: .349, .5686, .392, 1
-                font_size: 40
-                #bold: True
+                font_size: 48
+                #underline: True
                 text_size: self.size
                 pos: self.parent.pos
                 halign: "center"
@@ -333,6 +333,7 @@
                     size_hint_y: 2
                     height: 200
                     valign: "center"
+                    keep_ratio: True
 
                 Label:
                     color: .349, .5686, .392, 1
@@ -385,7 +386,7 @@
                 id: bottom_box
                 orientation: 'vertical'
                 spacing: 80
-                padding:[60, 0, 60, 0]
+                padding:[60, 100, 60, 0]
 
                 Label:
                     background_normal: ''
@@ -575,6 +576,7 @@
                             text_size: self.size
                             valign: "center"        
                 Widget:
+
             
                 FloatLayout:
                     Image:
@@ -584,28 +586,86 @@
                         size: self.texture_size
                         anchor_x: "center"
                         anchor_y: "center"
+                    
+                    Image:
+                        source: "chibi_side_bar.png"
+                        size_hint_x: 1
+                        size_hint_y: None
+                        size: self.texture_size
+                        anchor_x: "right"
+                        anchor_y: "top"
+                    
+
 
 <HeaderTopicName>:
+
     BoxLayout:
         orientation: 'vertical'
         size: root.size
         pos: root.pos
         spacing: 30
         id: content_box
-        
+
 
 <InterventionsSelection>:
     BoxLayout:
         #interventions à gauche et chibi avec bulle à droite
         orientation: "horizontal"
-        pos: [root.pos[0],root.pos[1]-150]
-        size: root.size
+        pos: self.parent.pos
+        size: self.parent.size
 
         BoxLayout:
             id: intervention_box
             #pour ajouter le widget et tout remonter
             orientation: "vertical"
             size_hint: 2, 1
+            pos: self.parent.pos
+            size: self.parent.size
+
+            StackLayout:
+                orientation: "lr-tb"
+                size_hint_y: 0.6
+                padding: [0, 40, 0, 0]
+
+
+                Button:
+                    text: ""
+                    color: 1, 1, 1, 0
+                    background_color: 1, 0, 0, 0
+
+                    on_press:
+                        app.topicsSelectionScreen.manager.transition.direction = 'right' 
+                        app.topicsSelectionScreen.manager.transition.duration = 0
+                        app.topicsSelectionScreen.manager.current = 'screen_TopicsSelection'
+
+                    StackLayout:
+                        orientation: 'lr-tb'
+                        size: self.parent.size
+                        pos: self.parent.pos
+                        #size_hint_y: .1
+                        spacing: 30
+
+                        Image:
+                            source: 'back.png'
+                            size_hint_x: None
+                            width: 50
+                            valign: "center"
+                            keep_ratio: True
+
+                        Label:
+                            size_hint_x: None
+                            halign: "left"
+                            height: 40
+                            width: 300
+                            text: "Retour"
+                            text_size: self.size
+                            valign: "center"
+                            color: .349, .5686, .392, 1
+                            bold: True
+                            font_size: 50
+
+                
+                Widget:
 
             GridLayout:
                 id: intervention_content
@@ -627,6 +687,7 @@
                 background_color: 0, 0, 0, 0
                 pos: self.pos
                 size: self.size
+                size_hint_y: 2
 
                 on_press:
                     app.interventionsSelection.fire_popup()
@@ -640,6 +701,104 @@
                         size: self.size
                         pos: self.pos
                         source: "" if app.subjectTitle is None else "data/%s/subject/chibi_subject.png" % (app.subjectTitle)
+
+            GridLayout:
+                cols: 1
+                padding: [180, 100, 200, 100]
+                spacing: 60
+
+                Button:
+                    text: ""
+                    size: self.parent.size
+                    color: 1, 0, 0, 0
+                    size_hint_y: 3
+                    background_color: 0, 0, 0, 0
+
+                    on_press:
+                        app.interventionsSelection.fire_popupGraffiti()
+                    
+                    canvas.before:
+                        Color:
+                            rgba: (.349, .5686, .392, 1) if self.state == 'normal' else (.349, .5686, .392, .3)
+
+                        RoundedRectangle:
+                            size: self.size
+                            pos: self.pos
+                            radius: 20, 20, 20, 20
+
+                    StackLayout:
+                        pos: self.parent.pos
+                        size: self.parent.size
+                        orientation: 'lr-tb'
+                        size_hint_y: None
+                        spacing: 30
+                        padding: [50, 0, 50, 0]
+
+                        Image:
+                            source: 'white_paint_spray.png'
+                            size_hint_x: None
+                            width: 40
+                            valign: "center"
+                            keep_ratio: True
+
+                        Label:
+                            size_hint_x: None
+                            halign: "center"
+                            height: 40
+                            width: 300
+                            text: "Ajoute un graffiti"
+                            text_size: self.size
+                            valign: "center"
+                            color: 1, 1, 1, 1
+                            bold: True
+                            font_size: 34
+                
+                Button:
+                    text: ""
+                    size: self.parent.size
+                    color: 1, 0, 0, 0
+                    size_hint_y: 3
+                    background_color: 0, 0, 0, 0
+                    
+                    canvas.before:
+                        Color:
+                            rgba: (.349, .5686, .392, 1) if self.state == 'normal' else (.349, .5686, .392, .3)
+
+                        RoundedRectangle:
+                            size: self.size
+                            pos: self.pos
+                            radius: 20, 20, 20, 20
+
+                    StackLayout:
+                        pos: self.parent.pos
+                        size: self.parent.size
+                        orientation: 'lr-tb'
+                        size_hint_y: None
+                        spacing: 30
+                        padding: [40, 0, 50, 0]
+
+                        Image:
+                            source: 'add_video.png'
+                            size_hint_x: None
+                            width: 50
+                            valign: "left"
+                            keep_ratio: True
+
+                        Label:
+                            size_hint_x: None
+                            halign: "center"
+                            height: 40
+                            width: 300
+                            text: "Ajoute une vidéo"
+                            text_size: self.size
+                            valign: "center"
+                            color: 1, 1, 1, 1
+                            bold: True
+                            font_size: 34
+
+                Widget:
+
+                        
             
             Widget:
             
@@ -650,24 +809,74 @@
     BoxLayout:
         #interventions à gauche et chibi avec bulle à droite
         orientation: "horizontal"
-        pos: [root.pos[0],root.pos[1]-150]
-        size: root.size
+        pos: self.parent.pos
+        size: self.parent.size
 
         BoxLayout:
             id: intervention_box
             #pour ajouter le widget et tout remonter
             orientation: "vertical"
             size_hint: 2, 1
+            pos: self.parent.pos
+            size: self.parent.size
+
+            StackLayout:
+                orientation: "lr-tb"
+                size_hint_y: 0.6
+                padding: [0, 40, 0, 0]
+
+
+                Button:
+                    text: ""
+                    color: 1, 1, 1, 0
+                    background_color: 1, 0, 0, 0
+
+                    on_press:
+                        app.topicsSelectionScreen.manager.transition.direction = 'right' 
+                        app.topicsSelectionScreen.manager.transition.duration = 0
+                        app.topicsSelectionScreen.manager.current = 'screen_TopicsSelection'
+
+                    StackLayout:
+                        orientation: 'lr-tb'
+                        size: self.parent.size
+                        pos: self.parent.pos
+                        #size_hint_y: .1
+                        spacing: 30
+
+                        Image:
+                            source: 'back.png'
+                            size_hint_x: None
+                            width: 50
+                            valign: "center"
+                            keep_ratio: True
+
+                        Label:
+                            size_hint_x: None
+                            halign: "left"
+                            height: 40
+                            width: 300
+                            text: "Retour"
+                            text_size: self.size
+                            valign: "center"
+                            color: .349, .5686, .392, 1
+                            bold: True
+                            font_size: 50
+
+                
+                Widget:
 
             FloatLayout:
                 size: self.size
                 pos: self.pos
+                size_hint: 1,3
+
                 Image:
                     source: "chibiMan.png"
                     size_hint_x: None
                     size_hint_y: None
-                    size: [self.parent.size[0]/1.2,self.parent.size[1]/1.2]
-                    pos_hint: {"x":-0.1, "y":-0.5}
+                    size: [self.parent.size[0]/1.7,self.parent.size[1]/1.7]
+                    keep_ratio: True
+                    pos_hint: {"x": 0.0, "y": 0.0}
 
             Widget:
 
@@ -679,6 +888,7 @@
                 background_color: 0, 0, 0, 0
                 pos: self.pos
                 size: self.size
+                size_hint_y: 2
 
                 on_press:
                     app.interventionsSelectionEmpty.fire_popup()
@@ -692,6 +902,102 @@
                         size: self.size
                         pos: self.pos
                         source: "" if app.subjectTitle is None else "data/%s/subject/chibi_subject.png" % (app.subjectTitle)
+                
+            GridLayout:
+                cols: 1
+                padding: [180, 100, 200, 100]
+                spacing: 60
+
+                Button:
+                    text: ""
+                    size: self.parent.size
+                    color: 1, 0, 0, 0
+                    size_hint_y: 3
+                    background_color: 0, 0, 0, 0
+
+                    on_press:
+                        app.interventionsSelectionEmpty.fire_popupGraffiti()
+                    
+                    canvas.before:
+                        Color:
+                            rgba: (.349, .5686, .392, 1) if self.state == 'normal' else (.349, .5686, .392, .3)
+
+                        RoundedRectangle:
+                            size: self.size
+                            pos: self.pos
+                            radius: 20, 20, 20, 20
+
+                    StackLayout:
+                        pos: self.parent.pos
+                        size: self.parent.size
+                        orientation: 'lr-tb'
+                        size_hint_y: None
+                        spacing: 30
+                        padding: [50, 0, 50, 0]
+
+                        Image:
+                            source: 'white_paint_spray.png'
+                            size_hint_x: None
+                            width: 40
+                            valign: "center"
+                            keep_ratio: True
+
+                        Label:
+                            size_hint_x: None
+                            halign: "center"
+                            height: 40
+                            width: 300
+                            text: "Ajoute un graffiti"
+                            text_size: self.size
+                            valign: "center"
+                            color: 1, 1, 1, 1
+                            bold: True
+                            font_size: 34
+                
+                Button:
+                    text: ""
+                    size: self.parent.size
+                    color: 1, 0, 0, 0
+                    size_hint_y: 3
+                    background_color: 0, 0, 0, 0
+                    
+                    canvas.before:
+                        Color:
+                            rgba: (.349, .5686, .392, 1) if self.state == 'normal' else (.349, .5686, .392, .3)
+
+                        RoundedRectangle:
+                            size: self.size
+                            pos: self.pos
+                            radius: 20, 20, 20, 20
+
+                    StackLayout:
+                        pos: self.parent.pos
+                        size: self.parent.size
+                        orientation: 'lr-tb'
+                        size_hint_y: None
+                        spacing: 30
+                        padding: [40, 0, 50, 0]
+
+                        Image:
+                            source: 'add_video.png'
+                            size_hint_x: None
+                            width: 50
+                            valign: "left"
+                            keep_ratio: True
+
+                        Label:
+                            size_hint_x: None
+                            halign: "center"
+                            height: 40
+                            width: 300
+                            text: "Ajoute une vidéo"
+                            text_size: self.size
+                            valign: "center"
+                            color: 1, 1, 1, 1
+                            bold: True
+                            font_size: 34
+
+                Widget:
             
             Widget:
 
@@ -750,7 +1056,7 @@
                 id: bottom_box
                 orientation: 'vertical'
                 spacing: 80
-                padding:[60, 0, 60, 0]
+                padding:[60, 100, 60, 0]
 
                 Label:
                     background_normal: ''
@@ -858,7 +1164,7 @@
                             source: 'hand.png'
                             size_hint_x: None
                             width: 30
-                            valign: "center"
+                            valign: "center" 
 
                         Label:
                             size_hint_x: None
@@ -1068,7 +1374,7 @@
                 id: bottom_box
                 orientation: 'vertical'
                 spacing: 80
-                padding:[60, 0, 60, 0]
+                padding:[60, 100, 60, 0]
 
                 Label:
                     background_normal: ''
@@ -1250,7 +1556,7 @@
                 id: bottom_box
                 orientation: 'vertical'
                 spacing: 80
-                padding:[60, 0, 60, 0]
+                padding:[60, 100, 60, 0]
 
                 Label:
                     background_normal: ''
@@ -1402,7 +1708,8 @@
                         
                     
 
-<MyWidget>:
+#<MyWidget>:
+    # painterWidget
     #Button:
         #background_color: 1, 1, 1, 0
         #center: root.center
@@ -1414,7 +1721,7 @@
     auto_dismiss: True
     title: "" if app.subjectTitle is None else '%s' % (app.subjectTitle) 
     title_color: .349, .5686, .392, 1
-    title_size: 30
+    title_size: 40
     separator_color: .349, .5686, .392, 1
     background: "popup_background.png"
 
@@ -1431,6 +1738,29 @@
             halign: "left"
             valign: "top"
         
-            
+
+<GraffitiPopup>:
+    id: graffitiPopup
+    size_hint: .6, .6
+    auto_dismiss: True
+    title: "" if app.subjectTitle is None else '%s' % (app.subjectTitle) 
+    title_color: .349, .5686, .392, 1
+    title_size: 45
+    separator_color: .349, .5686, .392, 1
+    background: "popup_background.png"
+
+    GridLayout:
+        cols: 1
+        padding: [20, 30, 20, 30]
+        size: self.size
+
+        Label:
+            text: "espace pour ajouter le graffiti"
+            color: .588, .588, .588, 1
+            text_size: self.size
+            size_hint : 1.0, 1.0
+            halign: "left"
+            valign: "top"
+        
     
         

@@ -64,10 +64,18 @@ class InterventionsSelection(Widget):
     def fire_popup(self):
         pops = DescriptionPopup()
         pops.open()
+    
+    def fire_popupGraffiti(self):
+        pops = GraffitiPopup()
+        pops.open()
 
 class InterventionsSelectionEmpty(Widget):
     def fire_popup(self):
         pops = DescriptionPopup()
+        pops.open()
+
+    def fire_popupGraffiti(self):
+        pops = GraffitiPopup()
         pops.open()
 
 class InterventionDisplayedContent(Widget):
@@ -130,8 +138,9 @@ class MyWidget(Widget):
         # save graffiti as png
         fbo.add(self.canvas)
         fbo.draw()
-        print("graff" + str(graffitiNb) + ".png")
-        fbo.texture.save(filename+"graff" + str(graffitiNb) + ".png", flipped=False)
+        print("longueur liste : " + str(len(files)))
+        print("graff" + str(graffitiNb+1) + ".png")
+        fbo.texture.save(filename+"graff" + str(graffitiNb+1) + ".png", flipped=False)
         fbo.remove(self.canvas)
 
         if self.parent is not None and canvas_parent_index > -1:
@@ -146,12 +155,12 @@ class GraffitiDraw(Widget):
 
     def on_touch_down(self, touch):
         color = (random(), random(), random())
-        print(color)
+        #print(color)
         color = (.349, .5686, .392)
         with self.canvas:
             Color(*color, mode='hsv') # (numéro couleur rgb) / 255
             d = 5.
-            print("X: " + str(touch.spos[0]) + " - Y: " + str(touch.spos[1]))
+            #print("X: " + str(touch.spos[0]) + " - Y: " + str(touch.spos[1]))
             if 0.19 < touch.spos[0] < 0.96 and 0.05 < touch.spos[1] < 0.83:
                 Ellipse(pos=(touch.x - d / 2, touch.y - d / 2), size=(d, d))
                 #try:
@@ -202,6 +211,9 @@ class KivyCamera(Image):
             self.texture = image_texture
 
 class DescriptionPopup(Popup):
+    pass
+
+class GraffitiPopup(Popup):
     pass
 
 
@@ -298,7 +310,6 @@ class MyApp(App): # <- Main Class
             self.topics.ids.contents.add_widget(subject)
         
         #topic display screen
-            #TODO: if len() == 0 then chibi mec else ce qui est déjà fait
         self.headerTopicName = HeaderTopicName()
         self.topicDisplayScreen.ids.top_box.add_widget(self.headerTopicName)
 
