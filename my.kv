@@ -1,0 +1,1436 @@
+#:kivy 1.11.1
+
+<TopicsSelectionScreen>:
+    # \TODO: add scroll ?
+
+    BoxLayout:
+        id: top_box
+        #diviser l'écran en deux
+        orientation: "horizontal"
+        size: root.size
+        pos: root.pos
+        spacing: 60
+
+
+        BoxLayout:
+            #barre latérale
+            id: lateral
+            orientation: "vertical"
+            size_hint: 0.2, 1 #la barre latéral prend 20% de l'espace à l'écran
+            pos: root.pos
+
+            #couleur de fond
+            canvas:
+                Color:
+                    rgb: (.349, .5686, .392, 1)
+
+                RoundedRectangle:
+                    size: self.size
+                    pos: self.pos
+                    radius: 0, 20, 20, 0 #TOP-L, TOP-R, BOTTOM-R, BOTTOM-L
+            
+            BoxLayout:
+                id: bottom_box
+                orientation: 'vertical'
+                spacing: 80
+                padding:[60, 0, 60, 0]
+
+                Label:
+                    background_normal: ''
+                    text: 'VideGraff'
+                    color: 1, 1, 1, 1
+                    size_hint_y: 0.2
+                    height: 40
+                    width: 260
+                    font_size: 65
+                    halign: "center"
+                    text_size: self.size
+                    bold: True
+
+                Label:
+                    background_normal: ''
+                    text: 'Essaie un de ces gestes !'
+                    color: 1, 1, 1, 1
+                    size_hint_y: 0.1
+                    height: 40
+                    width: 260
+                    font_size: 34
+                    halign: "left"
+                    text_size: self.size
+                    bold: True
+
+                Button:
+                    id: button_1
+                    background_normal: ''
+                    background_color: .349, .5686, .392, 1
+                    size_hint_y: 0.10
+                    width: 260
+                    height: 40
+
+                    StackLayout:
+                        pos: self.parent.pos
+                        size: self.parent.size
+                        orientation: 'lr-tb'
+                        size_hint_y: None
+                        spacing: 30
+
+                        Image:
+                            source: 'hand.png'
+                            size_hint_x: None
+                            width: 30
+                            valign: "center"
+
+                        Label:
+                            size_hint_x: None
+                            halign: "left"
+                            height: 40
+                            width: 260
+                            text: "Sélectionner"
+                            text_size: self.size
+                            valign: "center"
+                Button:
+                    id: button_2
+                    background_normal: ''
+                    background_color: .349, .5686, .392, 1
+                    size_hint_y: 0.10
+                    width: 260
+                    height: 40
+
+                    StackLayout:
+                        pos: self.parent.pos
+                        size: self.parent.size
+                        orientation: 'lr-tb'
+                        size_hint_y: None
+                        spacing: 30
+                        Image:
+                            source: 'hand.png'
+                            size_hint_x: None
+                            width: 30
+                            valign: "center"
+
+                        Label:
+                            size_hint_x: None
+                            halign: "left"
+                            height: 40
+                            width: 260
+                            text: "Vers le bas"
+                            text_size: self.size
+                            valign: "center"
+                Button:
+                    id: button_3
+                    background_normal: ''
+                    background_color: .349, .5686, .392, 1
+                    size_hint_y: 0.10
+                    width: 260
+                    height: 40
+
+                    StackLayout:
+                        pos: self.parent.pos
+                        size: self.parent.size
+                        orientation: 'lr-tb'
+                        size_hint_y: None
+                        spacing: 30
+
+                        Image:
+                            source: 'hand.png'
+                            size_hint_x: None
+                            width: 30
+                            valign: "center"
+
+                        Label:
+                            size_hint_x: None
+                            halign: "left"
+                            height: 40
+                            width: 260
+                            text: "Vers le haut"
+                            text_size: self.size
+                            valign: "center"
+                Button:
+                    id: button_4
+                    background_normal: ''
+                    background_color: .349, .5686, .392, 1
+                    size_hint_y: 0.10
+                    width: 260
+                    height: 40
+
+                    StackLayout:
+                        pos: self.parent.pos
+                        size: self.parent.size
+                        orientation: 'lr-tb'
+                        size_hint_y: None
+                        spacing: 30
+                        Image:
+                            source: 'hand.png'
+                            size_hint_x: None
+                            width: 30
+                            valign: "center"
+
+                        Label:
+                            size_hint_x: None
+                            halign: "left"
+                            height: 40
+                            width: 260
+                            text: "Vers la droite"
+                            text_size: self.size
+                            valign: "center"
+                Button:
+                    id: button_4
+                    background_normal: ''
+                    background_color: .349, .5686, .392, 1
+                    size_hint_y: 0.10
+                    width: 240
+                    height: 40
+
+                    StackLayout:
+                        pos: self.parent.pos
+                        size: self.parent.size
+                        orientation: 'lr-tb'
+                        size_hint_x: None
+                        size_hint_y: None
+                        spacing: 30
+                        Image:
+                            source: 'hand.png'
+                            size_hint_x: None
+                            width: 30
+                            valign: "center"
+
+                        Label:
+                            size_hint_x: None
+                            halign: "left"
+                            height: 40
+                            width: 260
+                            text: "Vers la gauche"
+                            text_size: self.size
+                            valign: "center"        
+                Widget:
+            
+                FloatLayout:
+                    Image:
+                        source: "chibi_side_bar.png"
+                        size_hint_x: 1
+                        size_hint_y: None
+                        size: self.texture_size
+                        anchor_x: "center"
+                        anchor_y: "center"
+
+
+<Header>:
+    BoxLayout:
+        orientation: 'vertical'
+        size: root.size
+        pos: root.pos
+        spacing: 30
+        id: content_box
+
+        StackLayout:
+            orientation: 'lr-tb'
+            size_hint_x: 2
+            size_hint_y: .1
+            
+
+            Label:
+                text: "[b] Sujets chauds du moment"
+                markup: True
+                font_size: 44
+                text_size: self.size
+                color: .349, .5686, .392, 1
+            
+
+<Topics>:
+
+    GridLayout:
+        id: contents
+        cols: 3
+        size: root.size
+        pos: root.pos
+        spacing: 100
+        padding: [0, 0, 100, 100]
+        #on_parent:
+            #for i in range(11): txt = "Label {0}".format(i); self.add_widget(Label(text = txt, text_size=(cm(2), cm(2)), pos=self.pos,
+            #id=txt, color=(1,0,0,1)))
+
+<Subject>:
+    Button:
+        id: button_subject
+        pos: self.parent.pos
+        size: self.parent.size
+        text: "" if app.subjectName is None else "%s" % (app.subjectName) #subject name not displayed here
+        color: 1, 0, 0, 0
+        background_color: 0, 0, 0, 0
+
+        on_press:
+            app.topicsSelectionScreen.manager.transition.direction = 'left' 
+            app.topicsSelectionScreen.manager.transition.duration = 0
+            app.topicsSelectionScreen.manager.current = 'screen_TopicDisplay'
+            app.subjectTitle = self.text
+            app.currentDescription = app.subjectDescription[self.text]
+            app.displayInterventions()
+
+        canvas.before:
+            Color:
+                rgba: (1, 1, 1, 1) if self.state == 'normal' else (.349, .5686, .392, .2)
+
+            RoundedRectangle:
+                size: self.parent.size
+                pos: self.parent.pos
+                radius: 40, 40, 40, 40
+
+        BoxLayout:
+            orientation: "vertical"
+            size: self.parent.size
+            pos: self.parent.pos
+            padding: [50, 50, 50, 100]
+            spacing: 100
+
+            Label:
+                text: "" if app.subjectName is None else "%s" % (app.subjectName) # subject name displayed here
+                color: .349, .5686, .392, 1
+                font_size: 40
+                #bold: True
+                text_size: self.size
+                pos: self.parent.pos
+                halign: "center"
+            
+            Image:
+                source: "" if app.subjectName is None else "data/%s/subject/subject_image.jpg" % (app.subjectName) #subject name not displayed here
+                keep_ratio: True
+                size_hint_y: 3
+                size: self.parent.size
+                pos: self.parent.pos
+                        
+            
+            GridLayout:
+                cols: 5
+                pos: self.parent.pos
+                size: self.parent.size
+                padding: [80, 0, 80, 0]
+                size_hint_y: 0.3
+                spacing: 20
+
+                
+                Image:
+                    source: 'camera.png'
+                    size_hint_x: 1
+                    width: 50
+                    valign: "center"
+
+                Label:
+                    color: .349, .5686, .392, 1
+                    size_hint_x: 1
+                    font_size: 38
+                    halign: "center"
+                    height: 50
+                    width: 80
+                    text: "" if app.subjectCamNb is None else "%s" % (app.subjectCamNb)
+                    text_size: self.size
+                    valign: "center" 
+                
+                Widget:
+
+                Image:
+                    source: 'paint_spray.png'
+                    size_hint_x: 1
+                    size_hint_y: 2
+                    height: 200
+                    valign: "center"
+
+                Label:
+                    color: .349, .5686, .392, 1
+                    size_hint_x: 1
+                    font_size: 38
+                    halign: "center"
+                    height: 50
+                    width: 80
+                    text: "" if app.subjectGrafNb is None else "%s" % (app.subjectGrafNb)
+                    text_size: self.size
+                    valign: "center" 
+                        
+
+
+<TopicDisplayScreen>:
+
+    BoxLayout:
+        id: top_box
+        #diviser l'écran en deux
+        orientation: "horizontal"
+        size: root.size
+        pos: root.pos
+        spacing: 60
+
+        canvas.before:
+            Rectangle:
+                pos: self.parent.pos
+                size: [self.parent.size[0], self.parent.size[1]/2]
+                source: "people_background.png"
+        
+
+        BoxLayout:
+            #barre latérale
+            id: lateral
+            orientation: "vertical"
+            size_hint: 0.2, 1 #la barre latéral prend 20% de l'espace à l'écran
+            pos: root.pos
+
+            #couleur de fond
+            canvas:
+                Color:
+                    rgb: (.349, .5686, .392, 1)
+
+                RoundedRectangle:
+                    size: self.size
+                    pos: self.pos
+                    radius: 0, 20, 20, 0 #TOP-L, TOP-R, BOTTOM-R, BOTTOM-L
+            
+            BoxLayout:
+                id: bottom_box
+                orientation: 'vertical'
+                spacing: 80
+                padding:[60, 0, 60, 0]
+
+                Label:
+                    background_normal: ''
+                    text: 'VideGraff'
+                    color: 1, 1, 1, 1
+                    size_hint_y: 0.2
+                    height: 40
+                    width: 260
+                    font_size: 65
+                    halign: "center"
+                    text_size: self.size
+                    bold: True
+                
+                Label:
+                    background_normal: ''
+                    text: 'Essaie un de ces gestes !'
+                    color: 1, 1, 1, 1
+                    size_hint_y: 0.1
+                    height: 40
+                    width: 260
+                    font_size: 34
+                    halign: "left"
+                    text_size: self.size
+                    bold: True
+
+                Button:
+                    id: button_1
+                    background_normal: ''
+                    background_color: .349, .5686, .392, 1
+                    size_hint_y: 0.10
+                    width: 260
+                    height: 40
+                    
+                    on_press:
+                        root.manager.transition.direction = 'left' 
+                        root.manager.transition.duration = 0
+                        root.manager.current = 'screen_InterventionDisplayed'
+
+                    StackLayout:
+                        pos: self.parent.pos
+                        size: self.parent.size
+                        orientation: 'lr-tb'
+                        size_hint_y: None
+                        spacing: 30
+
+                        Image:
+                            source: 'hand.png'
+                            size_hint_x: None
+                            width: 30
+                            valign: "center"
+
+                        Label:
+                            size_hint_x: None
+                            halign: "left"
+                            height: 40
+                            width: 260
+                            text: "Sélectionner"
+                            text_size: self.size
+                            valign: "center"
+                Label:
+                    id: button_2
+                    background_normal: ''
+                    background_color: .349, .5686, .392, 1
+                    size_hint_y: 0.10
+                    width: 260
+                    height: 40
+
+                    StackLayout:
+                        pos: self.parent.pos
+                        size: self.parent.size
+                        orientation: 'tb-lr'
+                        size_hint_y: None
+                        spacing: 30
+
+                        Label:
+                            size_hint_x: None
+                            halign: "left"
+                            height: 40
+                            width: 260
+                            text: "Contribuer"
+                            text_size: self.size
+                            valign: "center"
+                            bold: True
+                Button:
+                    id: button_3
+                    background_normal: ''
+                    background_color: .349, .5686, .392, 1
+                    size_hint_y: 0.10
+                    width: 260
+                    height: 40
+                    on_press:
+                        root.manager.transition.direction = 'left' 
+                        root.manager.transition.duration = 0
+                        root.manager.current = 'screen_AddGraffiti'
+
+                    StackLayout:
+                        pos: self.parent.pos
+                        size: self.parent.size
+                        orientation: 'lr-tb'
+                        size_hint_y: None
+                        spacing: 30
+                        padding:[80, 0, 0, 0]
+
+                        Image:
+                            source: 'hand.png'
+                            size_hint_x: None
+                            width: 30
+                            valign: "center"
+
+                        Label:
+                            size_hint_x: None
+                            halign: "left"
+                            height: 40
+                            width: 260
+                            text: "Graffiti"
+                            text_size: self.size
+                            valign: "center"
+                Button:
+                    id: button_4
+                    background_normal: ''
+                    background_color: .349, .5686, .392, 1
+                    size_hint_y: 0.10
+                    width: 260
+                    height: 40
+
+                    on_press:
+                        root.manager.transition.direction = 'left' 
+                        root.manager.transition.duration = 0
+                        root.manager.current = 'screen_AddVideo'
+
+                    StackLayout:
+                        pos: self.parent.pos
+                        size: self.parent.size
+                        orientation: 'lr-tb'
+                        size_hint_y: None
+                        spacing: 30
+                        padding:[80, 0, 0, 0]
+
+                        Image:
+                            source: 'hand.png'
+                            size_hint_x: None
+                            width: 30
+                            valign: "center"
+
+                        Label:
+                            size_hint_x: None
+                            halign: "left"
+                            height: 40
+                            width: 260
+                            text: "Vidéo"
+                            text_size: self.size
+                            valign: "center"
+                Button:
+                    id: button_4
+                    background_normal: ''
+                    background_color: .349, .5686, .392, 1
+                    size_hint_y: 0.10
+                    width: 240
+                    height: 40
+                    on_press:
+                        root.manager.transition.direction = 'right' 
+                        root.manager.transition.duration = 0
+                        root.manager.current = 'screen_TopicsSelection'
+
+
+                    StackLayout:
+                        pos: self.parent.pos
+                        size: self.parent.size
+                        orientation: 'lr-tb'
+                        size_hint_x: None
+                        size_hint_y: None
+                        spacing: 30
+                        
+
+                        Image:
+                            source: 'hand.png'
+                            size_hint_x: None
+                            width: 30
+                            valign: "center"
+
+                        Label:
+                            size_hint_x: None
+                            halign: "left"
+                            height: 40
+                            width: 260
+                            text: "Retour aux sujets"
+                            text_size: self.size
+                            valign: "center"        
+                Widget:
+            
+                FloatLayout:
+                    Image:
+                        source: "chibi_side_bar.png"
+                        size_hint_x: 1
+                        size_hint_y: None
+                        size: self.texture_size
+                        anchor_x: "center"
+                        anchor_y: "center"
+
+<HeaderTopicName>:
+    BoxLayout:
+        orientation: 'vertical'
+        size: root.size
+        pos: root.pos
+        spacing: 30
+        id: content_box
+        
+
+<InterventionsSelection>:
+    BoxLayout:
+        #interventions à gauche et chibi avec bulle à droite
+        orientation: "horizontal"
+        pos: [root.pos[0],root.pos[1]-150]
+        size: root.size
+
+        BoxLayout:
+            id: intervention_box
+            #pour ajouter le widget et tout remonter
+            orientation: "vertical"
+            size_hint: 2, 1
+
+            GridLayout:
+                id: intervention_content
+                cols: 3
+                rows: 5
+                size: root.size
+                pos: self.parent.pos
+                spacing: 100
+                size_hint: 1,3
+
+            
+            Widget:
+    
+        BoxLayout:
+            orientation: "vertical"
+
+            Button:
+                color: 0, 0, 0, 0
+                background_color: 0, 0, 0, 0
+                pos: self.pos
+                size: self.size
+
+                on_press:
+                    app.interventionsSelection.fire_popup()
+
+                canvas.before:
+                    Color:
+                        rgba: (1, 1, 1, 1) if self.state == 'normal' else (1, 1, 1, .2)
+
+                    RoundedRectangle:
+                        id: ellipse
+                        size: self.size
+                        pos: self.pos
+                        source: "" if app.subjectTitle is None else "data/%s/subject/chibi_subject.png" % (app.subjectTitle)
+            
+            Widget:
+            
+
+            
+
+<InterventionsSelectionEmpty>:
+    BoxLayout:
+        #interventions à gauche et chibi avec bulle à droite
+        orientation: "horizontal"
+        pos: [root.pos[0],root.pos[1]-150]
+        size: root.size
+
+        BoxLayout:
+            id: intervention_box
+            #pour ajouter le widget et tout remonter
+            orientation: "vertical"
+            size_hint: 2, 1
+
+            FloatLayout:
+                size: self.size
+                pos: self.pos
+                Image:
+                    source: "chibiMan.png"
+                    size_hint_x: None
+                    size_hint_y: None
+                    size: [self.parent.size[0]/1.2,self.parent.size[1]/1.2]
+                    pos_hint: {"x":-0.1, "y":-0.5}
+
+            Widget:
+
+        BoxLayout:
+            orientation: "vertical"
+
+            Button:
+                color: 0, 0, 0, 0
+                background_color: 0, 0, 0, 0
+                pos: self.pos
+                size: self.size
+
+                on_press:
+                    app.interventionsSelectionEmpty.fire_popup()
+
+                canvas.before:
+                    Color:
+                        rgba: (1, 1, 1, 1) if self.state == 'normal' else (1, 1, 1, .2)
+
+                    RoundedRectangle:
+                        id: ellipse
+                        size: self.size
+                        pos: self.pos
+                        source: "" if app.subjectTitle is None else "data/%s/subject/chibi_subject.png" % (app.subjectTitle)
+            
+            Widget:
+
+<Intervention>:
+    Button:
+        text: "" if app.interventionView is None else "%s" % (app.interventionView)
+        color: 0, 0, 0, 0
+        pos: root.pos
+        size: [550, 200]
+        background_color: 0, 0, 0, 0
+        text_size: self.size
+        on_press:
+            app.currentIntervention = self.text
+            app.interventionDisplayedScreen.manager.transition.direction = 'left' 
+            app.interventionDisplayedScreen.manager.transition.duration = 0
+            app.interventionDisplayedScreen.manager.current = 'screen_InterventionDisplayed'
+
+        canvas.before:
+            Color:
+                rgba: (1, 1, 1, 1) if self.state == 'normal' else (.349, .5686, .392, .2)
+
+            Ellipse:
+                id: ellipse
+                size: self.size
+                pos: self.pos
+                source: "" if self.text is None else "%s" % (self.text)
+
+<InterventionDisplayedScreen>:
+    BoxLayout:
+        id: top_box
+        #diviser l'écran en deux
+        orientation: "horizontal"
+        size: root.size
+        pos: root.pos
+        spacing: 60
+
+
+        BoxLayout:
+            #barre latérale
+            id: lateral
+            orientation: "vertical"
+            size_hint: 0.2, 1 #la barre latéral prend 20% de l'espace à l'écran
+            pos: root.pos
+
+            #couleur de fond
+            canvas:
+                Color:
+                    rgb: (.349, .5686, .392, 1)
+
+                RoundedRectangle:
+                    size: self.size
+                    pos: self.pos
+                    radius: 0, 20, 20, 0 #TOP-L, TOP-R, BOTTOM-R, BOTTOM-L
+            
+            BoxLayout:
+                id: bottom_box
+                orientation: 'vertical'
+                spacing: 80
+                padding:[60, 0, 60, 0]
+
+                Label:
+                    background_normal: ''
+                    text: 'VideGraff'
+                    color: 1, 1, 1, 1
+                    size_hint_y: 0.2
+                    height: 40
+                    width: 260
+                    font_size: 65
+                    halign: "center"
+                    text_size: self.size
+                    bold: True
+
+                Label:
+                    background_normal: ''
+                    text: 'Essaie un de ces gestes !'
+                    color: 1, 1, 1, 1
+                    size_hint_y: 0.1
+                    height: 40
+                    width: 260
+                    font_size: 34
+                    halign: "left"
+                    text_size: self.size
+                    bold: True
+
+                Button:
+                    id: button_2
+                    background_normal: ''
+                    background_color: .349, .5686, .392, 1
+                    size_hint_y: 0.10
+                    width: 350
+                    height: 40
+                    on_press:
+                        root.manager.transition.direction = 'left' 
+                        root.manager.transition.duration = 0
+                        root.manager.current = 'screen_TopicDisplay'
+
+                    StackLayout:
+                        pos: self.parent.pos
+                        size: self.parent.size
+                        orientation: 'lr-tb'
+                        size_hint_y: None
+                        spacing: 30
+
+                        Image:
+                            source: 'hand.png'
+                            size_hint_x: None
+                            width: 30
+                            valign: "center"
+
+                        Label:
+                            size_hint_x: None
+                            halign: "left"
+                            height: 40
+                            width: 350
+                            text: "Changer d'intervention"
+                            text_size: self.size
+                            valign: "center"
+
+                Label:
+                    id: button_2
+                    background_normal: ''
+                    background_color: .349, .5686, .392, 1
+                    size_hint_y: 0.10
+                    width: 260
+                    height: 40
+
+                    StackLayout:
+                        pos: self.parent.pos
+                        size: self.parent.size
+                        orientation: 'tb-lr'
+                        size_hint_y: None
+                        spacing: 30
+
+                        Label:
+                            size_hint_x: None
+                            halign: "left"
+                            height: 40
+                            width: 260
+                            text: "Contribuer"
+                            text_size: self.size
+                            valign: "center"
+                            bold: True
+                Button:
+                    id: button_3
+                    background_normal: ''
+                    background_color: .349, .5686, .392, 1
+                    size_hint_y: 0.10
+                    width: 260
+                    height: 40
+                    on_press:
+                        root.manager.transition.direction = 'left' 
+                        root.manager.transition.duration = 0
+                        root.manager.current = 'screen_AddGraffiti'
+
+                    StackLayout:
+                        pos: self.parent.pos
+                        size: self.parent.size
+                        orientation: 'lr-tb'
+                        size_hint_y: None
+                        spacing: 30
+                        padding:[80, 0, 0, 0]
+
+                        Image:
+                            source: 'hand.png'
+                            size_hint_x: None
+                            width: 30
+                            valign: "center"
+
+                        Label:
+                            size_hint_x: None
+                            halign: "left"
+                            height: 40
+                            width: 260
+                            text: "Graffiti"
+                            text_size: self.size
+                            valign: "center"
+                Button:
+                    id: button_4
+                    background_normal: ''
+                    background_color: .349, .5686, .392, 1
+                    size_hint_y: 0.10
+                    width: 260
+                    height: 40
+
+                    on_press:
+                        root.manager.transition.direction = 'left' 
+                        root.manager.transition.duration = 0
+                        root.manager.current = 'screen_AddVideo'
+
+                    StackLayout:
+                        pos: self.parent.pos
+                        size: self.parent.size
+                        orientation: 'lr-tb'
+                        size_hint_y: None
+                        spacing: 30
+                        padding:[80, 0, 0, 0]
+
+                        Image:
+                            source: 'hand.png'
+                            size_hint_x: None
+                            width: 30
+                            valign: "center"
+
+                        Label:
+                            size_hint_x: None
+                            halign: "left"
+                            height: 40
+                            width: 260
+                            text: "Vidéo"
+                            text_size: self.size
+                            valign: "center"
+                Button:
+                    id: button_4
+                    background_normal: ''
+                    background_color: .349, .5686, .392, 1
+                    size_hint_y: 0.10
+                    width: 240
+                    height: 40
+                    on_press:
+                        root.manager.transition.direction = 'right' 
+                        root.manager.transition.duration = 0
+                        root.manager.current = 'screen_TopicsSelection'
+
+                    StackLayout:
+                        pos: self.parent.pos
+                        size: self.parent.size
+                        orientation: 'lr-tb'
+                        size_hint_x: None
+                        size_hint_y: None
+                        spacing: 30
+                        
+
+                        Image:
+                            source: 'hand.png'
+                            size_hint_x: None
+                            width: 30
+                            valign: "center"
+
+                        Label:
+                            size_hint_x: None
+                            halign: "left"
+                            height: 40
+                            width: 260
+                            text: "Retour aux sujets"
+                            text_size: self.size
+                            valign: "center"  
+      
+                Widget:
+            
+                FloatLayout:
+                    Image:
+                        source: "chibi_side_bar.png"
+                        size_hint_x: 1
+                        size_hint_y: None
+                        size: self.texture_size
+                        anchor_x: "center"
+                        anchor_y: "center"
+
+<HeaderSubjectTitle>:
+    BoxLayout:
+        orientation: 'vertical'
+        size: root.size
+        pos: root.pos
+        spacing: 30
+        id: content_box
+
+        StackLayout:
+            orientation: 'lr-tb'
+            size_hint_x: 2
+            size_hint_y: .1
+            
+
+            Label:
+                text: "" if app.subjectTitle is None else "%s" % (app.subjectTitle)
+                bold: True
+                font_size: 44
+                text_size: self.size
+                color: .349, .5686, .392, 1
+
+<InterventionContent>:
+    BoxLayout:
+        id: intervention_content
+        orientation: "horizontal"
+        size: root.size
+        pos: root.pos
+        padding:[100]
+        spacing: 100
+
+
+        #BoxLayout:
+            #orientation: "vertical"
+            #size: root.size
+            #pos: root.pos
+
+            #VideoPlayer:
+                #id: video
+                #source: "video_test.mp4"
+                #state: "pause"
+                #state: root.video_state
+                #size_hint: 1,2
+                #size: root.size
+            
+
+            #Widget:
+        
+        StackLayout:
+            orientation: "tb-lr"
+            pos: self.pos
+            size: self.size
+            background_color: 0, 0, 0, 0
+            size_hint: 0.5, 1
+
+            canvas.before:
+                Color:
+                    rgba: 1, 1, 1, 1
+
+                RoundedRectangle:
+                    pos: self.pos
+                    size: self.size
+                    radius: 40, 40, 40, 40
+            
+            GridLayout:
+                cols: 1
+                pos: self.pos
+                size: self.size
+                padding: [40, 60, 60, 60]
+
+                Label:
+                    text: "Graffiti"
+                    text_size: self.size
+                    size: self.parent.size
+                    size_hint_y: 0.05
+                    pos: self.pos
+                    color: .349, .5686, .392, 1
+                    halign: 'left'
+                    bold: True
+
+                Image:
+                    source: "" if app.currentIntervention is None else "%s" % (app.currentIntervention)
+                    size: self.size
+                    pos: self.pos
+                    halign: "left"
+
+                Widget:
+
+<AddGraffitiScreen>:
+    BoxLayout:
+        id: top_box
+        #diviser l'écran en deux
+        orientation: "horizontal"
+        size: root.size
+        pos: root.pos
+        spacing: 60
+
+
+        BoxLayout:
+            #barre latérale
+            id: lateral
+            orientation: "vertical"
+            size_hint: 0.2, 1 #la barre latéral prend 20% de l'espace à l'écran
+            pos: root.pos
+
+            #couleur de fond
+            canvas:
+                Color:
+                    rgb: (.349, .5686, .392, 1)
+
+                RoundedRectangle:
+                    size: self.size
+                    pos: self.pos
+                    radius: 0, 20, 20, 0 #TOP-L, TOP-R, BOTTOM-R, BOTTOM-L
+            
+            BoxLayout:
+                id: bottom_box
+                orientation: 'vertical'
+                spacing: 80
+                padding:[60, 0, 60, 0]
+
+                Label:
+                    background_normal: ''
+                    text: 'VideGraff'
+                    color: 1, 1, 1, 1
+                    size_hint_y: 0.2
+                    height: 40
+                    width: 260
+                    font_size: 65
+                    halign: "center"
+                    text_size: self.size
+                    bold: True
+
+                Label:
+                    background_normal: ''
+                    text: 'Essaie un de ces gestes !'
+                    color: 1, 1, 1, 1
+                    size_hint_y: 0.1
+                    height: 40
+                    width: 260
+                    font_size: 34
+                    halign: "left"
+                    text_size: self.size
+                    bold: True
+
+                Button:
+                    id: button_1
+                    background_normal: ''
+                    background_color: .349, .5686, .392, 1
+                    size_hint_y: 0.10
+                    width: 260
+                    height: 40
+                    on_press:
+                        root.manager.transition.direction = 'left' 
+                        root.manager.transition.duration = 0
+                        root.manager.current = 'screen_TopicDisplay'
+                        app.addGraffitiContentRef.ids.painter_widget.export_scaled_png('data/%s/' % (app.subjectTitle), image_scale=float("2"))
+                        app.clear_graff()
+                        app.updateGraffitiNumberDB()
+                        app.displayInterventions()
+
+                    StackLayout:
+                        pos: self.parent.pos
+                        size: self.parent.size
+                        orientation: 'lr-tb'
+                        size_hint_y: None
+                        spacing: 30
+
+                        Image:
+                            source: 'hand.png'
+                            size_hint_x: None
+                            width: 30
+                            valign: "center"
+
+                        Label:
+                            size_hint_x: None
+                            halign: "left"
+                            height: 40
+                            width: 300
+                            text: "Ajouter le graffiti"
+                            text_size: self.size
+                            valign: "center"
+                
+                Button:
+                    id: button_3
+                    background_normal: ''
+                    background_color: .349, .5686, .392, 1
+                    size_hint_y: 0.10
+                    width: 260
+                    height: 40
+                    on_press:
+                        root.manager.transition.direction = 'left' 
+                        root.manager.transition.duration = 0
+                        root.manager.current = 'screen_TopicsSelection'
+                        app.clear_graff()
+
+                    StackLayout:
+                        pos: self.parent.pos
+                        size: self.parent.size
+                        orientation: 'lr-tb'
+                        size_hint_y: None
+                        spacing: 30
+
+                        Image:
+                            source: 'hand.png'
+                            size_hint_x: None
+                            width: 30
+                            valign: "center"
+
+                        Label:
+                            size_hint_x: None
+                            halign: "left"
+                            height: 40
+                            width: 260
+                            text: "Annuler"
+                            text_size: self.size
+                            valign: "center"
+                  
+                Widget:
+            
+                FloatLayout:
+                    Image:
+                        source: "chibi_side_bar.png"
+                        size_hint_x: 1
+                        size_hint_y: None
+                        size: self.texture_size
+                        anchor_x: "center"
+                        anchor_y: "center"
+
+<AddGraffitiContent>:
+    BoxLayout:
+        orientation: "vertical"
+        padding: [30, 60, 100, 100]
+        size: root.size
+        pos: root.pos
+
+        GridLayout:
+            cols: 1
+            size: root.size
+            pos: root.pos
+            id: graffiti_draw
+
+            canvas.before:
+                Color:
+                    rgba: 1, 1, 1, 1
+                RoundedRectangle:
+                    size: self.size
+                    pos: self.pos
+                    radius: 40, 40, 40, 40
+            
+            BoxLayout:
+                orientation: "vertical"
+                size: self.size
+                pos: self.pos
+
+                Label:
+                    text: "Graffiti"
+                    color: .349, .5686, .392, 1
+                    bold: True
+                    halign: "left"
+                    valign: "top"
+                    size_hint: 0.08, 0.1
+
+                GridLayout:
+                    cols: 1
+
+                    MyWidget:
+                        id: painter_widget
+                        
+                    
+<AddVideoScreen>:
+    BoxLayout:
+        id: top_box
+        #diviser l'écran en deux
+        orientation: "horizontal"
+        size: root.size
+        pos: root.pos
+        spacing: 60
+
+
+        BoxLayout:
+            #barre latérale
+            id: lateral
+            orientation: "vertical"
+            size_hint: 0.2, 1 #la barre latéral prend 20% de l'espace à l'écran
+            pos: root.pos
+
+            #couleur de fond
+            canvas:
+                Color:
+                    rgb: (.349, .5686, .392, 1)
+
+                RoundedRectangle:
+                    size: self.size
+                    pos: self.pos
+                    radius: 0, 20, 20, 0 #TOP-L, TOP-R, BOTTOM-R, BOTTOM-L
+            
+            BoxLayout:
+                id: bottom_box
+                orientation: 'vertical'
+                spacing: 80
+                padding:[60, 0, 60, 0]
+
+                Label:
+                    background_normal: ''
+                    text: 'VideGraff'
+                    color: 1, 1, 1, 1
+                    size_hint_y: 0.2
+                    height: 40
+                    width: 260
+                    font_size: 65
+                    halign: "center"
+                    text_size: self.size
+                    bold: True
+
+                Label:
+                    background_normal: ''
+                    text: 'Essaie un de ces gestes !'
+                    color: 1, 1, 1, 1
+                    size_hint_y: 0.1
+                    height: 40
+                    width: 260
+                    font_size: 34
+                    halign: "left"
+                    text_size: self.size
+                    bold: True
+
+                Button:
+                    id: button_1
+                    background_normal: ''
+                    background_color: .349, .5686, .392, 1
+                    size_hint_y: 0.10
+                    width: 260
+                    height: 40
+                    on_press:
+                        #root.manager.transition.direction = 'left' 
+                        #root.manager.transition.duration = 0
+                        #root.manager.current = 'screen_TopicsSelection'
+                        #app.addVideoContentRef.record_video()
+
+                    StackLayout:
+                        pos: self.parent.pos
+                        size: self.parent.size
+                        orientation: 'lr-tb'
+                        size_hint_y: None
+                        spacing: 30
+
+                        Image:
+                            source: 'hand.png'
+                            size_hint_x: None
+                            width: 30
+                            valign: "center"
+
+                        Label:
+                            size_hint_x: None
+                            halign: "left"
+                            height: 40
+                            width: 300
+                            text: "Enregistrer/Stopper"
+                            text_size: self.size
+                            valign: "center"
+                
+                Button:
+                    id: button_3
+                    background_normal: ''
+                    background_color: .349, .5686, .392, 1
+                    size_hint_y: 0.10
+                    width: 260
+                    height: 40
+                     
+                    on_press:
+                        root.manager.transition.direction = 'left' 
+                        root.manager.transition.duration = 0
+                        root.manager.current = 'screen_TopicsSelection'
+
+                    StackLayout:
+                        pos: self.parent.pos
+                        size: self.parent.size
+                        orientation: 'lr-tb'
+                        size_hint_y: None
+                        spacing: 30
+
+                        Image:
+                            source: 'hand.png'
+                            size_hint_x: None
+                            width: 30
+                            valign: "center"
+
+                        Label:
+                            size_hint_x: None
+                            halign: "left"
+                            height: 40
+                            width: 260
+                            text: "Annuler"
+                            text_size: self.size
+                            valign: "center"
+                  
+                Widget:
+            
+                FloatLayout:
+                    Image:
+                        source: "chibi_side_bar.png"
+                        size_hint_x: 1
+                        size_hint_y: None
+                        size: self.texture_size
+                        anchor_x: "center"
+                        anchor_y: "center"
+
+<AddVideoContent>:
+    BoxLayout:
+        orientation: "vertical"
+        padding: [30, 60, 100, 100]
+        size: root.size
+        pos: root.pos
+
+        GridLayout:
+            cols: 1
+            size: self.size
+            pos: self.pos
+            id: graffiti_draw
+
+            canvas.before:
+                Color:
+                    rgba: 1, 1, 1, 1
+                RoundedRectangle:
+                    size: self.size
+                    pos: self.pos
+                    radius: 40, 40, 40, 40
+            
+            BoxLayout:
+                id: camera_display
+                orientation: "vertical"
+                size: self.size
+                pos: self.pos
+                padding: [90, 0, 0, 30]
+
+                Label:
+                    text: "Enregistrement vidéo"
+                    color: .349, .5686, .392, 1
+                    bold: True
+                    halign: "left"
+                    valign: "top"
+                    size_hint: 0.08, 0.15
+                Widget:
+
+                GridLayout:
+                    cols: 1
+
+                    Camera:
+                        id: recorder_widget
+                        
+                    
+
+<MyWidget>:
+    #Button:
+        #background_color: 1, 1, 1, 0
+        #center: root.center
+        #size: (root.width // 2, root.height // 8)
+
+<DescriptionPopup>:
+    id: descriptionPopup
+    size_hint: .3, .3
+    auto_dismiss: True
+    title: "" if app.subjectTitle is None else '%s' % (app.subjectTitle) 
+    title_color: .349, .5686, .392, 1
+    title_size: 30
+    separator_color: .349, .5686, .392, 1
+    background: "popup_background.png"
+
+    GridLayout:
+        cols: 1
+        padding: [20, 30, 20, 30]
+        size: self.size
+
+        Label:
+            text: "" if app.currentDescription is None else "%s" % (app.currentDescription)
+            color: .588, .588, .588, 1
+            text_size: self.size
+            size_hint : 1.0, 1.0
+            halign: "left"
+            valign: "top"
+        
+            
+    
+        
