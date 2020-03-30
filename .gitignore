@@ -3,7 +3,7 @@ __pycache__/
 *.py[cod]
 *$py.class
 
-# environment variable
+#environment variable
 work
 
 # C extensions
