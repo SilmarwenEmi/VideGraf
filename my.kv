@@ -777,40 +777,6 @@
                     bold: True
 
                 Button:
-                    id: button_1
-                    background_normal: ''
-                    background_color: .349, .5686, .392, 1
-                    size_hint_y: 0.10
-                    width: 260
-                    height: 40
-                    on_press:
-                        app.interventionContentRef.play()
-                        #root.manager.transition.direction = 'left' 
-                        #root.manager.transition.duration = 0
-                        #root.manager.current = 'screen_TopicDisplay'
-
-                    StackLayout:
-                        pos: self.parent.pos
-                        size: self.parent.size
-                        orientation: 'lr-tb'
-                        size_hint_y: None
-                        spacing: 30
-
-                        Image:
-                            source: 'hand.png'
-                            size_hint_x: None
-                            width: 30
-                            valign: "center"
-
-                        Label:
-                            size_hint_x: None
-                            halign: "left"
-                            height: 40
-                            width: 260
-                            text: "Play / Pause"
-                            text_size: self.size
-                            valign: "center"
-                Button:
                     id: button_2
                     background_normal: ''
                     background_color: .349, .5686, .392, 1
@@ -1162,7 +1128,7 @@
                             halign: "left"
                             height: 40
                             width: 300
-                            text: "Valider les changements"
+                            text: "Ajouter le graffiti"
                             text_size: self.size
                             valign: "center"
                 
