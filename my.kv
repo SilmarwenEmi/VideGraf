@@ -715,6 +715,7 @@
                     background_color: 0, 0, 0, 0
 
                     on_press:
+                        app.currentIntervention = ""
                         app.interventionsSelection.fire_popupGraffiti()
                     
                     canvas.before:
@@ -1011,9 +1012,10 @@
         text_size: self.size
         on_press:
             app.currentIntervention = self.text
-            app.interventionDisplayedScreen.manager.transition.direction = 'left' 
-            app.interventionDisplayedScreen.manager.transition.duration = 0
-            app.interventionDisplayedScreen.manager.current = 'screen_InterventionDisplayed'
+            app.interventionsSelection.fire_popupGraffiti()
+            #app.interventionDisplayedScreen.manager.transition.direction = 'left' 
+            #app.interventionDisplayedScreen.manager.transition.duration = 0
+            #app.interventionDisplayedScreen.manager.current = 'screen_InterventionDisplayed'
 
         canvas.before:
             Color:
@@ -1753,14 +1755,115 @@
         cols: 1
         padding: [20, 30, 20, 30]
         size: self.size
+        
+        Image:
+            source: "" if app.currentIntervention is None else "%s" % (app.currentIntervention)
+            pos: self.pos
+            size: self.texture_size
+            keep_ratio: True
+            size_hint_y: 2
+        
+        GridLayout:
+            # bottom buttons - retour and modifier
+            cols: 2
+            size_hint_y: 0.3
+            padding: [80, 20, 80, 20]
+            spacing: 400
 
-        Label:
-            text: "espace pour ajouter le graffiti"
-            color: .588, .588, .588, 1
-            text_size: self.size
-            size_hint : 1.0, 1.0
-            halign: "left"
-            valign: "top"
+            Button:
+                text: ""
+                size: self.size
+                color: 1, 0, 0, 1
+                background_color: 0, 0, 0, 0
+
+                on_press:
+                    app.currentIntervention = ""
+                    graffitiPopup.dismiss()
+                
+                canvas.before:
+                    Color:
+                        rgba: (1, 1, 1, 1) if self.state == 'normal' else (.349, .5686, .392, .3)
+
+                    RoundedRectangle:
+                        size: self.size
+                        pos: self.pos
+                        radius: 10, 10, 10, 10
+                        source: "rounded_border.png"
+                
+
+                StackLayout:
+                    pos: self.parent.pos
+                    size: self.parent.size
+                    orientation: 'lr-tb'
+                    size_hint_y: None
+                    spacing: 30
+                    padding: [50, 0, 50, 0]
+
+                    Image:
+                        source: 'back.png'
+                        size_hint_x: None
+                        width: 40
+                        valign: "center"
+                        keep_ratio: True
+
+                    Label:
+                        size_hint_x: None
+                        halign: "center"
+                        height: 40
+                        width: 300
+                        text: "Retour"
+                        text_size: self.size
+                        valign: "center"
+                        color: .349, .5686, .392, 1
+                        bold: True
+                        font_size: 34
+
+            Button:
+                text: ""
+                size: self.size
+                color: 1, 0, 0, 0
+                background_color: 0, 0, 0, 0
+
+                on_press:
+                    app.currentIntervention = ""
+                    app.interventionsSelection.fire_popupGraffiti()
+                
+                canvas.before:
+                    Color:
+                        rgba: (.349, .5686, .392, 1) if self.state == 'normal' else (.349, .5686, .392, .3)
+
+                    RoundedRectangle:
+                        size: self.size
+                        pos: self.pos
+                        radius: 20, 20, 20, 20
+
+                StackLayout:
+                    pos: self.parent.pos
+                    size: self.parent.size
+                    orientation: 'lr-tb'
+                    size_hint_y: None
+                    spacing: 30
+                    padding: [50, 0, 50, 0]
+
+                    Image:
+                        source: 'edit.png'
+                        size_hint_x: None
+                        width: 40
+                        valign: "center"
+                        keep_ratio: True
+
+                    Label:
+                        size_hint_x: None
+                        halign: "center"
+                        height: 40
+                        width: 300
+                        text: "Modifier"
+                        text_size: self.size
+                        valign: "center"
+                        color: 1, 1, 1, 1
+                        bold: True
+                        font_size: 34
+
         
     
         

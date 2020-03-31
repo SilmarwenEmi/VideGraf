@@ -70,13 +70,14 @@ class InterventionsSelection(Widget):
         pops.open()
 
 class InterventionsSelectionEmpty(Widget):
-    def fire_popup(self):
+    pass
+    """def fire_popup(self):
         pops = DescriptionPopup()
         pops.open()
 
     def fire_popupGraffiti(self):
         pops = GraffitiPopup()
-        pops.open()
+        pops.open()"""
 
 class InterventionDisplayedContent(Widget):
     pass
