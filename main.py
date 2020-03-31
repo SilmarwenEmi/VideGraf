@@ -68,16 +68,33 @@ class InterventionsSelection(Widget):
     def fire_popupGraffiti(self):
         pops = GraffitiPopup()
         pops.open()
+    
+    def fire_popupAddGraffiti(self):
+        pops = AddGraffitiPopup()
+
+        global mywgt
+        mywgt = MyWidget()
+
+        paintGraffiti = pops.ids.painter_widget
+        self.painter = GraffitiDraw()
+        paintGraffiti.add_widget(self.painter)
+        paintGraffiti.add_widget(mywgt)
+
+        pops.open()
 
 class InterventionsSelectionEmpty(Widget):
-    pass
-    """def fire_popup(self):
+
+    def fire_popup(self):
         pops = DescriptionPopup()
         pops.open()
 
     def fire_popupGraffiti(self):
         pops = GraffitiPopup()
-        pops.open()"""
+        pops.open()
+
+    def fire_popupAddGraffiti(self):
+        pops = AddGraffitiPopup()
+        pops.open()
 
 class InterventionDisplayedContent(Widget):
     pass
@@ -161,8 +178,8 @@ class GraffitiDraw(Widget):
         with self.canvas:
             Color(*color, mode='hsv') # (numéro couleur rgb) / 255
             d = 5.
-            #print("X: " + str(touch.spos[0]) + " - Y: " + str(touch.spos[1]))
-            if 0.19 < touch.spos[0] < 0.96 and 0.05 < touch.spos[1] < 0.83:
+            print("X: " + str(touch.spos[0]) + " - Y: " + str(touch.spos[1]))
+            if 0.2125 < touch.spos[0] < 0.7833 and 0.2914 < touch.spos[1] < 0.7276:
                 Ellipse(pos=(touch.x - d / 2, touch.y - d / 2), size=(d, d))
                 #try:
                 touch.ud['line'] = Line(points=(touch.x, touch.y),width=4)
@@ -171,7 +188,7 @@ class GraffitiDraw(Widget):
                 
 
     def on_touch_move(self, touch):
-        if 0.19 < touch.spos[0] < 0.96 and 0.05 < touch.spos[1] < 0.83:
+        if 0.2125 < touch.spos[0] < 0.7833 and 0.2914 < touch.spos[1] < 0.7276:
             try:
                 touch.ud['line'].points += [touch.x, touch.y]
             except:
@@ -193,23 +210,6 @@ class AddGraffitiScreen(Screen):
 class AddVideoScreen(Screen):
     pass
 
-class KivyCamera(Image):
-    def __init__(self, capture, fps, **kwargs):
-        super(KivyCamera, self).__init__(**kwargs)
-        self.capture = capture
-        Clock.schedule_interval(self.update, 1.0 / fps)
-
-    def update(self, dt):
-        ret, frame = self.capture.read()
-        if ret:
-            # convert it to texture
-            buf1 = cv2.flip(frame, 0)
-            buf = buf1.tostring()
-            image_texture = Texture.create(
-                size=(frame.shape[1], frame.shape[0]), colorfmt='bgr')
-            image_texture.blit_buffer(buf, colorfmt='bgr', bufferfmt='ubyte')
-            # display image from the texture
-            self.texture = image_texture
 
 class DescriptionPopup(Popup):
     pass
@@ -217,6 +217,8 @@ class DescriptionPopup(Popup):
 class GraffitiPopup(Popup):
     pass
 
+class AddGraffitiPopup(Popup):
+    pass
 
 class MyApp(App): # <- Main Class
     subjectsTitles = ListProperty()

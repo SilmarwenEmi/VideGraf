@@ -626,12 +626,14 @@
                 orientation: "lr-tb"
                 size_hint_y: 0.6
                 padding: [0, 40, 0, 0]
+                
 
 
                 Button:
                     text: ""
                     color: 1, 1, 1, 0
                     background_color: 1, 0, 0, 0
+                    size_hint_x: .25
 
                     on_press:
                         app.topicsSelectionScreen.manager.transition.direction = 'right' 
@@ -642,7 +644,6 @@
                         orientation: 'lr-tb'
                         size: self.parent.size
                         pos: self.parent.pos
-                        #size_hint_y: .1
                         spacing: 30
 
                         Image:
@@ -716,7 +717,7 @@
 
                     on_press:
                         app.currentIntervention = ""
-                        app.interventionsSelection.fire_popupGraffiti()
+                        app.interventionsSelection.fire_popupAddGraffiti()
                     
                     canvas.before:
                         Color:
@@ -831,6 +832,7 @@
                     text: ""
                     color: 1, 1, 1, 0
                     background_color: 1, 0, 0, 0
+                    size_hint_x: .25
 
                     on_press:
                         app.topicsSelectionScreen.manager.transition.direction = 'right' 
@@ -917,7 +919,7 @@
                     background_color: 0, 0, 0, 0
 
                     on_press:
-                        app.interventionsSelectionEmpty.fire_popupGraffiti()
+                        app.interventionsSelectionEmpty.fire_popupAddGraffiti()
                     
                     canvas.before:
                         Color:
@@ -1287,23 +1289,6 @@
         pos: root.pos
         padding:[100]
         spacing: 100
-
-
-        #BoxLayout:
-            #orientation: "vertical"
-            #size: root.size
-            #pos: root.pos
-
-            #VideoPlayer:
-                #id: video
-                #source: "video_test.mp4"
-                #state: "pause"
-                #state: root.video_state
-                #size_hint: 1,2
-                #size: root.size
-            
-
-            #Widget:
         
         StackLayout:
             orientation: "tb-lr"
@@ -1765,10 +1750,10 @@
         
         GridLayout:
             # bottom buttons - retour and modifier
-            cols: 2
+            cols: 3
             size_hint_y: 0.3
-            padding: [80, 20, 80, 20]
-            spacing: 400
+            padding: [100, 20, 100, 20]
+            spacing: 100
 
             Button:
                 text: ""
@@ -1817,6 +1802,7 @@
                         color: .349, .5686, .392, 1
                         bold: True
                         font_size: 34
+            Widget:
 
             Button:
                 text: ""
@@ -1864,6 +1850,124 @@
                         bold: True
                         font_size: 34
 
+<AddGraffitiPopup>:
+    id: addGraffitiPopup
+    size_hint: .6, .6
+    auto_dismiss: True
+    title: "" if app.subjectTitle is None else '%s' % (app.subjectTitle) 
+    title_color: .349, .5686, .392, 1
+    title_size: 45
+    separator_color: .349, .5686, .392, 1
+    background: "popup_background.png"
+
+    GridLayout:
+        cols: 1
+        padding: [20, 30, 20, 30]
+        size: self.size
         
-    
+        MyWidget:
+            id: painter_widget
+        
+        
+        GridLayout:
+            # bottom buttons - annuler and valider
+            cols: 3
+            size_hint_y: 0.15
+            padding: [100, 20, 100, 20]
+            spacing: 100
+
+            Button:
+                text: ""
+                size: self.size
+                color: 1, 0, 0, 1
+                background_color: 0, 0, 0, 0
+
+                on_press:
+                    app.currentIntervention = ""
+                    addGraffitiPopup.dismiss()
+                
+                canvas.before:
+                    Color:
+                        rgba: (1, 1, 1, 1) if self.state == 'normal' else (.349, .5686, .392, .3)
+
+                    RoundedRectangle:
+                        size: self.size
+                        pos: self.pos
+                        radius: 10, 10, 10, 10
+                        source: "rounded_border.png"
+                
+
+                StackLayout:
+                    pos: self.parent.pos
+                    size: self.parent.size
+                    orientation: 'lr-tb'
+                    size_hint_y: None
+                    spacing: 30
+                    padding: [50, 0, 50, 0]
+
+                    Image:
+                        source: 'cancel.png'
+                        size_hint_x: None
+                        width: 60
+                        valign: "center"
+                        keep_ratio: True
+
+                    Label:
+                        size_hint_x: None
+                        halign: "center"
+                        height: 40
+                        width: 300
+                        text: "Annuler"
+                        text_size: self.size
+                        valign: "center"
+                        color: .349, .5686, .392, 1
+                        bold: True
+                        font_size: 34
+            Widget:
+
+            Button:
+                text: ""
+                size: self.size
+                color: 1, 0, 0, 0
+                background_color: 0, 0, 0, 0
+
+                on_press:
+                    app.currentIntervention = ""
+                    app.interventionsSelection.fire_popupGraffiti()
+                
+                canvas.before:
+                    Color:
+                        rgba: (.349, .5686, .392, 1) if self.state == 'normal' else (.349, .5686, .392, .3)
+
+                    RoundedRectangle:
+                        size: self.size
+                        pos: self.pos
+                        radius: 20, 20, 20, 20
+
+                StackLayout:
+                    pos: self.parent.pos
+                    size: self.parent.size
+                    orientation: 'lr-tb'
+                    size_hint_y: None
+                    spacing: 30
+                    padding: [50, 0, 50, 0]
+
+                    Image:
+                        source: 'validate.png'
+                        size_hint_x: None
+                        width: 50
+                        valign: "center"
+                        keep_ratio: True
+
+                    Label:
+                        size_hint_x: None
+                        halign: "center"
+                        height: 40
+                        width: 300
+                        text: "Valider"
+                        text_size: self.size
+                        valign: "center"
+                        color: 1, 1, 1, 1
+                        bold: True
+                        font_size: 34
         
