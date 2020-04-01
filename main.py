@@ -269,11 +269,11 @@ class MyApp(App): # <- Main Class
         
 
         interventionView = StringProperty("")
-        subjectName = StringProperty('test')
-        subjectCamNb = StringProperty('test1')
-        subjectGrafNb = StringProperty('test2')
+        subjectName = StringProperty("")
+        subjectCamNb = StringProperty("")
+        subjectGrafNb = StringProperty("")
         self.subjectDescription = {}
-        interventionLabel = StringProperty("test3")
+        interventionLabel = StringProperty("")
 
         #screens declaration
         self.topicsSelectionScreen = TopicsSelectionScreen(name ="screen_TopicsSelection")
@@ -420,6 +420,7 @@ class MyApp(App): # <- Main Class
         self.header.ids.content_box.add_widget(self.topics)
     
     def fire_popupAddGraffiti(self):
+        print(self.currentIntervention)
         self.addGraffitiPopup = AddGraffitiPopup()
 
         self.myWidget = MyWidget()

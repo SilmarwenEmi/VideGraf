@@ -1015,9 +1015,6 @@
         on_press:
             app.currentIntervention = self.text
             app.interventionsSelection.fire_popupGraffiti()
-            #app.interventionDisplayedScreen.manager.transition.direction = 'left' 
-            #app.interventionDisplayedScreen.manager.transition.duration = 0
-            #app.interventionDisplayedScreen.manager.current = 'screen_InterventionDisplayed'
 
         canvas.before:
             Color:
@@ -1735,11 +1732,12 @@
         cols: 1
         padding: [20, 30, 20, 30]
         size: self.size
+        pos: self.pos
         
         Image:
             source: "" if app.currentIntervention is None else "%s" % (app.currentIntervention)
-            pos: self.pos
-            size: self.texture_size
+            pos: self.parent.pos
+            size: self.parent.size
             keep_ratio: True
             size_hint_y: 2
         
@@ -1797,7 +1795,8 @@
                         color: .349, .5686, .392, 1
                         bold: True
                         font_size: 34
-            Widget:
+            MyWidget:
+                id: painter_widget
 
             Button:
                 text: ""
@@ -1806,8 +1805,8 @@
                 background_color: 0, 0, 0, 0
 
                 on_press:
-                    app.currentIntervention = ""
-                    app.interventionsSelection.fire_popupGraffiti()
+                    graffitiPopup.dismiss()
+                    app.fire_popupAddGraffiti()
                 
                 canvas.before:
                     Color:
@@ -1859,11 +1858,21 @@
         cols: 1
         padding: [20, 30, 20, 30]
         size: self.size
+        pos: self.pos
+        
         
         MyWidget:
             id: painter_widget
-        
-        
+
+            FloatLayout:
+                size: self.size
+                pos: self.pos
+
+            Image:
+                size: self.parent.size
+                pos: self.parent.pos
+                source: "data/Un master en sciences informatiques à Charleroi/graff2.png"
+
         GridLayout:
             # bottom buttons - annuler and valider
             cols: 3
@@ -1928,7 +1937,6 @@
 
                 on_press:
                     app.currentIntervention = ""
-                
                     app.addGraffitiPopup.ids.painter_widget.export_scaled_png('data/%s/' % (app.subjectTitle), image_scale=float("2"))
                     app.updateGraffitiNumberDB()
                     app.addGraffitiPopup.dismiss()
