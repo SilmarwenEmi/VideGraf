@@ -4,6 +4,8 @@ import os
 import cv2
 import pygame
 
+from datetime import datetime
+
 from PIL import Image
 from random import random
 
@@ -80,10 +82,6 @@ class InterventionsSelectionEmpty(Widget):
         pops = GraffitiPopup()
         pops.open()
 
-    def fire_popupAddGraffiti(self):
-        pops = AddGraffitiPopup()
-        pops.open()
-
 class InterventionDisplayedContent(Widget):
     pass
 
@@ -108,10 +106,9 @@ class AddGraffitiContent(Widget):
 
 class MyWidget(Widget):
 
-    def export_scaled_png(self, filename, image_scale=1):
+    def export_scaled_png(self, filename, image_scale=1, currentIntervention=""):
+
         re_size = (self.width * image_scale, self.height * image_scale)
-        print("##################################")
-        print(self)
 
         if self.parent is not None:
             canvas_parent_index = self.parent.canvas.indexof(self.canvas)
@@ -127,10 +124,10 @@ class MyWidget(Widget):
             Translate(-self.x, -self.y - self.height, 0)
 
         # graffiti number (without video)
+        
         global graffitiNb 
         graffitiNb = 0
-        print("filename")
-        print(filename)
+        
         try: 
             files = os.listdir(filename)
             print(files)
@@ -144,21 +141,40 @@ class MyWidget(Widget):
         except:
             print("erreur file")
         
-        # save graffiti as png
         fbo.add(self.canvas)
         fbo.draw()
-        print("longueur liste : " + str(len(files)))
-        print("graff" + str(graffitiNb+1) + ".png")
-        print("FILE NAME HERE : " + filename+"graff" + str(graffitiNb+1) + ".png" + "####################")
 
-        fbo.texture.save(filename+"graff" + str(graffitiNb+1) + ".png", flipped=False)
+        # rename png if it's a new one
         
-        print("save ok")
+        nameGraff = str(datetime.now())+".png"
+
+        print(nameGraff)
+
+        fbo.texture.save(filename+nameGraff, flipped=False)
+        
         fbo.remove(self.canvas)
-        print("remove ok")
+
+        if currentIntervention != "":
+            print("remove : " + currentIntervention)
+            os.remove(currentIntervention)
+        else:
+            if graffitiNb >= 15:
+
+                older = str(datetime.now())
+
+                for f in files:
+                    if f < older:
+                        older = f
+                
+                os.remove(filename+older)
+                graffitiNb = 15
+
+        
 
         if self.parent is not None and canvas_parent_index > -1:
             self.parent.canvas.insert(canvas_parent_index, self.canvas)
+
+
 
 
 class AddVideoContent(Widget):
@@ -247,9 +263,7 @@ class MyApp(App): # <- Main Class
 
             nbGraff = 0
             for fileName in files:
-                
-                if "graff" in fileName:
-                    nbGraff += 1
+                nbGraff += 1
 
             myquery = { "title": directory }
             newvalues = { "$set": { "graffitis": nbGraff } }
@@ -394,7 +408,10 @@ class MyApp(App): # <- Main Class
      
     def updateGraffitiNumberDB(self):
         myquery = { "title": self.subjectTitle }
-        newvalues = { "$set": { "graffitis": graffitiNb + 1 } }
+        if graffitiNb >= 15:
+            newvalues = { "$set": { "graffitis": graffitiNb } }
+        else:
+            newvalues = { "$set": { "graffitis": graffitiNb + 1 } }
 
         print(myquery)
         print(newvalues)
@@ -420,7 +437,7 @@ class MyApp(App): # <- Main Class
         self.header.ids.content_box.add_widget(self.topics)
     
     def fire_popupAddGraffiti(self):
-        print(self.currentIntervention)
+        
         self.addGraffitiPopup = AddGraffitiPopup()
 
         self.myWidget = MyWidget()
@@ -429,9 +446,6 @@ class MyApp(App): # <- Main Class
         self.painter = GraffitiDraw()
         paintGraffiti.add_widget(self.painter)
         paintGraffiti.add_widget(self.myWidget)
-
-        print("paintgraffiti")
-        print(self.myWidget)
 
         self.addGraffitiPopup.open()
 

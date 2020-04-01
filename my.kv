@@ -919,7 +919,8 @@
                     background_color: 0, 0, 0, 0
 
                     on_press:
-                        app.interventionsSelectionEmpty.fire_popupAddGraffiti()
+                        app.currentIntervention = ""
+                        app.fire_popupAddGraffiti()
                     
                     canvas.before:
                         Color:
@@ -1871,7 +1872,7 @@
             Image:
                 size: self.parent.size
                 pos: self.parent.pos
-                source: "data/Un master en sciences informatiques à Charleroi/graff2.png"
+                source: "" if app.currentIntervention is None else "%s" % (app.currentIntervention)
 
         GridLayout:
             # bottom buttons - annuler and valider
@@ -1936,11 +1937,11 @@
                 background_color: 0, 0, 0, 0
 
                 on_press:
+                    app.addGraffitiPopup.ids.painter_widget.export_scaled_png('data/%s/' % (app.subjectTitle), image_scale=float("2"), currentIntervention=app.currentIntervention)
                     app.currentIntervention = ""
-                    app.addGraffitiPopup.ids.painter_widget.export_scaled_png('data/%s/' % (app.subjectTitle), image_scale=float("2"))
                     app.updateGraffitiNumberDB()
-                    app.addGraffitiPopup.dismiss()
                     app.displayInterventions()
+                    app.addGraffitiPopup.dismiss()
                 
                 canvas.before:
                     Color:
