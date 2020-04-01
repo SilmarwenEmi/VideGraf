@@ -717,7 +717,7 @@
 
                     on_press:
                         app.currentIntervention = ""
-                        app.interventionsSelection.fire_popupAddGraffiti()
+                        app.fire_popupAddGraffiti()
                     
                     canvas.before:
                         Color:
@@ -877,7 +877,7 @@
                     source: "chibiMan.png"
                     size_hint_x: None
                     size_hint_y: None
-                    size: [self.parent.size[0]/1.7,self.parent.size[1]/1.7]
+                    size: [self.parent.size[0]/1.2,self.parent.size[1]/1.2]
                     keep_ratio: True
                     pos_hint: {"x": 0.0, "y": 0.0}
 
@@ -1695,12 +1695,7 @@
                         
                     
 
-#<MyWidget>:
-    # painterWidget
-    #Button:
-        #background_color: 1, 1, 1, 0
-        #center: root.center
-        #size: (root.width // 2, root.height // 8)
+
 
 <DescriptionPopup>:
     id: descriptionPopup
@@ -1853,7 +1848,7 @@
 <AddGraffitiPopup>:
     id: addGraffitiPopup
     size_hint: .6, .6
-    auto_dismiss: True
+    auto_dismiss: False
     title: "" if app.subjectTitle is None else '%s' % (app.subjectTitle) 
     title_color: .349, .5686, .392, 1
     title_size: 45
@@ -1933,7 +1928,11 @@
 
                 on_press:
                     app.currentIntervention = ""
-                    app.interventionsSelection.fire_popupGraffiti()
+                
+                    app.addGraffitiPopup.ids.painter_widget.export_scaled_png('data/%s/' % (app.subjectTitle), image_scale=float("2"))
+                    app.updateGraffitiNumberDB()
+                    app.addGraffitiPopup.dismiss()
+                    app.displayInterventions()
                 
                 canvas.before:
                     Color:

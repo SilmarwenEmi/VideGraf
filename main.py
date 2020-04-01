@@ -69,18 +69,6 @@ class InterventionsSelection(Widget):
         pops = GraffitiPopup()
         pops.open()
     
-    def fire_popupAddGraffiti(self):
-        pops = AddGraffitiPopup()
-
-        global mywgt
-        mywgt = MyWidget()
-
-        paintGraffiti = pops.ids.painter_widget
-        self.painter = GraffitiDraw()
-        paintGraffiti.add_widget(self.painter)
-        paintGraffiti.add_widget(mywgt)
-
-        pops.open()
 
 class InterventionsSelectionEmpty(Widget):
 
@@ -122,6 +110,8 @@ class MyWidget(Widget):
 
     def export_scaled_png(self, filename, image_scale=1):
         re_size = (self.width * image_scale, self.height * image_scale)
+        print("##################################")
+        print(self)
 
         if self.parent is not None:
             canvas_parent_index = self.parent.canvas.indexof(self.canvas)
@@ -139,6 +129,7 @@ class MyWidget(Widget):
         # graffiti number (without video)
         global graffitiNb 
         graffitiNb = 0
+        print("filename")
         print(filename)
         try: 
             files = os.listdir(filename)
@@ -151,15 +142,20 @@ class MyWidget(Widget):
             graffitiNb = len(files)
             
         except:
-            pass
+            print("erreur file")
         
         # save graffiti as png
         fbo.add(self.canvas)
         fbo.draw()
         print("longueur liste : " + str(len(files)))
         print("graff" + str(graffitiNb+1) + ".png")
+        print("FILE NAME HERE : " + filename+"graff" + str(graffitiNb+1) + ".png" + "####################")
+
         fbo.texture.save(filename+"graff" + str(graffitiNb+1) + ".png", flipped=False)
+        
+        print("save ok")
         fbo.remove(self.canvas)
+        print("remove ok")
 
         if self.parent is not None and canvas_parent_index > -1:
             self.parent.canvas.insert(canvas_parent_index, self.canvas)
@@ -258,10 +254,7 @@ class MyApp(App): # <- Main Class
             myquery = { "title": directory }
             newvalues = { "$set": { "graffitis": nbGraff } }
 
-            print(myquery)
-            print(newvalues)
-
-            test = self.client["VideGraff"]["data"].update_one(myquery, newvalues)
+            self.client["VideGraff"]["data"].update_one(myquery, newvalues)
 
 
         #app code
@@ -271,6 +264,8 @@ class MyApp(App): # <- Main Class
         self.addGraffitiContentRef = addGraffitiContent
         self.mywgtRef = MyWidget()
         self.interventionsSelection = InterventionsSelection()
+        self.addGraffitiPopup = AddGraffitiPopup()
+        self.myWidget = MyWidget()
         
 
         interventionView = StringProperty("")
@@ -423,6 +418,21 @@ class MyApp(App): # <- Main Class
             self.topics.ids.contents.add_widget(subject)
         
         self.header.ids.content_box.add_widget(self.topics)
+    
+    def fire_popupAddGraffiti(self):
+        self.addGraffitiPopup = AddGraffitiPopup()
+
+        self.myWidget = MyWidget()
+
+        paintGraffiti = self.addGraffitiPopup.ids.painter_widget
+        self.painter = GraffitiDraw()
+        paintGraffiti.add_widget(self.painter)
+        paintGraffiti.add_widget(self.myWidget)
+
+        print("paintgraffiti")
+        print(self.myWidget)
+
+        self.addGraffitiPopup.open()
 
         
 
