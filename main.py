@@ -1,7 +1,7 @@
 import kivy
 import pymongo
 import os
-import cv2
+#import cv2
 import pygame
 
 from datetime import datetime
@@ -47,6 +47,9 @@ class Subject(Widget):
 class Intervention(Widget):
     pass
 
+class InterventionVideo(Widget):
+    pass
+
 class Topics(Widget):
     pass
 
@@ -71,6 +74,10 @@ class InterventionsSelection(Widget):
         pops = GraffitiPopup()
         pops.open()
     
+    def fire_popupVideo(self):
+        pops = VideoPopup()
+        pops.open()
+    
 
 class InterventionsSelectionEmpty(Widget):
 
@@ -80,6 +87,10 @@ class InterventionsSelectionEmpty(Widget):
 
     def fire_popupGraffiti(self):
         pops = GraffitiPopup()
+        pops.open()
+    
+    def fire_popupVideo(self):
+        pops = VideoPopup()
         pops.open()
 
 class InterventionDisplayedContent(Widget):
@@ -132,6 +143,7 @@ class MyWidget(Widget):
             files = os.listdir(filename)
             print(files)
             files.remove("subject")
+            files.remove("videos")
 
             if ".DS_Store" in files:
                 files.remove(".DS_Store")
@@ -232,6 +244,10 @@ class GraffitiPopup(Popup):
 class AddGraffitiPopup(Popup):
     pass
 
+class VideoPopup(Popup):
+    pass
+
+
 class MyApp(App): # <- Main Class
     subjectsTitles = ListProperty()
     subjectTitle = StringProperty("")
@@ -257,6 +273,7 @@ class MyApp(App): # <- Main Class
 
             files = os.listdir("data/%s" % (directory))
             files.remove("subject")
+            files.remove("videos")
 
             if ".DS_Store" in files:
                 files.remove(".DS_Store")
@@ -283,11 +300,13 @@ class MyApp(App): # <- Main Class
         
 
         interventionView = StringProperty("")
+        videoPath = StringProperty("")
         subjectName = StringProperty("")
         subjectCamNb = StringProperty("")
         subjectGrafNb = StringProperty("")
         self.subjectDescription = {}
         interventionLabel = StringProperty("")
+        self.video_state = "play"
 
         #screens declaration
         self.topicsSelectionScreen = TopicsSelectionScreen(name ="screen_TopicsSelection")
@@ -383,6 +402,7 @@ class MyApp(App): # <- Main Class
         try: 
             files = os.listdir("data/%s" % (self.subjectTitle))
             files.remove("subject")
+            files.remove("videos")
 
             if ".DS_Store" in files:
                 files.remove(".DS_Store")
@@ -391,8 +411,14 @@ class MyApp(App): # <- Main Class
                 self.interventionsSelection = InterventionsSelection()
                 
                 for fileName in files:
-                    self.interventionView = "data/%s/%s" % (self.subjectTitle, fileName)
-                    self.interventionsSelection.ids.intervention_content.add_widget(Intervention())
+                    if "video" in fileName:
+                        videoName = fileName[:-4] + ".mp4" #video format
+                        self.videoPath = "data/%s/videos/%s" % (self.subjectTitle, videoName)
+                        self.interventionView = "data/%s/%s" % (self.subjectTitle, fileName)
+                        self.interventionsSelection.ids.intervention_content.add_widget(InterventionVideo())
+                    else:
+                        self.interventionView = "data/%s/%s" % (self.subjectTitle, fileName)
+                        self.interventionsSelection.ids.intervention_content.add_widget(Intervention())
 
                 self.headerTopicName.ids.content_box.add_widget(self.interventionsSelection)
             
@@ -448,6 +474,7 @@ class MyApp(App): # <- Main Class
         paintGraffiti.add_widget(self.myWidget)
 
         self.addGraffitiPopup.open()
+    
 
         
 
