@@ -1,4 +1,5 @@
 #:kivy 1.11.1
+#: import Clock kivy.clock.Clock
 
 <TopicsSelectionScreen>:
 
@@ -349,6 +350,8 @@
 
 
 <TopicDisplayScreen>:
+    on_enter:
+        app.test()
 
     BoxLayout:
         id: top_box
@@ -586,14 +589,23 @@
                         size: self.texture_size
                         anchor_x: "center"
                         anchor_y: "center"
-                    
-                    #Image:
-                    #    source: "chibi_side_bar.png"
-                    #    size_hint_x: 1
-                    #    size_hint_y: None
-                    #    size: self.texture_size
-                    #    anchor_x: "right"
-                    #    anchor_y: "top"
+
+    FloatLayout:
+        size: root.size
+        pos: root.pos
+        id: floatBulle
+
+
+<Bulle>:
+    Image:
+        source: "" if app.displayBubble is False else "bulle_chibi_side.png"
+        size_hint_x: None
+        size_hint_y: None
+        size: 800, 800
+        keep_ratio: True
+        pos_hint: {"x": 0.0, "y": 0.2}
+        #color: app.color
+            
                     
 
 
@@ -639,6 +651,7 @@
                         app.topicsSelectionScreen.manager.transition.direction = 'right' 
                         app.topicsSelectionScreen.manager.transition.duration = 0
                         app.topicsSelectionScreen.manager.current = 'screen_TopicsSelection'
+                        app.remove_bubble()
 
                     StackLayout:
                         orientation: 'lr-tb'
@@ -761,6 +774,7 @@
                     color: 1, 0, 0, 0
                     size_hint_y: 3
                     background_color: 0, 0, 0, 0
+                    disabled: True
 
                     on_press:
                         app.currentIntervention = ""
@@ -979,6 +993,7 @@
                     color: 1, 0, 0, 0
                     size_hint_y: 3
                     background_color: 0, 0, 0, 0
+                    disabled: True
 
                     on_press:
                         app.currentIntervention = ""

@@ -3,6 +3,7 @@ import pymongo
 import os
 #import cv2
 import pygame
+import time
 
 from datetime import datetime
 
@@ -27,7 +28,7 @@ from kivy.graphics import Rectangle, Color, RoundedRectangle, Ellipse, Line, Can
 
 from kivy.uix.screenmanager import Screen, ScreenManager
 
-from kivy.properties import StringProperty, ListProperty
+from kivy.properties import StringProperty, ListProperty, BooleanProperty
 
 from kivy.graphics.fbo import Fbo
 from kivy.graphics.opengl import glReadPixels, GL_RGBA, GL_UNSIGNED_BYTE
@@ -192,6 +193,15 @@ class MyWidget(Widget):
 class AddVideoContent(Widget):
     pass
 
+class Bulle(Widget):
+    pass
+
+def display_bulle(self):
+    print("display function")
+    print(bulle)
+    topicDisplayScreen.ids.floatBulle.add_widget(bulle)
+    print("displayed")
+
 
 class GraffitiDraw(Widget):
 
@@ -307,10 +317,19 @@ class MyApp(App): # <- Main Class
         self.subjectDescription = {}
         interventionLabel = StringProperty("")
         self.video_state = "play"
+        self.displayBubble = BooleanProperty(True)
+        global bulle
+        bulle = Bulle()
+        self.color = (1, 1, 1, 1)
+        self.displayBubble = True
+        #self.color = (.349, .5686, .392, 1)
+        self.color = (1, 1, 1, 1)
+        self.haveInterventions = True
 
         #screens declaration
         self.topicsSelectionScreen = TopicsSelectionScreen(name ="screen_TopicsSelection")
-        self.topicDisplayScreen = TopicDisplayScreen(name="screen_TopicDisplay")
+        global topicDisplayScreen 
+        topicDisplayScreen = TopicDisplayScreen(name="screen_TopicDisplay")
         self.interventionDisplayedScreen = InterventionDisplayedScreen(name="screen_InterventionDisplayed")
         addGraffitiScreen = AddGraffitiScreen(name="screen_AddGraffiti")
         addVideoScreen = AddVideoScreen(name="screen_AddVideo")
@@ -340,9 +359,11 @@ class MyApp(App): # <- Main Class
         for subject in listSubject:
             self.topics.ids.contents.add_widget(subject)
         
+        
         #topic display screen
         self.headerTopicName = HeaderTopicName()
-        self.topicDisplayScreen.ids.top_box.add_widget(self.headerTopicName)
+        topicDisplayScreen.ids.top_box.add_widget(self.headerTopicName)
+        
 
     
         #intervention display screen
@@ -382,7 +403,7 @@ class MyApp(App): # <- Main Class
         screenManager = ScreenManager()
 
         screenManager.add_widget(self.topicsSelectionScreen)
-        screenManager.add_widget(self.topicDisplayScreen)
+        screenManager.add_widget(topicDisplayScreen)
         screenManager.add_widget(self.interventionDisplayedScreen)
         screenManager.add_widget(addGraffitiScreen)
         screenManager.add_widget(addVideoScreen)
@@ -395,9 +416,9 @@ class MyApp(App): # <- Main Class
     
     def displayInterventions(self):
 
-        self.topicDisplayScreen.ids.top_box.remove_widget(self.headerTopicName)
+        topicDisplayScreen.ids.top_box.remove_widget(self.headerTopicName)
         self.headerTopicName = HeaderTopicName()
-        self.topicDisplayScreen.ids.top_box.add_widget(self.headerTopicName)
+        topicDisplayScreen.ids.top_box.add_widget(self.headerTopicName)
 
         try: 
             files = os.listdir("data/%s" % (self.subjectTitle))
@@ -421,10 +442,12 @@ class MyApp(App): # <- Main Class
                         self.interventionsSelection.ids.intervention_content.add_widget(Intervention())
 
                 self.headerTopicName.ids.content_box.add_widget(self.interventionsSelection)
+                self.haveInterventions = True
             
             else:
                 self.interventionsSelectionEmpty = InterventionsSelectionEmpty()
                 self.headerTopicName.ids.content_box.add_widget(self.interventionsSelectionEmpty)
+                self.haveInterventions = False
         
     
 
@@ -474,7 +497,21 @@ class MyApp(App): # <- Main Class
         paintGraffiti.add_widget(self.myWidget)
 
         self.addGraffitiPopup.open()
+
+
     
+    def test(self):
+        print("test")
+        if self.haveInterventions:
+            Clock.schedule_once(display_bulle, 2)
+    
+    
+    def remove_bubble(self):
+        print("remove function")
+        print(bulle)
+        topicDisplayScreen.ids.floatBulle.remove_widget(bulle)
+
+        print("removed ")
 
         
 
