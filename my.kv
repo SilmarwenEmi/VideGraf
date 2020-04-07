@@ -2001,7 +2001,8 @@
                     app.currentIntervention = ""
                     app.updateGraffitiNumberDB()
                     app.displayInterventions()
-                    app.addGraffitiPopup.dismiss()
+                    app.interventionsSelection.fire_popupVideo()
+                    addGraffitiPopup.dismiss()
                 
                 canvas.before:
                     Color:
@@ -2055,12 +2056,25 @@
         size: self.size
         pos: self.pos
         
-        VideoPlayer:
-            id: video
-            source: app.currentIntervention
-            state: app.video_state
-            size_hint: 1,2
-            size: root.size
+        BoxLayout:
+            orientation:"horizontal"
+            size: self.size
+            pos: self.pos
+            size_hint: 1, 2
+
+            VideoPlayer:
+                id: video
+                source: app.currentIntervention
+                state: app.video_state
+                size_hint: 1, 1
+                size: self.size
+            
+            Image:
+                source: "" if app.graffitiOfVideo is None else "%s" % (app.graffitiOfVideo)
+                size: self.texture_size
+                pos: self.pos
+
+        
         
         GridLayout:
             # bottom buttons - retour and modifier VIDEO
@@ -2128,7 +2142,6 @@
 
                 on_press:
                     app.video_state = "pause"
-                    print(app.graffitiOfVideo)
                     videoPopup.dismiss()
                     app.fire_popupAddVideoGraffiti()
                 
@@ -2261,7 +2274,7 @@
 
                 on_press:
                     app.addVideoGraffitiPopup.ids.painter_widget.export_scaled_png('data/%s/' % (app.subjectTitle), image_scale=float("2"), currentIntervention=app.currentIntervention, graffitiOfVideo=app.graffitiOfVideo)
-                    app.currentIntervention = ""
+                    #app.currentIntervention = ""
                     app.updateGraffitiNumberDB()
                     app.displayInterventions()
                     addVideoGraffitiPopup.dismiss()

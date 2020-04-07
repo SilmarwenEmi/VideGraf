@@ -167,14 +167,23 @@ class MyWidget(Widget):
         if ".mp4" in currentIntervention: #whether user modifies a graff corresponding to a video intervention
             if graffitiOfVideo != "":
                 os.remove(graffitiOfVideo)
-                nameGraff = graffitiOfVideo
             
-            else: 
-                splittedName = currentIntervention.split("/")
-                for piece in splittedName:
-                    if "video_" in piece:
-                        path = currentIntervention[:-len(piece)]
-                        nameGraff = path + piece[6:][:-4] + ".png"
+            
+            splittedName = currentIntervention.split("/")
+            print("currentintervention")
+            print(currentIntervention)
+            print("graffiti of video")
+            print(graffitiOfVideo)
+            for piece in splittedName:
+                if "video_" in piece:
+                    path = currentIntervention[:-len(piece)]
+                    os.rename(currentIntervention, path + "video_" + nameGraff[:-4] + ".mp4") #rename video
+                    os.rename(path[:-7] + piece[:-4] + ".png", path[:-7] + "video_" + nameGraff) #rename video overview
+                    nameGraff = path + nameGraff
+                    
+                    currentIntervention = path + "video_" + nameGraff[:-4] + ".mp4"
+                    graffitiOfVideo = nameGraff
+                    
                 
 
         elif currentIntervention != "": #whether user modifies a graff
@@ -229,7 +238,7 @@ class GraffitiDraw(Widget):
         with self.canvas:
             Color(*color, mode='hsv') # (numéro couleur rgb) / 255
             d = 5.
-            print("X: " + str(touch.spos[0]) + " - Y: " + str(touch.spos[1]))
+            #print("X: " + str(touch.spos[0]) + " - Y: " + str(touch.spos[1]))
             if 0.2125 < touch.spos[0] < 0.7833 and 0.2914 < touch.spos[1] < 0.7276:
                 Ellipse(pos=(touch.x - d / 2, touch.y - d / 2), size=(d, d))
                 #try:
