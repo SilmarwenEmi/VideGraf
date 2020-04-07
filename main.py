@@ -118,7 +118,7 @@ class AddGraffitiContent(Widget):
 
 class MyWidget(Widget):
 
-    def export_scaled_png(self, filename, image_scale=1, currentIntervention=""):
+    def export_scaled_png(self, filename, image_scale=1, currentIntervention="", graffitiOfVideo=""):
 
         re_size = (self.width * image_scale, self.height * image_scale)
 
@@ -163,24 +163,42 @@ class MyWidget(Widget):
 
         print(nameGraff)
 
-        fbo.texture.save(filename+nameGraff, flipped=False)
-        
-        fbo.remove(self.canvas)
 
-        if currentIntervention != "":
-            print("remove : " + currentIntervention)
+        if ".mp4" in currentIntervention: #whether user modifies a graff corresponding to a video intervention
+            if graffitiOfVideo != "":
+                os.remove(graffitiOfVideo)
+                nameGraff = graffitiOfVideo
+            
+            else: 
+                splittedName = currentIntervention.split("/")
+                for piece in splittedName:
+                    if "video_" in piece:
+                        path = currentIntervention[:-len(piece)]
+                        nameGraff = path + piece[6:][:-4] + ".png"
+                
+
+        elif currentIntervention != "": #whether user modifies a graff
             os.remove(currentIntervention)
+            
         else:
             if graffitiNb >= 15:
-
                 older = str(datetime.now())
 
                 for f in files:
+                    if "video_" in f:
+                        f = f[6:]
                     if f < older:
                         older = f
                 
                 os.remove(filename+older)
                 graffitiNb = 15
+        
+        if "data" in nameGraff:
+            fbo.texture.save(nameGraff, flipped=False)
+        else:
+            fbo.texture.save(filename+nameGraff, flipped=False)
+        
+        fbo.remove(self.canvas)
 
         
 
@@ -206,8 +224,7 @@ def display_bulle(self):
 class GraffitiDraw(Widget):
 
     def on_touch_down(self, touch):
-        color = (random(), random(), random())
-        #print(color)
+        #color = (random(), random(), random())
         color = (.349, .5686, .392)
         with self.canvas:
             Color(*color, mode='hsv') # (numéro couleur rgb) / 255
@@ -257,13 +274,16 @@ class AddGraffitiPopup(Popup):
 class VideoPopup(Popup):
     pass
 
+class AddVideoGraffitiPopup(Popup):
+    pass
+
 
 class MyApp(App): # <- Main Class
     subjectsTitles = ListProperty()
     subjectTitle = StringProperty("")
     currentDescription = StringProperty("test descr")
     currentIntervention = StringProperty("")
-
+    graffitiOfVideo = StringProperty("")
 
     def build(self):
 
@@ -279,7 +299,7 @@ class MyApp(App): # <- Main Class
         if ".DS_Store" in directories:
                 directories.remove(".DS_Store")
 
-        for directory in directories:
+        for directory in directories: #iterate on subjects
 
             files = os.listdir("data/%s" % (directory))
             files.remove("subject")
@@ -289,13 +309,20 @@ class MyApp(App): # <- Main Class
                 files.remove(".DS_Store")
 
             nbGraff = 0
+            nbVid = 0
             for fileName in files:
-                nbGraff += 1
+                print(fileName)
+                if "video_" in fileName:
+                    nbVid += 1
+                else:
+                    nbGraff += 1
 
+            print(nbGraff)
+            print(nbVid)
             myquery = { "title": directory }
-            newvalues = { "$set": { "graffitis": nbGraff } }
+            newvalues = { "$set": { "graffitis": nbGraff, "video": nbVid } }
 
-            self.client["VideGraff"]["data"].update_one(myquery, newvalues)
+            self.client["VideGraff"]["data"].update_many(myquery, newvalues)
 
 
         #app code
@@ -457,13 +484,23 @@ class MyApp(App): # <- Main Class
      
     def updateGraffitiNumberDB(self):
         myquery = { "title": self.subjectTitle }
-        if graffitiNb >= 15:
-            newvalues = { "$set": { "graffitis": graffitiNb } }
-        else:
-            newvalues = { "$set": { "graffitis": graffitiNb + 1 } }
 
-        print(myquery)
-        print(newvalues)
+        files = os.listdir("data/" + self.subjectTitle + "/")
+        files.remove("subject")
+        files.remove("videos")
+        if ".DS_Store" in files:
+            files.remove(".DS_Store")
+
+        nb_videos = 0
+        nb_graffitis = 0
+        for item in files:
+            if "video_" in item:
+                nb_videos += 1
+            else:
+                nb_graffitis += 1
+
+        
+        newvalues = { "$set": { "graffitis": nb_graffitis } }
 
         self.client["VideGraff"]["data"].update_one(myquery, newvalues)
 
@@ -497,6 +534,20 @@ class MyApp(App): # <- Main Class
         paintGraffiti.add_widget(self.myWidget)
 
         self.addGraffitiPopup.open()
+    
+    def fire_popupAddVideoGraffiti(self):
+        
+        self.addVideoGraffitiPopup = AddVideoGraffitiPopup()
+
+        self.myWidget = MyWidget()
+
+        paintGraffiti = self.addVideoGraffitiPopup.ids.painter_widget
+        self.painter = GraffitiDraw()
+        paintGraffiti.add_widget(self.painter)
+        paintGraffiti.add_widget(self.myWidget)
+
+        self.addVideoGraffitiPopup.open()
+    
 
 
     
@@ -512,6 +563,24 @@ class MyApp(App): # <- Main Class
         topicDisplayScreen.ids.floatBulle.remove_widget(bulle)
 
         print("removed ")
+
+    def retrieveGraffitiName(self, videoName):
+        splittedName = videoName.split("/")
+        graffName = ""
+
+        for piece in splittedName:
+            if "video_" in piece:
+                path = videoName[:-len(piece)]
+                graffName = piece[6:][:-4] + ".png"
+                
+        files = os.listdir(path)
+        for item in files:
+            if graffName in item:
+                print(" in files")
+                graffName = path + graffName
+                return graffName
+        
+        return ""
 
         
 
