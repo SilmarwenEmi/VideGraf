@@ -76,9 +76,6 @@ class InterventionsSelection(Widget):
         pops = GraffitiPopup()
         pops.open()
     
-    def fire_popupVideo(self):
-        pops = VideoPopup()
-        pops.open()
     
 
 class InterventionsSelectionEmpty(Widget):
@@ -289,6 +286,9 @@ class AddGraffitiPopup(Popup):
     pass
 
 class VideoPopup(Popup):
+    pass
+
+class VideoGraffitiPopup(Popup):
     pass
 
 class AddVideoGraffitiPopup(Popup):
@@ -559,6 +559,14 @@ class MyApp(App): # <- Main Class
         paintGraffiti.add_widget(self.myWidget)
 
         self.addVideoGraffitiPopup.open()
+    
+    def fire_popupVideo(self):
+        if self.graffitiOfVideo == "":
+            pops = VideoPopup()
+        else:
+            pops = VideoGraffitiPopup()
+
+        pops.open()
     
 
 

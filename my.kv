@@ -791,7 +791,7 @@
                     on_press:
                         app.currentIntervention = ""
                         app.video_state = "play"
-                        app.interventionsSelection.fire_popupVideo()
+                        app.fire_popupVideo()
                     
                     canvas.before:
                         Color:
@@ -1086,7 +1086,7 @@
             app.currentIntervention = self.text
             app.graffitiOfVideo = app.retrieveGraffitiName(self.text)
             app.video_state = "play" # auto play video
-            app.interventionsSelection.fire_popupVideo()
+            app.fire_popupVideo()
 
         canvas.before:
             Color:
@@ -2066,6 +2066,138 @@
         padding: [20, 30, 20, 30]
         size: self.size
         pos: self.pos
+            
+
+        VideoPlayer:
+            id: video
+            source: app.currentIntervention
+            state: app.video_state
+            size_hint: 1, 2
+            pos: self.pos
+            size: self.size
+            
+        
+        
+        GridLayout:
+            # bottom buttons - retour and modifier VIDEO
+            cols: 3
+            size_hint_y: 0.3
+            padding: [100, 20, 100, 20]
+            spacing: 100
+
+            Button:
+                text: ""
+                size: self.size
+                color: 1, 0, 0, 1
+                background_color: 0, 0, 0, 0
+
+                on_press:
+                    app.currentIntervention = ""
+                    app.video_state = "pause"
+                    videoPopup.dismiss()
+                
+                canvas.before:
+                    Color:
+                        rgba: (1, 1, 1, 1) if self.state == 'normal' else (.349, .5686, .392, .3)
+
+                    RoundedRectangle:
+                        size: self.size
+                        pos: self.pos
+                        radius: 10, 10, 10, 10
+                        source: "rounded_border.png"
+                
+
+                StackLayout:
+                    pos: self.parent.pos
+                    size: self.parent.size
+                    orientation: 'lr-tb'
+                    size_hint_y: None
+                    spacing: 30
+                    padding: [50, 0, 50, 0]
+
+                    Image:
+                        source: 'back.png'
+                        size_hint_x: None
+                        width: 40
+                        valign: "center"
+                        keep_ratio: True
+
+                    Label:
+                        size_hint_x: None
+                        halign: "center"
+                        height: 40
+                        width: 300
+                        text: "Retour"
+                        text_size: self.size
+                        valign: "center"
+                        color: .349, .5686, .392, 1
+                        bold: True
+                        font_size: 34
+            MyWidget:
+                id: painter_widget
+
+            Button:
+                text: ""
+                size: self.size
+                color: 1, 0, 0, 0
+                background_color: 0, 0, 0, 0
+
+                on_press:
+                    app.video_state = "pause"
+                    videoPopup.dismiss()
+                    app.fire_popupAddVideoGraffiti()
+                
+                canvas.before:
+                    Color:
+                        rgba: (.349, .5686, .392, 1) if self.state == 'normal' else (.349, .5686, .392, .3)
+
+                    RoundedRectangle:
+                        size: self.size
+                        pos: self.pos
+                        radius: 20, 20, 20, 20
+
+                StackLayout:
+                    pos: self.parent.pos
+                    size: self.parent.size
+                    orientation: 'lr-tb'
+                    size_hint_y: None
+                    spacing: 30
+                    padding: [50, 0, 50, 0]
+
+                    Image:
+                        source: 'edit.png'
+                        size_hint_x: None
+                        width: 40
+                        valign: "center"
+                        keep_ratio: True
+
+                    Label:
+                        size_hint_x: None
+                        halign: "center"
+                        height: 40
+                        width: 300
+                        text: "Commenter"
+                        text_size: self.size
+                        valign: "center"
+                        color: 1, 1, 1, 1
+                        bold: True
+                        font_size: 34
+
+<VideoGraffitiPopup>:
+    id: videoGraffPopup
+    size_hint: .6, .6
+    auto_dismiss: True
+    title: "" if app.subjectTitle is None else '%s' % (app.subjectTitle) 
+    title_color: .349, .5686, .392, 1
+    title_size: 45
+    separator_color: .349, .5686, .392, 1
+    background: "popup_background.png"
+
+    GridLayout:
+        cols: 1
+        padding: [20, 30, 20, 30]
+        size: self.size
+        pos: self.pos
         
         BoxLayout:
             orientation:"horizontal"
@@ -2103,7 +2235,7 @@
                 on_press:
                     app.currentIntervention = ""
                     app.video_state = "pause"
-                    videoPopup.dismiss()
+                    videoGraffPopup.dismiss()
                 
                 canvas.before:
                     Color:
