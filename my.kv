@@ -1,6 +1,12 @@
 #:kivy 1.11.1
 
 <TopicsSelectionScreen>:
+    on_enter:
+        app.displayBubble = "bulle_home.png"
+        app.test2()
+
+    on_leave:
+        app.remove_bubble_home()
 
     BoxLayout:
         id: top_box
@@ -212,6 +218,11 @@
                         size: self.texture_size
                         anchor_x: "center"
                         anchor_y: "center"
+    
+    FloatLayout:
+        size: root.size
+        pos: root.pos
+        id: floatBulle
 
 
 <Header>:
@@ -350,7 +361,11 @@
 
 <TopicDisplayScreen>:
     on_enter:
+        app.displayBubble = "bulle_chibi_side.png"
         app.test()
+    
+    #on_leave:
+        #app.remove_bubble()
 
     BoxLayout:
         id: top_box
@@ -598,15 +613,12 @@
 
 <Bulle>:
     Image:
-        source: "" if app.displayBubble is False else "bulle_chibi_side.png"
+        source: "" if app.displayBubble is None else "%s" % (app.displayBubble)
         size_hint_x: None
         size_hint_y: None
         size: 800, 800
         keep_ratio: True
         pos_hint: {"x": 0.0, "y": 0.2}
-        #color: app.color
-            
-                    
 
 
 <HeaderTopicName>:
@@ -2001,7 +2013,6 @@
                     app.currentIntervention = ""
                     app.updateGraffitiNumberDB()
                     app.displayInterventions()
-                    app.interventionsSelection.fire_popupVideo()
                     addGraffitiPopup.dismiss()
                 
                 canvas.before:

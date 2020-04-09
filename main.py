@@ -37,6 +37,7 @@ from kivy.graphics.texture import Texture
 
 from kivy.core.window import Window
 Window.clearcolor = (.94, .94, .94, 1)
+Window.fullscreen = 'auto'
 
 from kivy.uix.popup import Popup
 from kivy import platform
@@ -183,14 +184,14 @@ class MyWidget(Widget):
                     
                     currentIntervention = path + "video_" + nameGraff[:-4] + ".mp4"
                     graffitiOfVideo = nameGraff
-                    
+
                 
 
         elif currentIntervention != "": #whether user modifies a graff
             os.remove(currentIntervention)
             
         else:
-            if graffitiNb >= 15:
+            if graffitiNb >= 15: # delete older
                 older = str(datetime.now())
 
                 for f in files:
@@ -225,9 +226,16 @@ class Bulle(Widget):
 
 def display_bulle(self):
     print("display function")
+    
+    #bulle = Bulle()
+    global bulle
+    bulle = Bulle()
     print(bulle)
+
     topicDisplayScreen.ids.floatBulle.add_widget(bulle)
+
     print("displayed")
+
 
 
 class GraffitiDraw(Widget):
@@ -353,13 +361,8 @@ class MyApp(App): # <- Main Class
         self.subjectDescription = {}
         interventionLabel = StringProperty("")
         self.video_state = "play"
-        self.displayBubble = BooleanProperty(True)
-        global bulle
-        bulle = Bulle()
-        self.color = (1, 1, 1, 1)
-        self.displayBubble = True
-        #self.color = (.349, .5686, .392, 1)
-        self.color = (1, 1, 1, 1)
+        self.displayBubble = StringProperty("")
+
         self.haveInterventions = True
 
         #screens declaration
@@ -565,11 +568,34 @@ class MyApp(App): # <- Main Class
         if self.haveInterventions:
             Clock.schedule_once(display_bulle, 2)
     
+    def test2(self):
+        print("test")
+        Clock.schedule_once(self.display_bulle_home, 2)
+    
+    
     
     def remove_bubble(self):
         print("remove function")
+        global bulle
         print(bulle)
+
         topicDisplayScreen.ids.floatBulle.remove_widget(bulle)
+
+        print("removed ")
+    
+    def display_bulle_home(self, dt):
+        global bulle_home
+        bulle_home = Bulle()
+        self.topicsSelectionScreen.ids.floatBulle.add_widget(bulle_home)
+
+
+    
+    def remove_bubble_home(self):
+        print("remove function")
+        print(bulle_home)
+
+        self.topicsSelectionScreen.ids.floatBulle.remove_widget(bulle_home)
+
 
         print("removed ")
 
