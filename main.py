@@ -8,7 +8,7 @@ import time
 from datetime import datetime
 
 from PIL import Image
-from random import random
+from random import *
 
 from kivy.clock import Clock
 
@@ -38,6 +38,7 @@ from kivy.graphics.texture import Texture
 from kivy.core.window import Window
 Window.clearcolor = (.94, .94, .94, 1)
 Window.fullscreen = 'auto'
+Window.set_system_cursor = 'arrow'
 
 from kivy.uix.popup import Popup
 from kivy import platform

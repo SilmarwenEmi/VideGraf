@@ -1053,7 +1053,9 @@
             Widget:
 
 <Intervention>:
+
     Button:
+        id: button_interv
         text: "" if app.interventionView is None else "%s" % (app.interventionView)
         color: 0, 0, 0, 0
         pos: root.pos
@@ -1073,6 +1075,18 @@
                 size: self.size
                 pos: self.pos
                 source: "" if app.interventionView is None else "%s" % (app.interventionView)
+        
+        FloatLayout:
+            size: [690, 277]
+            pos: button_interv.pos
+
+            Image:
+                size: self.parent.size
+                allow_stretch: True
+                keep_ratio: False
+                pos: [self.parent.pos[0]-65,self.parent.pos[1]-63]
+                source: "bulle_intervention2.png"
+
 
 <InterventionVideo>:
     Button:
