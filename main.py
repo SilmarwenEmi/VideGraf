@@ -97,19 +97,8 @@ class InterventionDisplayedContent(Widget):
     pass
 
 class InterventionContent(Widget):
-
-    video_state = StringProperty("pause")
-
-    def play(self):
-        if self.video_state == 'play':
-            self.video_state = 'pause'
-
-        elif self.video_state == 'pause':
-            self.video_state = 'play'
-
-        print("Hello")
-
-
+    pass
+    
 
 class AddGraffitiContent(Widget):
     pass
@@ -361,6 +350,7 @@ class MyApp(App): # <- Main Class
         subjectGrafNb = StringProperty("")
         self.subjectDescription = {}
         interventionLabel = StringProperty("")
+        self.video_state = StringProperty("")
         self.video_state = "play"
         self.displayBubble = StringProperty("")
 
@@ -563,11 +553,11 @@ class MyApp(App): # <- Main Class
     
     def fire_popupVideo(self):
         if self.graffitiOfVideo == "":
-            pops = VideoPopup()
+            self.pops = VideoPopup()
         else:
-            pops = VideoGraffitiPopup()
+            self.pops = VideoGraffitiPopup()
 
-        pops.open()
+        self.pops.open()
     
 
 
@@ -625,6 +615,17 @@ class MyApp(App): # <- Main Class
                 return graffName
         
         return ""
+
+    def play(self):
+        if self.video_state == 'play':
+            self.video_state = 'pause'
+
+        elif self.video_state == 'pause':
+            self.video_state = 'play'
+
+        print("Hello -----")
+    
+    
 
         
 
