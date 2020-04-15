@@ -1050,7 +1050,8 @@
             id: button_interv
             text: "" if app.interventionView is None else "%s" % (app.interventionView)
             color: 0, 0, 0, 0
-            pos: [self.parent.pos[0] + randint(-50,100), self.parent.pos[1]+ randint(-50,100)]
+            pos: [self.parent.pos[0] + randint(-80,80), self.parent.pos[1]+ randint(-80,80)]
+            #pos: self.parent.pos
             size: [555, 205]
             background_color: 0, 0, 0, 0
             text_size: self.size
@@ -1069,19 +1070,20 @@
                     source: "" if app.interventionView is None else "%s" % (app.interventionView)
             
             FloatLayout:
-                size: [690, 277]
-                pos: button_interv.pos
+                #size: [690, 277]
+                size: [575, 245]
+                pos: [button_interv.pos[0]+55, button_interv.pos[1]+25]
 
                 canvas.before:
                     Color:
-                        rgba: (1, 1, 1, 0)
+                        rgba: (1, 1, 1, 1)
 
                 Image:
                     size: self.parent.size
                     allow_stretch: True
                     keep_ratio: False
                     pos: [self.parent.pos[0]-65,self.parent.pos[1]-63]
-                    source: "bulle_interventionBerk.png"
+                    source: "bulle_intervention" + str(randint(1,5)) + ".png"
 
 
 <InterventionVideo>:
@@ -1093,7 +1095,7 @@
             id: button_interv
             text: "" if app.videoPath is None else "%s" % (app.videoPath)
             color: 0, 0, 0, 0
-            pos: [self.parent.pos[0] + randint(-50,50), self.parent.pos[1]+ randint(-50,50)]
+            pos: [self.parent.pos[0] + randint(-80,80), self.parent.pos[1]+ randint(-80,80)]
             size: [555, 205]
             background_color: 0, 0, 0, 0
             text_size: self.size
@@ -1114,15 +1116,16 @@
                     source: "" if app.interventionView is None else "%s" % (app.interventionView)
         
             FloatLayout:
-                size: [690, 277]
-                pos: button_interv.pos
+                #size: [690, 277]
+                size: [575, 245]
+                pos: [button_interv.pos[0]+55, button_interv.pos[1]+25]
 
                 Image:
                     size: self.parent.size
                     allow_stretch: True
                     keep_ratio: False
                     pos: [self.parent.pos[0]-65,self.parent.pos[1]-63]
-                    source: "bulle_intervention1.png"
+                    source: "bulle_intervention" + str(randint(1,5)) + ".png"
 
 <InterventionDisplayedScreen>:
     BoxLayout:
