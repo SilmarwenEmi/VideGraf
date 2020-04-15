@@ -1,4 +1,5 @@
 #:kivy 1.11.1
+#:import randint random.randint
 
 <TopicsSelectionScreen>:
     on_enter:
@@ -835,18 +836,6 @@
             
             Widget:
         
-        #FloatLayout:
-        #    size: root.size
-        #    pos: root.pos
-
-        #    Image:
-        #        source: "bulle_chibi_side.png"
-        #        size_hint_x: None
-        #        size_hint_y: None
-        #        size: [self.size[0]/1.2,self.size[1]/1.2]
-        #        keep_ratio: True
-        #        pos_hint: {"x": 0.0, "y": 0.0}
-
 
 <InterventionsSelectionEmpty>:
     BoxLayout:
@@ -1053,64 +1042,87 @@
             Widget:
 
 <Intervention>:
-
-    Button:
-        id: button_interv
-        text: "" if app.interventionView is None else "%s" % (app.interventionView)
-        color: 0, 0, 0, 0
+    FloatLayout:
         pos: root.pos
-        size: [550, 200]
-        background_color: 0, 0, 0, 0
-        text_size: self.size
-        on_press:
-            app.currentIntervention = self.text
-            app.interventionsSelection.fire_popupGraffiti()
+        size: [555, 205]
 
-        canvas.before:
-            Color:
-                rgba: (1, 1, 1, 1) if self.state == 'normal' else (.349, .5686, .392, .2)
+        Button:
+            id: button_interv
+            text: "" if app.interventionView is None else "%s" % (app.interventionView)
+            color: 0, 0, 0, 0
+            pos: [self.parent.pos[0] + randint(-50,100), self.parent.pos[1]+ randint(-50,100)]
+            size: [555, 205]
+            background_color: 0, 0, 0, 0
+            text_size: self.size
+            on_press:
+                app.currentIntervention = self.text
+                app.interventionsSelection.fire_popupGraffiti()
 
-            Ellipse:
-                id: ellipse
-                size: self.size
-                pos: self.pos
-                source: "" if app.interventionView is None else "%s" % (app.interventionView)
-        
-        FloatLayout:
-            size: [690, 277]
-            pos: button_interv.pos
+            canvas.before:
+                Color:
+                    rgba: (1, 1, 1, 1) if self.state == 'normal' else (.349, .5686, .392, .2)
 
-            Image:
-                size: self.parent.size
-                allow_stretch: True
-                keep_ratio: False
-                pos: [self.parent.pos[0]-65,self.parent.pos[1]-63]
-                source: "bulle_intervention2.png"
+                Ellipse:
+                    id: ellipse
+                    size: self.size
+                    pos: self.pos
+                    source: "" if app.interventionView is None else "%s" % (app.interventionView)
+            
+            FloatLayout:
+                size: [690, 277]
+                pos: button_interv.pos
+
+                canvas.before:
+                    Color:
+                        rgba: (1, 1, 1, 0)
+
+                Image:
+                    size: self.parent.size
+                    allow_stretch: True
+                    keep_ratio: False
+                    pos: [self.parent.pos[0]-65,self.parent.pos[1]-63]
+                    source: "bulle_interventionBerk.png"
 
 
 <InterventionVideo>:
-    Button:
-        text: "" if app.videoPath is None else "%s" % (app.videoPath)
-        color: 0, 0, 0, 0
+    FloatLayout:
         pos: root.pos
-        size: [550, 200]
-        background_color: 0, 0, 0, 0
-        text_size: self.size
-        on_press:
-            app.currentIntervention = self.text
-            app.graffitiOfVideo = app.retrieveGraffitiName(self.text)
-            app.video_state = "play" # auto play video
-            app.fire_popupVideo()
+        size: [555, 205]
 
-        canvas.before:
-            Color:
-                rgba: (1, 1, 1, 1) if self.state == 'normal' else (.349, .5686, .392, .2)
+        Button:
+            id: button_interv
+            text: "" if app.videoPath is None else "%s" % (app.videoPath)
+            color: 0, 0, 0, 0
+            pos: [self.parent.pos[0] + randint(-50,50), self.parent.pos[1]+ randint(-50,50)]
+            size: [555, 205]
+            background_color: 0, 0, 0, 0
+            text_size: self.size
+            on_press:
+                app.currentIntervention = self.text
+                app.graffitiOfVideo = app.retrieveGraffitiName(self.text)
+                app.video_state = "play" # auto play video
+                app.fire_popupVideo()
 
-            Ellipse:
-                id: ellipse
-                size: self.size
-                pos: self.pos
-                source: "" if app.interventionView is None else "%s" % (app.interventionView)
+            canvas.before:
+                Color:
+                    rgba: (1, 1, 1, 1) if self.state == 'normal' else (.349, .5686, .392, .2)
+
+                Ellipse:
+                    id: ellipse
+                    size: self.size
+                    pos: self.pos
+                    source: "" if app.interventionView is None else "%s" % (app.interventionView)
+        
+            FloatLayout:
+                size: [690, 277]
+                pos: button_interv.pos
+
+                Image:
+                    size: self.parent.size
+                    allow_stretch: True
+                    keep_ratio: False
+                    pos: [self.parent.pos[0]-65,self.parent.pos[1]-63]
+                    source: "bulle_intervention1.png"
 
 <InterventionDisplayedScreen>:
     BoxLayout:
