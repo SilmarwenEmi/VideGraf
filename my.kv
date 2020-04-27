@@ -236,6 +236,8 @@
 
         StackLayout:
             orientation: 'lr-tb'
+            size:self.size
+            pos: self.pos
             size_hint_x: 2
             size_hint_y: .1
             
@@ -246,6 +248,18 @@
                 font_size: 50
                 text_size: self.size
                 color: .349, .5686, .392, 1
+        
+            FloatLayout:
+                size: self.parent.size
+                pos: self.parent.pos
+                id: chibi_rotated
+                size_hint_x: 1
+
+                Image:
+                    source: "chibi_rotated.png"
+                    size: self.parent.size
+                    pos: [self.parent.pos[0]-100, self.parent.pos[1]+150]
+
             
 
 <Topics>:
