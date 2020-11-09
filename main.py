@@ -215,7 +215,7 @@ class MyApp(App): # <- Main Class
     def build(self):
 
         #connection to DB
-        self.client = pymongo.MongoClient("mongodb+srv://Silmarwen:Kirby2011@stage-sodbw.gcp.mongodb.net/test?retryWrites=true&w=majority")
+        self.client = pymongo.MongoClient("mongodb+srv://Silmarwen:password@stage-sodbw.gcp.mongodb.net/test?retryWrites=true&w=majority")
         if self.client != None:
             db = self.client["VideGraff"]
             self.collection = db["data"]
